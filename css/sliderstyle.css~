@@ -1,0 +1,107 @@
+.pager{
+margin:0px 40px;
+}
+.nbs-flexisel-container {
+    position:relative;
+    max-width:100%;
+	  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.nbs-flexisel-ul {
+    position:relative;
+    width:1200000px;
+    margin:0px;
+    padding:0px;
+    list-style-type:none;   
+    text-align:center;  
+}
+
+.nbs-flexisel-inner {
+    overflow:hidden;
+    float:left;
+    width:100%;
+   
+      border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;  
+	  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+.nbs-flexisel-item {
+    float:left;
+    margin:0px;
+    padding:0px;
+    cursor:pointer;
+    position:relative;
+    line-height:0px;
+	/* background:#fff; */
+	margin-top:10px;
+	margin-bottom:10px;
+	display:block;
+	margin:0px auto;
+	
+
+}
+.nbs-flexisel-item img {
+    width: 100%;
+    cursor: pointer;
+    position: relative;
+    /*margin-top: 10px;
+    margin-bottom: 10px;*/
+    max-width:100%;
+    max-height:100%;
+	padding: 0px 10px;
+	/* margin-left:-50px;
+	margin-right:-50px; */
+}
+
+/*** Navigation ***/
+
+.nbs-flexisel-nav-left,
+.nbs-flexisel-nav-right {
+    width: 22px;
+    height: 22px; 
+    position: absolute;
+    cursor: pointer;
+    z-index: 100;
+    opacity: 0.5;
+}
+
+.nbs-flexisel-nav-left {
+   /* width:50px;
+   height:50px; */
+    left: 2px;
+	top:100px !important;
+    background: url(../images/preve.png) no-repeat;
+}
+.nbs-flexisel-nav-left:nth-child(3){
+	display:none;
+}
+.nbs-flexisel-nav-right {
+  /*  width:50px;
+   height:50px; */
+    right: -8px;
+	top:100px !important;
+    background: url(../images/nextt.png) no-repeat;
+}
+.nbs-flexisel-nav-right:hover,.nbs-flexisel-nav-left:hover{
+	opacity:1;
+}
+.padd >.nbs-flexisel-container{
+	padding:0px;
+}
+.padd>.nbs-flexisel-container>.nbs-flexisel-nav-left{
+	display:none;
+}
+.padd>.nbs-flexisel-container>.nbs-flexisel-nav-right{
+	display:none;
+}
+#flexiselDemo4> .nbs-flexisel-item{
+		margin-left:0px;
+		margin-right:0px;
+}
+.padd>.nbs-flexisel-container> .nbs-flexisel-inner{
+	margin:0px !important;
+}

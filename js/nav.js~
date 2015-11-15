@@ -1,0 +1,27 @@
+                function() {
+
+                var listParent = object.parent();
+                var flexiselcontainer = listParent.parent();
+                var childSet = object.children();
+                var leftArrow = flexiselInner.find(".nbs-flexisel-nav-left");
+                var rightArrow = flexiselInner.find(".nbs-flexisel-nav-right");
+
+                $(window).on("resize", function(event) {
+
+                    methods.setResponsiveEvents();
+
+                    var innerWidth = $(listParent).width();
+                    var innerHeight = $(listParent).height();
+
+                    itemsWidth = (innerWidth) / itemsVisible;
+
+                    childSet.width(itemsWidth);
+                    if (settings.clone) {
+                        object.css({
+                            'left' : -itemsWidth                            
+                        });
+                    }else {
+                        object.css({
+                            'left' : 0
+                        });
+                    }
