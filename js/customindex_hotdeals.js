@@ -34,23 +34,22 @@ function tabledata_handler(pageNum)
                $(modal_body).html('All pages are served');
                $(modal_body).css('padding' ,'10px');
                $(modal_body).css('position','relative');
-              var modal_footer = document.createElement('div');
-              $(modal_footer).css('textAlign','right');
-              $(modal_footer).css('padding','15px');
-              $(modal_footer).css('borderTop','1px solid #e5e5e5');
-              $(modal_footer).css('marginRight','20px');
-             var btn_element = document.createElement('button');
-             $(btn_element).addClass("btn btn-primary");
-             $(btn_element).html("Ok");
-             $(close_action).on('click',function () 
-             {
-             	$(error_modal).modal().close(); 
-             	});
+               var modal_footer = document.createElement('div');
+               $(modal_footer).css('textAlign','right');
+               $(modal_footer).css('padding','15px');
+               $(modal_footer).css('borderTop','1px solid #e5e5e5');
+               $(modal_footer).css('marginRight','20px');
+               var btn_element = document.createElement('button');
+               $(btn_element).addClass("btn btn-primary");
+               $(btn_element).html("Ok");
+               $(close_action).on('click',function () 
+               {
+             	   $(error_modal).modal().close(); 
+               });
              	$(btn_element).on('click',function () 
              	{
-             		$(error_modal).modal().close();
-             		 
-             		});
+             	   $(error_modal).modal().close();
+             	});
                 $(modal_footer).append(btn_element);
                 $(error_modal).append(close_action);
                 $(error_modal).append(modal_body);
@@ -80,7 +79,7 @@ function tabledata_handler(pageNum)
                var table_data_finalprice = document.createElement('td');
                $(table_data_finalprice).html(data[i].HotDealFinalPrice);
                var table_data_discount = document.createElement('td');
-              $(table_data_discount).html(data[i].HotDealDiscount+"%");
+               $(table_data_discount).html(data[i].HotDealDiscount+"%");
                var table_data_date = document.createElement('td');
                $(table_data_date).html(data[i].HotDealEndDate);
                $(table_row).append(table_data_des);
@@ -110,7 +109,7 @@ function tabledata_handler(pageNum)
  window.onload =tabledata_handler(1);
    function loadingimage_handler() 
    {
-   	         var error_page = document.createElement('div');
+   	           var error_page = document.createElement('div');
                $(error_page).addClass("modal");
                $(error_page).attr('id','loading_page');
                $(error_page).css('backgroundColor','#fff');
@@ -122,8 +121,8 @@ function tabledata_handler(pageNum)
                $(load_img).attr('id','loading_img');
                $(load_img).attr('src','images/loading.gif');
                $(load_img).css('marginLeft','256px');
-                $(error_page).append(load_img);
-                $(error_page).append(load_msg);
+               $(error_page).append(load_img);
+               $(error_page).append(load_msg);
                $(error_page).modal().open();
     } 
     function deal_details(dataid)
@@ -135,9 +134,9 @@ function tabledata_handler(pageNum)
          dataType: 'json',
          data:{hotdealSlug:dataid},
           success:function(data){
-          	 var dataToStore = JSON.stringify(data);
-             localStorage.setItem('someData',dataToStore);
-              var deal_details_modal = document.createElement('div');
+          	   var dataToStore = JSON.stringify(data);
+               localStorage.setItem('someData',dataToStore);
+               var deal_details_modal = document.createElement('div');
                $(deal_details_modal).addClass("modal");
                $(deal_details_modal).attr('id', 'modal_firstpage');
                $(deal_details_modal).css('position','relative');
@@ -171,7 +170,7 @@ function tabledata_handler(pageNum)
                var price_table = document.createElement('table');
                $(price_table).addClass("pricetable");
                $(price_table).css('float','left');
-                var tr_price = document.createElement('tr');
+               var tr_price = document.createElement('tr');
                var td_finalprice = document.createElement('td');
                var td_finalprice_data = document.createElement('td');
                $(td_finalprice).html("&nbsp"+"Final Price"+"&nbsp"+"&nbsp"+":");
@@ -229,13 +228,13 @@ function tabledata_handler(pageNum)
                $(deal_details_modal).append(price_table);
                $(deal_details_modal).append(validity_table);
                var offer_labs = document.createElement('div');
-                 $(offer_labs).html("Offering Labs");
-                 $(offer_labs).css("background", "#41A7B3");
-                 $(offer_labs).css("color","white");
-                 $(offer_labs).css("fontWeight","bold");
-                 $(offer_labs).css("marginBottom","11px");
-                 $(offer_labs).css("marginRight",'20px');
-                var labs_list = document.createElement('table');
+               $(offer_labs).html("Offering Labs");
+               $(offer_labs).css("background", "#41A7B3");
+               $(offer_labs).css("color","white");
+               $(offer_labs).css("fontWeight","bold");
+               $(offer_labs).css("marginBottom","11px");
+               $(offer_labs).css("marginRight",'20px');
+               var labs_list = document.createElement('table');
                $(labs_list).addClass("offer_labs");
                $(labs_list).css('cursor','pointer');
                for(var i=0;i<data.OfferingLabs.length;i++)
@@ -276,10 +275,9 @@ function tabledata_handler(pageNum)
                  $(tr_labs).append(td_lab_pin);
                  $(tr_labs).append(td_lab_btn);
                  $(labs_list).append(tr_labs); 
-                	
-                	$(tr_labs).on('click',function () 
-                	{
-                		 var labname = $(this).data('labname');
+                 $(tr_labs).on('click',function () 
+                 {
+                	 var labname = $(this).data('labname');
                   	 var labslug = $(this).data('labslug');
                   	 var dealname = $(this).data('dealname');
                   	 var deal_slug = $(this).data('dealslug');
@@ -287,8 +285,8 @@ function tabledata_handler(pageNum)
                   	 var deal_discount = $(this).data('dealdiscount');
                   	 var deal_finalprice = $(this).data('dealfinalprice');
                   	 var labarea = $(this).data('labarea');
-                		form_handler(dataid,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
-                		});
+                	 form_handler(dataid,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
+                 });//click fun
               
                }//for offeringlabs
                  $(deal_details_modal).append(offer_labs);
@@ -338,7 +336,7 @@ function tabledata_handler(pageNum)
                     if((totalcount >20) && (count_var >(totalcount/2)) ) 
                     {  
                         var group_heading = document.createElement('div');
-                 	      $(group_heading).addClass("deal_data");
+                 	    $(group_heading).addClass("deal_data");
                         $(group_heading).html(data.GroupsInfo[0].GroupName);
                         $(group_heading).css('fontWeight', 'bold');
                         $(right_element).append(group_heading);
@@ -347,11 +345,11 @@ function tabledata_handler(pageNum)
                     }//if groupheading
                   else 
                    {
-                   	 var group_heading = document.createElement('div');
-                 	    $(group_heading).addClass("deal_data");
+                   	  var group_heading = document.createElement('div');
+                 	  $(group_heading).addClass("deal_data");
                       $(group_heading).html(data.GroupsInfo[0].GroupName);
                       $(group_heading).css('fontWeight', 'bold');
-                   	 $(left_element).append(group_heading);
+                   	  $(left_element).append(group_heading);
                 	    count_var++;
                 	 }//else groupheading
                    var new_str = data.GroupsInfo[i].testsInGroup;
@@ -422,9 +420,9 @@ function tabledata_handler(pageNum)
                         $(content_data).addClass("deal_data");
                         $(content_data).html(data.TestsInfo[i]);
                         $(content_data).css('textIndent','20pt');
-                    	   $(left_element).append(content_data);
-                    	  count_var++;
-                    	}//else contentdata
+                    	$(left_element).append(content_data);
+                    	count_var++;
+                    }//else contentdata
                  }//for TestsInfo
                 }//if testsinfolength
               if(data.Consultations.length !=0)
@@ -441,8 +439,8 @@ function tabledata_handler(pageNum)
                    }//if consultheading
                  else  
                     {
-                   	  var consult_heading = document.createElement('div');
-                   	  $(consult_heading).addClass("deal_data");
+                   	   var consult_heading = document.createElement('div');
+                   	   $(consult_heading).addClass("deal_data");
                        $(consult_heading).html("Consultations");
                        $(consult_heading).css('fontWeight','bold');
                        $(left_element).append(consult_heading);
@@ -464,12 +462,12 @@ function tabledata_handler(pageNum)
                      }//if consultdata
                    else 
                     {
-                    	  var consult_data = document.createElement('div');
-                       $(consult_data).addClass("deal_data");
-                       $(consult_data).html(data.Consultations[i]);
-                       $(consult_data).css('textIndent','20pt');
-                   	 $(left_element).append(consult_data);
-                   	 count_var++;        
+                        var consult_data = document.createElement('div');
+                        $(consult_data).addClass("deal_data");
+                        $(consult_data).html(data.Consultations[i]);
+                        $(consult_data).css('textIndent','20pt');
+                   	    $(left_element).append(consult_data);
+                   	    count_var++;        
                     }//else consultdata
                  }//for Consultations   
               }//if dataconsultationslength
@@ -705,13 +703,13 @@ function tabledata_handler(pageNum)
                   $(parent_wizard).append(form_element);
                   var error_display = document.createElement('div');
                   $(error_display).addClass("display_error");
-                 var name_element = document.createElement('div');
-                 $(name_element).addClass("err_msg");
-                 $(name_element).attr('id','err_name');
-                 $(name_element).css('color','rgb(236,73,73)');
-                 $(name_element).css('textAlign','left');
-                 $(name_element).css('marginLeft','16px');
-                 $(name_element).css('display','none');
+                  var name_element = document.createElement('div');
+                  $(name_element).addClass("err_msg");
+                  $(name_element).attr('id','err_name');
+                  $(name_element).css('color','rgb(236,73,73)');
+                  $(name_element).css('textAlign','left');
+                  $(name_element).css('marginLeft','16px');
+                  $(name_element).css('display','none');
                   var star_element = document.createElement('span');
                   $(star_element).addClass('star');
                   $(star_element).html("&#x2605");
@@ -721,7 +719,7 @@ function tabledata_handler(pageNum)
                   $(name_element).append(star_element);
                   $(name_element).append(error_name_element);
                   var email_element = document.createElement('div');
-               	$(email_element).addClass("err_msg");
+               	  $(email_element).addClass("err_msg");
                   $(email_element).attr('id','err_email');
                   $(email_element).css('color','rgb(236,73,73)');
                   $(email_element).css('textAlign','left');
@@ -733,14 +731,14 @@ function tabledata_handler(pageNum)
                   $(star_email).css('float','left');
                   var error_email_element = document.createElement('div');
                   $(error_email_element).html('Enter valid e-mail id');
-                 	$(email_element).append(star_email);
-                 	$(email_element).append(error_email_element);
+                  $(email_element).append(star_email);
+                  $(email_element).append(error_email_element);
                   var mbno_element = document.createElement('div');
-                 	$(mbno_element).addClass("err_msg");
-                 	$(mbno_element).attr('id','err_mbno');
+                  $(mbno_element).addClass("err_msg");
+                  $(mbno_element).attr('id','err_mbno');
                   $(mbno_element).css('color','rgb(236,73,73)');
                   $(mbno_element).css('textAlign','left');
-                 	$(mbno_element).css('marginLeft','16px');
+                  $(mbno_element).css('marginLeft','16px');
                   $(mbno_element).css('display','none');
                   var star_mbno = document.createElement('span');
                   $(star_mbno).addClass('star');
@@ -765,46 +763,46 @@ function tabledata_handler(pageNum)
                   $(phno_element).append(star_phno);
                   $(phno_element).append(error_phno_element);
                   var apptime_element = document.createElement('div');
-                 	$(apptime_element).attr('id','err_apptime');
-                 	$(apptime_element).addClass("err_msg");
+                  $(apptime_element).attr('id','err_apptime');
+                  $(apptime_element).addClass("err_msg");
                   $(apptime_element).css('color','rgb(236,73,73)');
-                 	$(apptime_element).css('textAlign','left');
-                 	$(apptime_element).css('marginLeft','16px');
-                 	$(apptime_element).css('display','none');
-                 	var star_apptime = document.createElement('span');
-                 	$(star_apptime).addClass('star');
-                 	$(star_apptime).html("&#x2605");
-                 	$(star_apptime).css('float','left');
+                  $(apptime_element).css('textAlign','left');
+                  $(apptime_element).css('marginLeft','16px');
+                  $(apptime_element).css('display','none');
+                  var star_apptime = document.createElement('span');
+                  $(star_apptime).addClass('star');
+                  $(star_apptime).html("&#x2605");
+                  $(star_apptime).css('float','left');
                   var error_apptime_element = document.createElement('div');
                   $(error_apptime_element).html('Please select Appointment Time');
-               	 $(apptime_element).append(star_apptime);
-                   $(apptime_element).append(error_apptime_element);
+               	  $(apptime_element).append(star_apptime);
+                  $(apptime_element).append(error_apptime_element);
                   var app_time_element = document.createElement('div');
-                   $(app_time_element).attr('id','err_app_time');
-                   $(app_time_element).addClass("err_msg");
-                   $(app_time_element).css('color','rgb(236,73,73)');
-                   $(app_time_element).css('textAlign','left');
-                   $(app_time_element).css('marginLeft','16px');
-                 	 $(app_time_element).css('display','none');
-                   var star_app_time = document.createElement('span');
-                    $(star_app_time).addClass('star');
-                    $(star_app_time).html("&#x2605");
-                    $(star_app_time).css('float','left');
-                    var error_app_time_element = document.createElement('div');
-                     $(error_app_time_element).html('You have given past time.Give future time');
-                     $(app_time_element).append(star_app_time);
-                     $(app_time_element).append(error_app_time_element);
-                     $(error_display).append(name_element);
-                     $(error_display).append(email_element);
-                     $(error_display).append(mbno_element);
-                     $(error_display).append(apptime_element);
-                     $(error_display).append(app_time_element);
-                     $("#modal_secondpage").append(close_element);
-                     $("#modal_secondpage").append(contact_heading);
-                     $("#modal_secondpage").append(lab_details);
-                     $("#modal_secondpage").append(deal_name);
-                     $("#modal_secondpage").append(error_display);
-                     $("#modal_secondpage").append(parent_wizard);
+                  $(app_time_element).attr('id','err_app_time');
+                  $(app_time_element).addClass("err_msg");
+                  $(app_time_element).css('color','rgb(236,73,73)');
+                  $(app_time_element).css('textAlign','left');
+                  $(app_time_element).css('marginLeft','16px');
+                  $(app_time_element).css('display','none');
+                  var star_app_time = document.createElement('span');
+                  $(star_app_time).addClass('star');
+                  $(star_app_time).html("&#x2605");
+                  $(star_app_time).css('float','left');
+                  var error_app_time_element = document.createElement('div');
+                  $(error_app_time_element).html('You have given past time.Give future time');
+                  $(app_time_element).append(star_app_time);
+                  $(app_time_element).append(error_app_time_element);
+                  $(error_display).append(name_element);
+                  $(error_display).append(email_element);
+                  $(error_display).append(mbno_element);
+                  $(error_display).append(apptime_element);
+                  $(error_display).append(app_time_element);
+                  $("#modal_secondpage").append(close_element);
+                  $("#modal_secondpage").append(contact_heading);
+                  $("#modal_secondpage").append(lab_details);
+                  $("#modal_secondpage").append(deal_name);
+                  $("#modal_secondpage").append(error_display);
+                  $("#modal_secondpage").append(parent_wizard);
                          
                    $(input_booking).on('keyup' ,function (event)
                       { 
@@ -839,7 +837,7 @@ function tabledata_handler(pageNum)
                               }//if keycode
                          });//key fnctn
                           
-                  var today = new Date();  
+                 var today = new Date();  
                  var minutes = today.getMinutes();
                  
                  if((minutes >= '0'))  
@@ -971,7 +969,7 @@ function tabledata_handler(pageNum)
                        }//if app_time
                        
                        var val_time = date+"-"+month+"-"+year+" "+hours +":"+ mnt+":"+sec;
-                      //var appt_time = localStorage.getItem("app_time");
+                     
                          
                           var sel_month_name = appt_time.substr(3,3);
     
@@ -1168,12 +1166,12 @@ function tabledata_handler(pageNum)
                $(labs_list).addClass("offer_labs");
                $(labs_list).css('cursor','pointer');
                var offer_labs = document.createElement('div');
-                 $(offer_labs).html("Offering Labs");
-                 $(offer_labs).css("background", "#41A7B3");
-                 $(offer_labs).css("color","white");
-                 $(offer_labs).css("fontWeight","bold");
-                 $(offer_labs).css("marginBottom","11px");
-                 $(offer_labs).css("marginRight",'20px');
+               $(offer_labs).html("Offering Labs");
+               $(offer_labs).css("background", "#41A7B3");
+               $(offer_labs).css("color","white");
+               $(offer_labs).css("fontWeight","bold");
+               $(offer_labs).css("marginBottom","11px");
+               $(offer_labs).css("marginRight",'20px');
                for(var i=0;i<localData.OfferingLabs.length;i++)
                {
                  var tr_labs = document.createElement('tr');
