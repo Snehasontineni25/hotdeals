@@ -859,22 +859,7 @@ function tabledata_handler(pageNum)
                      minuteStep: 30,
                  }); //datetimepicker	
                 }//if
-               /* if(today.getHours() > '22')
-                {
-                	  
-                	   $('.form_datetime').datetimepicker
-                   ({ 
-                     format:'dd/M/yyyy HH:ii P',
-                     startDate: new Date(today.getFullYear(), today.getMonth(), today.getDate()+1, today.getHours()-today.getHours(), today.getMinutes()-today.getMinutes()),
-                     weekStart: 1,
-                     todayBtn:  0,
-                     autoclose: 1,
-                     todayHighlight: 1,
-                     startView: 2,
-                     forceParse: 0,
-                     minuteStep: 30,
-                });
-                }*/ 
+             
                   $('.form_datetime').datetimepicker('setHoursDisabled', '0,1,2,3,4,5,22,23,24'); 
                    
                  var pat_name = $("#patient_name").val();
