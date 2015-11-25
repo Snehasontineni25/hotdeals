@@ -126,7 +126,7 @@ function tabledata_handler(pageNum)
                 $(error_page).append(load_msg);
                $(error_page).modal().open();
     } 
-    function deal_details(dataid)
+      function deal_details(dataid)
     {    
           
           $.ajax({
@@ -137,6 +137,7 @@ function tabledata_handler(pageNum)
           success:function(data){
           	 var dataToStore = JSON.stringify(data);
              localStorage.setItem('someData',dataToStore);
+             console.log(data);
               var deal_details_modal = document.createElement('div');
                $(deal_details_modal).addClass("modal");
                $(deal_details_modal).attr('id', 'modal_firstpage');
@@ -339,7 +340,7 @@ function tabledata_handler(pageNum)
                     {  
                         var group_heading = document.createElement('div');
                  	      $(group_heading).addClass("deal_data");
-                        $(group_heading).html(data.GroupsInfo[0].GroupName);
+                        $(group_heading).html(data.GroupsInfo[i].GroupName);
                         $(group_heading).css('fontWeight', 'bold');
                         $(right_element).append(group_heading);
                         $(left_element).css('float','left');
@@ -349,7 +350,7 @@ function tabledata_handler(pageNum)
                    {
                    	 var group_heading = document.createElement('div');
                  	    $(group_heading).addClass("deal_data");
-                      $(group_heading).html(data.GroupsInfo[0].GroupName);
+                      $(group_heading).html(data.GroupsInfo[i].GroupName);
                       $(group_heading).css('fontWeight', 'bold');
                    	 $(left_element).append(group_heading);
                 	    count_var++;
@@ -859,22 +860,7 @@ function tabledata_handler(pageNum)
                      minuteStep: 30,
                  }); //datetimepicker	
                 }//if
-               /* if(today.getHours() > '22')
-                {
-                	  
-                	   $('.form_datetime').datetimepicker
-                   ({ 
-                     format:'dd/M/yyyy HH:ii P',
-                     startDate: new Date(today.getFullYear(), today.getMonth(), today.getDate()+1, today.getHours()-today.getHours(), today.getMinutes()-today.getMinutes()),
-                     weekStart: 1,
-                     todayBtn:  0,
-                     autoclose: 1,
-                     todayHighlight: 1,
-                     startView: 2,
-                     forceParse: 0,
-                     minuteStep: 30,
-                });
-                }*/ 
+              
                   $('.form_datetime').datetimepicker('setHoursDisabled', '0,1,2,3,4,5,22,23,24'); 
                    
                  var pat_name = $("#patient_name").val();
@@ -1046,8 +1032,73 @@ function tabledata_handler(pageNum)
              var sel_hours = appt_time.substr(12,2);
              var sel_minutes = appt_time.substr(15,2);
              var sel_sec = addZero(tday.getSeconds());
-             var sel_time = sel_year+"-"+sel_month+"-"+sel_date+" "+sel_hours+":"+sel_minutes+":"+sel_sec;
-             
+             var sel_meridian = appt_time.substr(18,2);
+             var sel_hours_meridian = sel_hours +" "+ sel_meridian;
+             if (sel_meridian == "AM") 
+             {
+             	 var sel_time = sel_year+"-"+sel_month+"-"+sel_date+" "+sel_hours+":"+sel_minutes+":"+sel_sec;
+             	
+              }//if AM
+              if (sel_hours_meridian == "12 PM")
+              {
+              	   var sel_hours = "12";
+              	 var sel_time = sel_year+"-"+sel_month+"-"+sel_date+" "+sel_hours+":"+sel_minutes+":"+sel_sec;
+                 
+              	}//if 12
+             if (sel_hours_meridian == "01 PM")
+              {
+              	   var sel_hours = "13";
+              	 var sel_time = sel_year+"-"+sel_month+"-"+sel_date+" "+sel_hours+":"+sel_minutes+":"+sel_sec;
+                 
+              	}//if 01
+              	if (sel_hours_meridian == "02 PM")
+               {
+              	   var sel_hours = "14";
+                  var sel_time = sel_year+"-"+sel_month+"-"+sel_date+" "+sel_hours+":"+sel_minutes+":"+sel_sec;
+                 
+                }//if 02
+               	if (sel_hours_meridian == "03 PM")
+                  {
+              	      var sel_hours = "15";
+                      var sel_time = sel_year+"-"+sel_month+"-"+sel_date+" "+sel_hours+":"+sel_minutes+":"+sel_sec;
+                     
+                 }//if 03
+                 if (sel_hours_meridian == "04 PM")
+                 {
+              	    var sel_hours = "16";
+                   var sel_time = sel_year+"-"+sel_month+"-"+sel_date+" "+sel_hours+":"+sel_minutes+":"+sel_sec;
+                  
+                  }// if 04
+                  if (sel_hours_meridian == "05 PM")
+                 {
+              	    var sel_hours = "17";
+                   var sel_time = sel_year+"-"+sel_month+"-"+sel_date+" "+sel_hours+":"+sel_minutes+":"+sel_sec;
+                  
+                  }// if 05
+                   if (sel_hours_meridian == "06 PM")
+                 {
+              	    var sel_hours = "18";
+                   var sel_time = sel_year+"-"+sel_month+"-"+sel_date+" "+sel_hours+":"+sel_minutes+":"+sel_sec;
+                  
+                  }// if 06
+                   if (sel_hours_meridian == "07 PM")
+                 {
+              	    var sel_hours = "19";
+                   var sel_time = sel_year+"-"+sel_month+"-"+sel_date+" "+sel_hours+":"+sel_minutes+":"+sel_sec;
+                   
+                  }// if 07
+                   if (sel_hours_meridian == "08 PM")
+                 {
+              	    var sel_hours = "20";
+                   var sel_time = sel_year+"-"+sel_month+"-"+sel_date+" "+sel_hours+":"+sel_minutes+":"+sel_sec;
+                   
+                  }// if 08
+                   if (sel_hours_meridian == "09 PM")
+                 {
+              	    var sel_hours = "21";
+                   var sel_time = sel_year+"-"+sel_month+"-"+sel_date+" "+sel_hours+":"+sel_minutes+":"+sel_sec;
+                   
+                  }// if 09
                        if(!(sel_time.match(/\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}/)))
                      
                         {
@@ -1593,7 +1644,7 @@ function tabledata_handler(pageNum)
                   $(order_button).css('marginTop','11px');
                   var tmm_form_element = document.createElement('div');
                   $(tmm_form_element).attr('id','tmm-form-wizard');
-                   var prevbtn_element = document.createElement('div');
+                  var prevbtn_element = document.createElement('div');
                   $(prevbtn_element).css('margin','0px');
                   $(prevbtn_element).addClass('prev');
                   var backbtn = document.createElement('button');
@@ -1604,7 +1655,7 @@ function tabledata_handler(pageNum)
                   $(span_backbtn).html("Back");
                   var backbtn_divider = document.createElement('div');
                   $(backbtn_divider).addClass("button-divider");
-                   var orderbtn_element = document.createElement('div');
+                  var orderbtn_element = document.createElement('div');
                   $(orderbtn_element).css('margin','0px');
                   $(orderbtn_element).addClass('next');
                   var nextbtn = document.createElement('button');
@@ -1694,7 +1745,8 @@ function tabledata_handler(pageNum)
                 $(error_page).append(load_img);
                 $(error_page).append(load_msg);
                $(error_page).modal().open();
-    }           
+    }// loading img fnctn           
+ 
  function confirm_pagehandler(labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea)
  {
  	 var pnt_name =localStorage.getItem("patient_name");
@@ -1769,9 +1821,75 @@ function tabledata_handler(pageNum)
              var sel_hours = appt_time.substr(12,2);
              var sel_minutes = appt_time.substr(15,2);
              var sel_sec = addZero(tday.getSeconds());
-             var sel_time = sel_year+"-"+sel_month+"-"+sel_date+" "+sel_hours+":"+sel_minutes+":"+sel_sec;
+             var sel_meridian = appt_time.substr(18,2);
+             var sel_hours_meridian = sel_hours +" "+ sel_meridian;
+             if (sel_meridian == "AM") 
+             {
+             	 var sel_time = sel_year+"-"+sel_month+"-"+sel_date+" "+sel_hours+":"+sel_minutes+":"+sel_sec;
+             	
+              }//if AM
+              if (sel_hours_meridian == "12 PM")
+              {
+              	   var sel_hours = "12";
+              	 var sel_time = sel_year+"-"+sel_month+"-"+sel_date+" "+sel_hours+":"+sel_minutes+":"+sel_sec;
+                 
+              	}//if 12
+             if (sel_hours_meridian == "01 PM")
+              {
+              	   var sel_hours = "13";
+              	 var sel_time = sel_year+"-"+sel_month+"-"+sel_date+" "+sel_hours+":"+sel_minutes+":"+sel_sec;
+                 
+              	}//if 01
+              	if (sel_hours_meridian == "02 PM")
+               {
+              	   var sel_hours = "14";
+                  var sel_time = sel_year+"-"+sel_month+"-"+sel_date+" "+sel_hours+":"+sel_minutes+":"+sel_sec;
+                 
+                }//if 02
+               	if (sel_hours_meridian == "03 PM")
+                  {
+              	      var sel_hours = "15";
+                      var sel_time = sel_year+"-"+sel_month+"-"+sel_date+" "+sel_hours+":"+sel_minutes+":"+sel_sec;
+                     
+                 }//if 03
+                 if (sel_hours_meridian == "04 PM")
+                 {
+              	    var sel_hours = "16";
+                   var sel_time = sel_year+"-"+sel_month+"-"+sel_date+" "+sel_hours+":"+sel_minutes+":"+sel_sec;
+                  
+                  }// if 04
+                  if (sel_hours_meridian == "05 PM")
+                 {
+              	    var sel_hours = "17";
+                   var sel_time = sel_year+"-"+sel_month+"-"+sel_date+" "+sel_hours+":"+sel_minutes+":"+sel_sec;
+                  
+                  }// if 05
+                   if (sel_hours_meridian == "06 PM")
+                 {
+              	    var sel_hours = "18";
+                   var sel_time = sel_year+"-"+sel_month+"-"+sel_date+" "+sel_hours+":"+sel_minutes+":"+sel_sec;
+                  
+                  }// if 06
+                   if (sel_hours_meridian == "07 PM")
+                 {
+              	    var sel_hours = "19";
+                   var sel_time = sel_year+"-"+sel_month+"-"+sel_date+" "+sel_hours+":"+sel_minutes+":"+sel_sec;
+                   
+                  }// if 07
+                   if (sel_hours_meridian == "08 PM")
+                 {
+              	    var sel_hours = "20";
+                   var sel_time = sel_year+"-"+sel_month+"-"+sel_date+" "+sel_hours+":"+sel_minutes+":"+sel_sec;
+                   
+                  }// if 08
+                   if (sel_hours_meridian == "09 PM")
+                 {
+              	    var sel_hours = "21";
+                   var sel_time = sel_year+"-"+sel_month+"-"+sel_date+" "+sel_hours+":"+sel_minutes+":"+sel_sec;
+                   
+                  }// if 09
                        
-          $.ajax({
+         $.ajax({
          url:host_api+"/m-checkout/book-order",
          type:'POST',
          dataType:'json',
@@ -1933,7 +2051,7 @@ function tabledata_handler(pageNum)
                   }//else
                    }//success
                  
-                  });//ajax  
+                  });//ajax   
  }//fnctn handler
     
     	
