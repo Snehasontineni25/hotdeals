@@ -61,7 +61,7 @@ function tabledata_handler(pageNum)
          }//id data error
          else 
          {
-         	 
+         	 console.log(data);
          	for(var i=0;i<data.length;i++)
              {	
                var table_row = document.createElement('tr');
@@ -250,7 +250,9 @@ function tabledata_handler(pageNum)
                  $(tr_labs).attr('data-dealmrp',data.HotDealMRP);
                  $(tr_labs).attr('data-dealdiscount',data.HotDealDiscount);
                  $(tr_labs).attr('data-dealfinalprice',data.HotDealFinalPrice);
-                 $(tr_labs).attr('data-labarea',data.OfferingLabs[i].labArea); 
+                 $(tr_labs).attr('data-labarea',data.OfferingLabs[i].labArea);
+                 $(tr_labs).attr('data-onlinereports',data.OfferingLabs[i].onlineReports);
+                 $(tr_labs).attr('data-visittype' ,data.OfferingLabs[i].visitType); 
                  var td_labs = document.createElement('td');
                  $(td_labs).addClass("lab_name");
                  var td_lab_area = document.createElement('td');
@@ -288,7 +290,9 @@ function tabledata_handler(pageNum)
                   	 var deal_discount = $(this).data('dealdiscount');
                   	 var deal_finalprice = $(this).data('dealfinalprice');
                   	 var labarea = $(this).data('labarea');
-                		form_handler(dataid,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
+                  	 var online_reports = $(this).data('onlinereports');
+                  	 var visit_type = $(this).data('visittype');
+                		form_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
                 		});
               
                }//for offeringlabs
@@ -331,6 +335,14 @@ function tabledata_handler(pageNum)
                     totalcount = data.Consultations.length+1+totalcount;                 
                  }//if consultationslength
                 
+                 if ((totalcount%2) =="0") 
+             {
+             	 count_var = 1;
+             }
+             if ((totalcount%2) !="0") 
+             {
+             	 count_var = 0;
+             }
               if(data.GroupsInfo.length !=0)
                {
                 for(var i=0;i<data.GroupsInfo.length;i++)
@@ -357,14 +369,14 @@ function tabledata_handler(pageNum)
                 	 }//else groupheading
                    var new_str = data.GroupsInfo[i].testsInGroup;
                    var temp_str = new_str.split(",");
-                   for(i=0;i<temp_str.length;i++)
+                   for(j=0;j<temp_str.length;j++)
                     {
                       
                        if((totalcount > 20)&& (count_var>(totalcount/2)))
                        { 
                          var group_data = document.createElement('div');
                          $(group_data).addClass("deal_data");
-                         $(group_data).html(temp_str[i]);
+                         $(group_data).html(temp_str[j]);
                          $(group_data).css('textIndent','20pt');
                          $(right_element).append(group_data);
                          $(left_element).css('float','left');
@@ -374,7 +386,7 @@ function tabledata_handler(pageNum)
                         { 
                            var group_data = document.createElement('div');
                            $(group_data).addClass("deal_data");
-                           $(group_data).html(temp_str[i]);
+                           $(group_data).html(temp_str[j]);
                            $(group_data).css('textIndent','20pt');
                            $(left_element).append(group_data);
                            count_var++;
@@ -507,7 +519,7 @@ function tabledata_handler(pageNum)
   
   
   
-      function form_handler(dataid,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea)
+      function form_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea)
       {
                   var booking_page = document.createElement('div');
                   $(booking_page).addClass("modal");
@@ -606,6 +618,48 @@ function tabledata_handler(pageNum)
                   $(input_email).addClass('form-icon form-icon-mail');
                   $(input_email).attr('placeholder','Please enter your email ID');
                   $(input_email).attr('required','required');
+                  /*var address_row = document.createElement('div');
+                  $(address_row).addClass("row");
+                  var address_col_class = document.createElement('div');
+                  $(address_col_class).addClass("col-md-12 col-sm-12");
+                  var fieldset_address = document.createElement('fieldset');
+                  $(fieldset_address).addClass("input-block");
+                  var label_address = document.createElement('label');
+                  $(label_address).attr('for','Address');
+                  $(label_address).html("Address");
+                  var input_address = document.createElement('input');
+                  $(input_address).attr('type','text');
+                  $(input_address).attr('id','pkg_address');
+                  $(input_address).attr('name','patient_address');
+                  $(input_address).attr('value','');
+                  $(input_address).css('width','468px');
+                  $(input_address).css('border','1px solid #c4cdcf');
+                  $(input_address).attr('placeholder','Please enter your Address');
+                  $(input_address).attr('required','required');
+                  $(input_address).css('paddingRight','11px');*/
+
+                  var address_row = document.createElement('div');
+                  $(address_row).addClass("row");
+                  var address_col_class = document.createElement('div');
+                  $(address_col_class).addClass("col-md-12 col-sm-12");
+                  var fieldset_address = document.createElement('fieldset');
+                  $(fieldset_address).addClass("input-block");
+                  var label_address = document.createElement('label');
+                  $(label_address).attr('for','Address');
+                  $(label_address).html("Address");
+                  var input_address = document.createElement('input');
+                  $(input_address).attr('type','text');
+                  $(input_address).attr('id','hotdeal_pkg_address');
+                  $(input_address).attr('name','patient_address');
+                  $(input_address).attr('value','');
+                  $(input_address).css('width','468px');
+                  $(input_address).css('border','1px solid #c4cdcf');
+                  
+                  $(input_address).attr('placeholder','Please enter your Address');
+                  $(input_address).attr('required','required');
+                 
+                  
+                  $(input_address).css('paddingRight','11px');
                   var phno_row = document.createElement('div');
                   $(phno_row).addClass("row");
                   var phno_col_class = document.createElement('div');
@@ -677,19 +731,25 @@ function tabledata_handler(pageNum)
                   $(fieldset_phno).append(input_phno);
                   $(fieldset_booking).append(label_booking);
                   $(fieldset_booking).append(input_booking);
+                  $(fieldset_address).append(label_address);
+                  $(fieldset_address).append(input_address);
+                 
                   $(name_col_class).append(fieldset_element);
                   $(email_col_class).append(fieldset_email);
                   $(phno_col_class).append(fieldset_phno);
                   $(apptime_col_class).append(fieldset_booking);
+                  $(address_col_class).append(fieldset_address);
                   $(note_col_class).append(font_element);
                   $(name_row).append(name_col_class);
                   $(email_row).append(email_col_class);
                   $(phno_row).append(phno_col_class);
                   $(phno_row).append(apptime_col_class);
+                  $(address_row).append(address_col_class);
                   $(information_row).append(note_col_class);
                   $(col_class_element).append(name_row);
                   $(col_class_element).append(email_row);
                   $(col_class_element).append(phno_row);
+                  $(col_class_element).append(address_row);
                   $(col_class_element).append(information_row);
                   $(second_row).append(col_class_element);
                   $(form_class).append(second_row);
@@ -765,6 +825,22 @@ function tabledata_handler(pageNum)
                   $(error_phno_element).html('Mobile number is not valid');
                   $(phno_element).append(star_phno);
                   $(phno_element).append(error_phno_element);
+                  var address_element = document.createElement('div');
+                  $(address_element).addClass("err_msg");
+                  $(address_element).attr('id','err_address');
+                  $(address_element).css('color','rgb(236,73,73)');
+                  $(address_element).css('textAlign','left');
+                  $(address_element).css('marginLeft','16px');
+                  $(address_element).css('display','none');
+                  var star_address = document.createElement('span');
+                  $(star_address).addClass('star');
+                  $(star_address).html("&#x2605");
+                  $(star_address).css('float','left');
+                  var error_address_element = document.createElement('div');
+                  $(error_address_element).html('Enter your address');
+                  $(address_element).append(star_address);
+                  $(address_element).append(error_address_element);
+
                   var apptime_element = document.createElement('div');
                  	$(apptime_element).attr('id','err_apptime');
                  	$(apptime_element).addClass("err_msg");
@@ -800,6 +876,7 @@ function tabledata_handler(pageNum)
                      $(error_display).append(mbno_element);
                      $(error_display).append(apptime_element);
                      $(error_display).append(app_time_element);
+                     $(error_display).append(address_element);
                      $("#modal_secondpage").append(close_element);
                      $("#modal_secondpage").append(contact_heading);
                      $("#modal_secondpage").append(lab_details);
@@ -911,7 +988,7 @@ function tabledata_handler(pageNum)
                           var sec =  addZero(tday.getSeconds());
                           var selected_time =year+"-"+month+"-"+date+" "+hours +":"+ mnt+":"+sec;
                          
-                          
+                          //(document.getElementById("err_address").style.display ='none')
                           var currenttime = new Date();
                           var current_year = currenttime.getFullYear();
                           var current_month = addZero(currenttime.getMonth()+1);
@@ -920,7 +997,7 @@ function tabledata_handler(pageNum)
                           var current_hours = addZero(currenttime.getHours());
                           var current_minutes = addZero(currenttime.getMinutes());
                           var current_time = current_year+"-"+current_month+"-"+current_date+" "+current_hours+":"+current_minutes;
-                     if((document.getElementById("err_email").style.display ='none') && (document.getElementById('err_mbno').style.display = 'none') &&(document.getElementById('err_apptime').style.display = 'none') &&(document.getElementById('err_app_time').style.display = 'none'))
+                     if((document.getElementById("err_email").style.display ='none') && (document.getElementById('err_mbno').style.display = 'none') &&(document.getElementById('err_apptime').style.display = 'none') &&(document.getElementById('err_app_time').style.display = 'none') &&(document.getElementById("err_address").style.display ='none'))
                     { 
                       if ( !(patient_name.length >= 6 && patient_name.length <= 26) || patient_name.match(/[^a-zA-Z ]/)  )
                         {
@@ -934,7 +1011,7 @@ function tabledata_handler(pageNum)
                           
                         }//if err_name
                       }//if 
-                     if((document.getElementById("err_name").style.display ='none') && (document.getElementById('err_mbno').style.display = 'none') &&(document.getElementById('err_apptime').style.display = 'none') &&(document.getElementById('err_app_time').style.display = 'none')) 
+                     if((document.getElementById("err_name").style.display ='none') && (document.getElementById('err_mbno').style.display = 'none') &&(document.getElementById('err_apptime').style.display = 'none') &&(document.getElementById('err_app_time').style.display = 'none') &&(document.getElementById("err_address").style.display ='none')) 
                     {
                     	 if(!filter.test(patient_email))
                        {
@@ -947,7 +1024,7 @@ function tabledata_handler(pageNum)
                           
                        }//if err_email
                        }//if
-                       if((document.getElementById("err_email").style.display ='none') && (document.getElementById('err_name').style.display = 'none') &&(document.getElementById('err_apptime').style.display = 'none') &&(document.getElementById('err_app_time').style.display = 'none'))
+                       if((document.getElementById("err_email").style.display ='none') && (document.getElementById('err_name').style.display = 'none') &&(document.getElementById('err_apptime').style.display = 'none') &&(document.getElementById('err_app_time').style.display = 'none') &&(document.getElementById("err_address").style.display ='none'))
                        {
                        	 if((mobile_number.match(/[^0-9]/) || mobile_number.length != 10) || (!(mobile_number.charAt(0)=="9" || mobile_number.charAt(0)=="8" || mobile_number.charAt(0)=="7")))
                        {
@@ -962,7 +1039,7 @@ function tabledata_handler(pageNum)
                        }//if err_mbno
                        }//if
                       
-                       if((document.getElementById("err_email").style.display ='none') && (document.getElementById('err_mbno').style.display = 'none') &&(document.getElementById('err_name').style.display = 'none') &&(document.getElementById('err_app_time').style.display = 'none'))
+                       if((document.getElementById("err_email").style.display ='none') && (document.getElementById('err_mbno').style.display = 'none') &&(document.getElementById('err_name').style.display = 'none') &&(document.getElementById('err_app_time').style.display = 'none') &&(document.getElementById("err_address").style.display ='none'))
                      {
                      	
                      	if(! ($('#app_time').val()))   
@@ -1113,9 +1190,9 @@ function tabledata_handler(pageNum)
                           
                        }
                        }//if
-                          if((document.getElementById("err_email").style.display ='none') && (document.getElementById('err_mbno').style.display = 'none') &&(document.getElementById('err_name').style.display = 'none') &&(document.getElementById('err_apptime').style.display = 'none'))
+                          if((document.getElementById("err_email").style.display ='none') && (document.getElementById('err_mbno').style.display = 'none') &&(document.getElementById('err_name').style.display = 'none') &&(document.getElementById('err_apptime').style.display = 'none') &&(document.getElementById("err_address").style.display ='none'))
                          {
-                          if(current_time > selected_time) 
+                          if(current_time > sel_time) 
                           {
                           	
                           	$(app_time_element).css('display','block');
@@ -1127,16 +1204,31 @@ function tabledata_handler(pageNum)
                           	  
                            }//if err_time
                          }//if
-                         
+                       if(visit_type.length == "13")
+                      {
+                       if((document.getElementById('err_name').style.display = 'none') && (document.getElementById("err_email").style.display ='none') && (document.getElementById('err_mbno').style.display = 'none') &&(document.getElementById('err_apptime').style.display = 'none') &&(document.getElementById('err_app_time').style.display = 'none'))
+                       {
+                            if(! ($('#hotdeal_pkg_address').val()))  
+                          {
+                             $(address_element).css('display','block');
+                              return false;
+                          }// if visit type
                        
-                       preview_handler(dataid,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
+                         if (document.getElementById('err_address').style.display = 'block') 
+                          {
+                          	  document.getElementById('err_address').style.display = 'none';
+                          	  
+                           }//if err_visittype
+                       }
+                      }
+                       preview_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
                  
                     });//btn onclick handler
                     
                 
           }//form_handler
           
-    function form_backbtn(dataid,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea)
+    function form_backbtn(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea)
     {
     	         var localData = JSON.parse(localStorage.getItem('someData'));
                var deal_details_element = document.createElement('div');
@@ -1265,6 +1357,9 @@ function tabledata_handler(pageNum)
                  $(tr_labs).attr('data-dealdiscount',localData.HotDealDiscount);
                  $(tr_labs).attr('data-dealfinalprice',localData.HotDealFinalPrice);
                  $(tr_labs).attr('data-labarea',localData.OfferingLabs[i].labArea);
+                 $(tr_labs).attr('data-onlinereports',localData.OfferingLabs[i].onlineReports);
+                 $(tr_labs).attr('data-visittype' ,localData.OfferingLabs[i].visitType); 
+
                  $(td_labs).html(localData.OfferingLabs[i].labName);
                  $(td_lab_area).html(localData.OfferingLabs[i].labArea);
                  $(td_lab_pin).html(localData.OfferingLabs[i].labPincode);
@@ -1287,7 +1382,9 @@ function tabledata_handler(pageNum)
                   	 var deal_discount = $(this).data('dealdiscount');
                   	 var deal_finalprice = $(this).data('dealfinalprice');
                   	 var labarea = $(this).data('labarea');
-                  	 form_handler(dataid,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
+                  	 var online_reports = $(this).data('onlinereports');
+                  	 var visit_type = $(this).data('visittype');
+                  	 form_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
                 	});//labs_tr onclick
                }//for offeringlabs
                  $(deal_details_element).append(offer_labs);
@@ -1508,12 +1605,12 @@ function tabledata_handler(pageNum)
         var ptnt_email = document.getElementById("email");
         var ptnt_phone = document.getElementById("phone");
         var ptnt_apptime = document.getElementById("app_time");
-       
+         var ptnt_address = document.getElementById("hotdeal_pkg_address");
         localStorage.setItem("patient_name",ptnt_name.value);
         localStorage.setItem("email" ,ptnt_email.value);
         localStorage.setItem("phone" ,ptnt_phone.value);
         localStorage.setItem("app_time" ,ptnt_apptime.value);
-       
+        localStorage.setItem("hotdeal_pkg_address",ptnt_address.value);
     } //fnctn handler
 
     function Filling_localdata()
@@ -1522,12 +1619,14 @@ function tabledata_handler(pageNum)
           document.getElementById("email").value = localStorage.getItem("email");
           document.getElementById("phone").value = localStorage.getItem("phone");
           document.getElementById("app_time").value = localStorage.getItem("app_time");
-           
+          document.getElementById("hotdeal_pkg_address").value = localStorage.getItem("hotdeal_pkg_address");
     }//fnctn handler
     
-   function preview_handler(dataid,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea)
+   function preview_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea)
    {
-   	            
+   	            console.log(online_reports);
+   	            console.log(visit_type);
+   	            var hotdeal_ptnt_address = localStorage.getItem("hotdeal_pkg_address"); 
    	            var order_page = document.createElement('div');
                   $(order_page).addClass("modal");
                   $(order_page).attr('id','modal_thirdpage');
@@ -1555,14 +1654,20 @@ function tabledata_handler(pageNum)
                   $(preview_heading).css('fontSize','18px');
                   $(preview_heading).css('fontWeight','bold');
                   $(preview_heading).css('color','#5cb0cf');
-                  var time_error = document.createElement('div');
+                  var deal_info = document.createElement('div');
+                  $(deal_info).html("Deal Information");
+                  $(deal_info).css('background','rgb(65, 167, 179)');
+                  $(deal_info).css('color','white');
+                  $(deal_info).css('fontWeight','bold');
+                  $(deal_info).css('paddingLeft','6px');
+                  $(deal_info).css('marginTop','10px');
                   var table_dealname = document.createElement('table');
                   $(table_dealname).css('float','left');
                   $(table_dealname).css('marginBottom','15px');
-                  $(table_dealname).css('marginTop','21px');
+                  //$(table_dealname).css('marginTop','21px');
                   var deal_th = document.createElement('th');
                   $(deal_th).html("Deal Information");
-                  $(table_dealname).append(deal_th);
+                  //$(table_dealname).append(deal_th);
                    var tr_dealname = document.createElement('tr');
                   var td_dealname = document.createElement('td');
                   $(td_dealname).html("&nbsp"+"&nbsp"+"&nbsp"+dealname);
@@ -1571,10 +1676,100 @@ function tabledata_handler(pageNum)
                   var td_labname = document.createElement('td');
                   $(td_labname).html("&nbsp"+"&nbsp"+"&nbsp"+"Lab"+"&nbsp"+":"+"&nbsp"+labname+"&nbsp"+"&nbsp"+"("+labarea+")");
                   var td_labarea = document.createElement('td');
+                  $(tr_dealname).append(td_dealname);
+                  $(tr_labname).append(td_labname);
+                  $(table_dealname).append(tr_dealname);
+                  $(table_dealname).append(tr_labname);
+                  var ptnt_info = document.createElement('div');
+                  $(ptnt_info).html("Patient Information");
+                  $(ptnt_info).css('fontWeight' ,'bold');
+                  $(ptnt_info).css('background','rgb(65, 167, 179)');
+                  $(ptnt_info).css('color','white');
+                  $(ptnt_info).css('marginTop','60px');
+                  $(ptnt_info).css('paddingLeft','6px');
+                   if (online_reports == "yes") 
+                {
+                 	 var onlinereports_tr = document.createElement('tr');
+                   var onlinereports_element = document.createElement('td');
+               	$(onlinereports_element).addClass("err_msg");
+                  $(onlinereports_element).attr('id','pkg_reports_msg');
+                  $(onlinereports_element).css('color','rgb(236,73,73)');
+                  $(onlinereports_element).css('textAlign','left');
+                  $(onlinereports_element).css('fontSize','10px');
+                  $(onlinereports_element).css('display','block');
+                  var star_onlinereports = document.createElement('span');
+                  $(star_onlinereports).addClass('star');
+                  $(star_onlinereports).html("&nbsp"+"&nbsp"+"&nbsp"+"&#x2605");
+                  $(star_onlinereports).css('float','left');
+                  var error_onlinereports_element = document.createElement('div');
+                  $(error_onlinereports_element).html("Online reports  available");
+                 	$(onlinereports_element).append(star_onlinereports);
+                 	$(onlinereports_element).append(error_onlinereports_element);
+                   $(onlinereports_tr).append(onlinereports_element);
+                   $(table_dealname).append(onlinereports_tr);
+                    $(ptnt_info).css('marginTop','72px');
+                	}
+                	
+                	  if(visit_type.length == "13")
+                   {
+                   	   var homevisit_tr_one_element = document.createElement('tr');
+                      var homevisit_one_element = document.createElement('td');
+               	    $(homevisit_one_element).addClass("err_msg");
+                      $(homevisit_one_element).attr('id','pkg_reports_msg');
+                       $(homevisit_one_element).css('color','rgb(236,73,73)');
+                     $(homevisit_one_element).css('textAlign','left');
+                     
+                    $(homevisit_one_element).css('fontSize','10px');
+                    
+                    $(homevisit_one_element).css('display','block');
+                    var star_homevisit_one = document.createElement('span');
+                    $(star_homevisit_one).addClass('star');
+                    $(star_homevisit_one).html("&nbsp"+"&nbsp"+"&nbsp"+"&#x2605");
+                    $(star_homevisit_one).css('float','left');
+                    var error_homevisit_one_element = document.createElement('div');
+                    $(error_homevisit_one_element).html('Home visit only');
+                 	  $(homevisit_one_element).append(star_homevisit_one);
+                 	  $(homevisit_one_element).append(error_homevisit_one_element);
+                  $(homevisit_tr_one_element).append(homevisit_one_element);   
+                  $(table_dealname).append(homevisit_tr_one_element); 
+                   $(ptnt_info).css('marginTop','72px');       
+                  }//if home visit
+                  
+                   if(visit_type.length > "13")
+                   {
+                   	   var labvisit_homevisit_tr_one_element = document.createElement('tr');
+                      var labvisit_homevisit_one_element = document.createElement('td');
+               	    $(labvisit_homevisit_one_element).addClass("err_msg");
+                      $(labvisit_homevisit_one_element).attr('id','pkg_reports_msg');
+                       $(labvisit_homevisit_one_element).css('color','rgb(236,73,73)');
+                     $(labvisit_homevisit_one_element).css('textAlign','left');
+                     
+                    $(labvisit_homevisit_one_element).css('fontSize','10px');
+                    
+                    $(labvisit_homevisit_one_element).css('display','block');
+                    var star_labvisit_homevisit_one = document.createElement('span');
+                    $(star_labvisit_homevisit_one).addClass('star');
+                    $(star_labvisit_homevisit_one).html("&nbsp"+"&nbsp"+"&nbsp"+"&#x2605");
+                    $(star_labvisit_homevisit_one).css('float','left');
+                    var error_labvisit_homevisit_one_element = document.createElement('div');
+                    $(error_labvisit_homevisit_one_element).html('Home visit and lab visit available');
+                 	  $(labvisit_homevisit_one_element).append(star_labvisit_homevisit_one);
+                 	  $(labvisit_homevisit_one_element).append(error_labvisit_homevisit_one_element);
+                  $(labvisit_homevisit_tr_one_element).append(labvisit_homevisit_one_element);   
+                  $(table_dealname).append(labvisit_homevisit_tr_one_element); 
+                  $(ptnt_info).css('marginTop','72px');  
+                          
+                  }//if home visit
+                  
+                   if ((online_reports == "yes" && visit_type.length  == "13") || (online_reports == "yes" && visit_type.length  > "13")) 
+                   {
+                      $(ptnt_info).css('marginTop','86px');
+                   } 
+                   
                   var price_table = document.createElement('table');
                   $(price_table).css('float','right');
                   $(price_table).css('marginBottom','15px');
-                  $(price_table).css('marginTop','44px');
+                  //$(price_table).css('marginTop','44px');
                   var tr_price = document.createElement('tr');
                   var td_price = document.createElement('td');
                   $(td_price).html("Price");
@@ -1595,37 +1790,73 @@ function tabledata_handler(pageNum)
                   var td_deal_discount = document.createElement('td');
                   $(td_deal_discount).html(":"+"&nbsp"+deal_discount+"%");
                   $(td_deal_discount).css('paddingLeft','11px');
+                  
+                  //online_reports,visit_type
+                 // if hme_vst , online rpts 
                   var patient_details_table = document.createElement('table');
                   $(patient_details_table).css('marginBottom','30px');
+                  $(patient_details_table).css('width','100%');
+                  $(patient_details_table).addClass("deals_ptnt_details");
                   var tr_ptntinfo_head = document.createElement('tr');
                   $(tr_ptntinfo_head).css('fontWeight' ,'bold');
-                  var th_ptntinfo_head = document.createElement('th');
+                  $(tr_ptntinfo_head).css('background','rgb(65, 167, 179)');
+                  $(tr_ptntinfo_head).css('color','white');
+                  var th_ptntinfo_head = document.createElement('td');
                   $(th_ptntinfo_head).html("Patient Information");
+                  $(th_ptntinfo_head).css('fontWeight','bold');
                   $(tr_ptntinfo_head).append(th_ptntinfo_head);
                   var tr_patient = document.createElement('tr');
                    $(tr_patient).css('lineHeight','2');
+                   $(tr_patient).addClass("deals_ptnt_preview_info");
+                   $(tr_patient).css('border' ,'1px solid rgb(221, 221, 221)');
                   var td_patientname = document.createElement('td');
                   $(td_patientname).html("&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"Name");
+                  $(td_patientname).css('border','1px solid #ddd');
                   var td_patient_name = document.createElement('td');
-                  $(td_patient_name).html(":"+"&nbsp"+localStorage.getItem("patient_name"));
+                  $(td_patient_name).html("&nbsp"+localStorage.getItem("patient_name"));
                   var tr_email = document.createElement('tr');
                   $(tr_email).css('lineHeight','2');
+                  $(tr_email).css('border' ,'1px solid rgb(221, 221, 221)');
+                  $(tr_email).addClass("deals_ptnt_preview_info");
                   var td_emailheading = document.createElement('td');
                   $(td_emailheading).html("&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"Email");
+                  $(td_emailheading).css('width','50%');
+                  $(td_emailheading).css('border','1px solid #ddd');
                   var td_email_heading = document.createElement('td');
-                  $(td_email_heading).html(":"+"&nbsp"+localStorage.getItem("email"));
+                  $(td_email_heading).html("&nbsp"+localStorage.getItem("email"));
                   var tr_phno = document.createElement('tr');
                   $(tr_phno).css('lineHeight','2');
+                  $(tr_phno).addClass("deals_ptnt_preview_info");
+                  $(tr_phno).css('border' ,'1px solid rgb(221, 221, 221)');
                   var td_phnoheading = document.createElement('td');
                   $(td_phnoheading).html("&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"Mobile No");
+                  $(td_phnoheading).css('width','50%');
+                  $(td_phnoheading).css('border','1px solid #ddd');
+                  
                   var td_phno_heading = document.createElement('td');
-                  $(td_phno_heading).html(":"+"&nbsp"+localStorage.getItem("phone"));
+                  $(td_phno_heading).html("&nbsp"+localStorage.getItem("phone"));
                   var tr_apptime = document.createElement('tr');
                   $(tr_apptime).css('lineHeight','2');
+                  $(tr_apptime).addClass("deals_ptnt_preview_info");
+                  $(tr_apptime).css('border' ,'1px solid rgb(221, 221, 221)');
                   var td_apptimeheading = document.createElement('td');
                   $(td_apptimeheading).html("&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"Appointment Timing");
+                  $(td_apptimeheading).css('border','1px solid #ddd');
+                  $(td_apptimeheading).css('width','50%');
                   var td_apptime_heading = document.createElement('td');
-                  $(td_apptime_heading).html(":"+"&nbsp"+localStorage.getItem("app_time"));
+                  $(td_apptime_heading).html("&nbsp"+localStorage.getItem("app_time"));
+                  var tr_address = document.createElement('tr');
+                  $(tr_address).css('lineHeight','2');
+                  $(tr_address).addClass("ptnt_preview_info");
+                  $(tr_address).css('border' ,'1px solid rgb(221, 221, 221)');
+                  var td_address_heading = document.createElement('td');
+                  $(td_address_heading).html("&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"Address");
+                  $(td_address_heading).css('width','50%');
+                  $(td_address_heading).css('border','1px solid rgb(221, 221, 221)');
+                  var td_address = document.createElement('td');
+                  $(td_address).html("&nbsp"+localStorage.getItem("hotdeal_pkg_address"));
+                  $(tr_address).append(td_address_heading);
+                  $(tr_address).append(td_address);
                   var back_button = document.createElement('button');
                   $(back_button).html("Back");
                   $(back_button).css('float','left');
@@ -1672,10 +1903,6 @@ function tabledata_handler(pageNum)
                    $(nextbtn).append(span_nextbtn);
                    $(orderbtn_element).append(nextbtn);
                    $(orderbtn_element).append(nextbtn_divider);
-                  $(tr_labname).append(td_labname);
-                  $(tr_dealname).append(td_dealname);
-                  $(table_dealname).append(tr_dealname);
-                  $(table_dealname).append(tr_labname);
                   $(tr_price).append(td_price);
                   $(tr_price).append(td_fp);
                   $(tr_price).append(td_mrp_openbracket);
@@ -1693,19 +1920,26 @@ function tabledata_handler(pageNum)
                   $(tr_phno).append(td_phno_heading);
                   $(tr_apptime).append(td_apptimeheading);
                   $(tr_apptime).append(td_apptime_heading);
-                  $(patient_details_table).append(tr_ptntinfo_head);
+                  //$(patient_details_table).append(tr_ptntinfo_head);
                   $(patient_details_table).append(tr_patient);
                   $(patient_details_table).append(tr_email);
                   $(patient_details_table).append(tr_phno);
                   $(patient_details_table).append(tr_apptime);
+                  $(patient_details_table).append(tr_address);
+                    if (hotdeal_ptnt_address == "")
+                   {
+                      $(tr_address).detach();
+                   }
                   $(tmm_form_element).append(prevbtn_element);
                   $(tmm_form_element).append(orderbtn_element);
                   $(preview_div_element).append(preview_heading);
                   $("#modal_thirdpage").append(closing_element);
                   $(preview_box).append(preview_div_element);
-                  $(preview_box).append(time_error);
+                  //$(preview_box).append(time_error);
+                  $(preview_box).append(deal_info);
                   $(preview_box).append(table_dealname); 
                   $(preview_box).append(price_table);
+                  $(preview_box).append(ptnt_info);
                   $(preview_box).append(patient_details_table);
                   $(preview_box).append(tmm_form_element);
                   $(".close").on('click',function () 
@@ -1717,7 +1951,7 @@ function tabledata_handler(pageNum)
                      $(prevbtn_element).on('click', function ()
                       {
                       	 
-                          form_handler(dataid,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
+                          form_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
                      	});//click fnctn  
                      	$(orderbtn_element).on('click',function ()
                      	 {
