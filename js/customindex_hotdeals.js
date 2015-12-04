@@ -618,25 +618,6 @@ function tabledata_handler(pageNum)
                   $(input_email).addClass('form-icon form-icon-mail');
                   $(input_email).attr('placeholder','Please enter your email ID');
                   $(input_email).attr('required','required');
-                  /*var address_row = document.createElement('div');
-                  $(address_row).addClass("row");
-                  var address_col_class = document.createElement('div');
-                  $(address_col_class).addClass("col-md-12 col-sm-12");
-                  var fieldset_address = document.createElement('fieldset');
-                  $(fieldset_address).addClass("input-block");
-                  var label_address = document.createElement('label');
-                  $(label_address).attr('for','Address');
-                  $(label_address).html("Address");
-                  var input_address = document.createElement('input');
-                  $(input_address).attr('type','text');
-                  $(input_address).attr('id','pkg_address');
-                  $(input_address).attr('name','patient_address');
-                  $(input_address).attr('value','');
-                  $(input_address).css('width','468px');
-                  $(input_address).css('border','1px solid #c4cdcf');
-                  $(input_address).attr('placeholder','Please enter your Address');
-                  $(input_address).attr('required','required');
-                  $(input_address).css('paddingRight','11px');*/
 
                   var address_row = document.createElement('div');
                   $(address_row).addClass("row");
