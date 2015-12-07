@@ -267,7 +267,8 @@ function tabledata_handler(pageNum)
                  $(book_button).css('border','none');
                  $(book_button).css('width','80px');
                  $(book_button).css('fontSize','12px');
-                 $(book_button).css('background','rgb(221,234,255)');
+                 $(book_button).css('background','rgb(236, 73, 73)');
+                 $(book_button).css('color','white');
                  $(td_labs).html(data.OfferingLabs[i].labName);
                  $(td_lab_area).html(data.OfferingLabs[i].labArea);
                  $(td_lab_pin).html(data.OfferingLabs[i].labPincode);
@@ -969,7 +970,7 @@ function tabledata_handler(pageNum)
                           var sec =  addZero(tday.getSeconds());
                           var selected_time =year+"-"+month+"-"+date+" "+hours +":"+ mnt+":"+sec;
                          
-                          //(document.getElementById("err_address").style.display ='none')
+                         
                           var currenttime = new Date();
                           var current_year = currenttime.getFullYear();
                           var current_month = addZero(currenttime.getMonth()+1);
@@ -1030,7 +1031,7 @@ function tabledata_handler(pageNum)
                        }//if app_time
                        
                        var val_time = date+"-"+month+"-"+year+" "+hours +":"+ mnt+":"+sec;
-                      //var appt_time = localStorage.getItem("app_time");
+                      
                          
                           var sel_month_name = appt_time.substr(3,3);
     
@@ -1328,8 +1329,9 @@ function tabledata_handler(pageNum)
                  $(book_button).css('borderRadius','3px');
                  $(book_button).css('border','none');
                  $(book_button).css('width','80px');
+                 $(book_button).css('background','rgb(236, 73, 73)');
+                 $(book_button).css('color','white');
                  $(book_button).css('fontSize','12px');
-                 $(book_button).css('background','rgb(221,234,255)');
                  $(tr_labs).attr('data-labname',localData.OfferingLabs[i].labName);
                  $(tr_labs).attr('data-labslug',localData.OfferingLabs[i].labSlug);
                  $(tr_labs).attr('data-dealname',localData.HotDealName);
@@ -1625,7 +1627,7 @@ function tabledata_handler(pageNum)
                   $(closing_element).attr('id','modal_close');
                   var preview_box = document.createElement('div');
                   $(preview_box).addClass("preview_details");
-                  $(preview_box).css('height','364px')
+                  $(preview_box).css('height','388px')
                   $(preview_box).css('padding','10px');
                   $(preview_box).css('marginRight','20px');
                   var preview_div_element = document.createElement('div');
@@ -1666,7 +1668,7 @@ function tabledata_handler(pageNum)
                   $(ptnt_info).css('fontWeight' ,'bold');
                   $(ptnt_info).css('background','rgb(65, 167, 179)');
                   $(ptnt_info).css('color','white');
-                  $(ptnt_info).css('marginTop','60px');
+                  $(ptnt_info).css('marginTop','12%');
                   $(ptnt_info).css('paddingLeft','6px');
                    if (online_reports == "yes") 
                 {
@@ -1688,7 +1690,7 @@ function tabledata_handler(pageNum)
                  	$(onlinereports_element).append(error_onlinereports_element);
                    $(onlinereports_tr).append(onlinereports_element);
                    $(table_dealname).append(onlinereports_tr);
-                    $(ptnt_info).css('marginTop','72px');
+                    $(ptnt_info).css('marginTop','14%');
                 	}
                 	
                 	  if(visit_type.length == "13")
@@ -1713,7 +1715,7 @@ function tabledata_handler(pageNum)
                  	  $(homevisit_one_element).append(error_homevisit_one_element);
                   $(homevisit_tr_one_element).append(homevisit_one_element);   
                   $(table_dealname).append(homevisit_tr_one_element); 
-                   $(ptnt_info).css('marginTop','72px');       
+                   $(ptnt_info).css('marginTop','14%');       
                   }//if home visit
                   
                    if(visit_type.length > "13")
@@ -1738,13 +1740,13 @@ function tabledata_handler(pageNum)
                  	  $(labvisit_homevisit_one_element).append(error_labvisit_homevisit_one_element);
                   $(labvisit_homevisit_tr_one_element).append(labvisit_homevisit_one_element);   
                   $(table_dealname).append(labvisit_homevisit_tr_one_element); 
-                  $(ptnt_info).css('marginTop','72px');  
+                  $(ptnt_info).css('marginTop','14%');  
                           
                   }//if home visit
                   
                    if ((online_reports == "yes" && visit_type.length  == "13") || (online_reports == "yes" && visit_type.length  > "13")) 
                    {
-                      $(ptnt_info).css('marginTop','86px');
+                      $(ptnt_info).css('marginTop','16%');
                    } 
                    
                   var price_table = document.createElement('table');
@@ -1775,7 +1777,7 @@ function tabledata_handler(pageNum)
                   //online_reports,visit_type
                  // if hme_vst , online rpts 
                   var patient_details_table = document.createElement('table');
-                  $(patient_details_table).css('marginBottom','30px');
+                  $(patient_details_table).css('marginBottom','5%');
                   $(patient_details_table).css('width','100%');
                   $(patient_details_table).addClass("deals_ptnt_details");
                   var tr_ptntinfo_head = document.createElement('tr');

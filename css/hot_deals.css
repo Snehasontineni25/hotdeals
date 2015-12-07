@@ -24,12 +24,8 @@ li
 }
 .datetimepicker 
 {
-  left:666.5px !important;
+  left:51% !important;
   position:fixed !important;
-}
-#tmm-form-wizard .next
-{
- margin-right:30px !important;
 }
 .preview_details
 {
