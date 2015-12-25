@@ -526,7 +526,7 @@ function tabledata_handler(pageNum)
                   $(booking_page).addClass("modal");
                   $(booking_page).attr('id','modal_secondpage');
                   $(booking_page).css('backgroundColor','#fff');
-                  $(booking_page).css('height','578px');
+                  $(booking_page).css('height','128%');
                   $(booking_page).css('paddingRight','0px');
                   $(booking_page).modal().open();
                   var close_element = document.createElement('a');
@@ -550,6 +550,7 @@ function tabledata_handler(pageNum)
                   $(lab_details).css('fontWeight','bold');
                   $(lab_details).css('marginTop','6px');  
                   $(lab_details).css('marginRight','20px');
+                  $(lab_details).css('fontSize','12px');
                   var deal_name  = document.createElement('div');
                   $(deal_name).html(dealname);
                   $(deal_name).css('textAlign' ,'right');
@@ -557,6 +558,7 @@ function tabledata_handler(pageNum)
                   $(deal_name).css('fontWeight','bold');
                   $(deal_name).css('marginTop','6px');
                   $(deal_name).css('marginRight','20px');
+                  $(deal_name).css('fontSize','12px');
                   var parent_wizard = document.createElement('div');
                   $(parent_wizard).attr('id','tmm-form-wizard');
                   $(parent_wizard).addClass('container substrate');
@@ -950,7 +952,7 @@ function tabledata_handler(pageNum)
                      	 datastore_handler();
                        }//if
                       
-                   var appt_time = localStorage.getItem("app_time");
+                   var appt_time = localStorage.getItem("patient_app_time");
                    var  tday = new Date();
                      
                    var i;
@@ -1590,26 +1592,26 @@ function tabledata_handler(pageNum)
         var ptnt_apptime = document.getElementById("app_time");
          var ptnt_address = document.getElementById("hotdeal_pkg_address");
         localStorage.setItem("patient_name",ptnt_name.value);
-        localStorage.setItem("email" ,ptnt_email.value);
-        localStorage.setItem("phone" ,ptnt_phone.value);
-        localStorage.setItem("app_time" ,ptnt_apptime.value);
-        localStorage.setItem("hotdeal_pkg_address",ptnt_address.value);
+        localStorage.setItem("patient_email" ,ptnt_email.value);
+        localStorage.setItem("patient_phone" ,ptnt_phone.value);
+        localStorage.setItem("patient_app_time" ,ptnt_apptime.value);
+        localStorage.setItem("patient_address",ptnt_address.value);
     } //fnctn handler
 
     function Filling_localdata()
     {
      	    document.getElementById("patient_name").value = localStorage.getItem("patient_name");
-          document.getElementById("email").value = localStorage.getItem("email");
-          document.getElementById("phone").value = localStorage.getItem("phone");
-          document.getElementById("app_time").value = localStorage.getItem("app_time");
-          document.getElementById("hotdeal_pkg_address").value = localStorage.getItem("hotdeal_pkg_address");
+          document.getElementById("email").value = localStorage.getItem("patient_email");
+          document.getElementById("phone").value = localStorage.getItem("patient_phone");
+          document.getElementById("app_time").value = localStorage.getItem("patient_app_time");
+          document.getElementById("hotdeal_pkg_address").value = localStorage.getItem("patient_address");
     }//fnctn handler
     
    function preview_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea)
    {
    	            console.log(online_reports);
    	            console.log(visit_type);
-   	            var hotdeal_ptnt_address = localStorage.getItem("hotdeal_pkg_address"); 
+   	            var hotdeal_ptnt_address = localStorage.getItem("patient_address"); 
    	            var order_page = document.createElement('div');
                   $(order_page).addClass("modal");
                   $(order_page).attr('id','modal_thirdpage');
@@ -1806,7 +1808,7 @@ function tabledata_handler(pageNum)
                   $(td_emailheading).css('width','50%');
                   $(td_emailheading).css('border','1px solid #ddd');
                   var td_email_heading = document.createElement('td');
-                  $(td_email_heading).html("&nbsp"+localStorage.getItem("email"));
+                  $(td_email_heading).html("&nbsp"+localStorage.getItem("patient_email"));
                   var tr_phno = document.createElement('tr');
                   $(tr_phno).css('lineHeight','2');
                   $(tr_phno).addClass("deals_ptnt_preview_info");
@@ -1817,7 +1819,7 @@ function tabledata_handler(pageNum)
                   $(td_phnoheading).css('border','1px solid #ddd');
                   
                   var td_phno_heading = document.createElement('td');
-                  $(td_phno_heading).html("&nbsp"+localStorage.getItem("phone"));
+                  $(td_phno_heading).html("&nbsp"+localStorage.getItem("patient_phone"));
                   var tr_apptime = document.createElement('tr');
                   $(tr_apptime).css('lineHeight','2');
                   $(tr_apptime).addClass("deals_ptnt_preview_info");
@@ -1827,7 +1829,7 @@ function tabledata_handler(pageNum)
                   $(td_apptimeheading).css('border','1px solid #ddd');
                   $(td_apptimeheading).css('width','50%');
                   var td_apptime_heading = document.createElement('td');
-                  $(td_apptime_heading).html("&nbsp"+localStorage.getItem("app_time"));
+                  $(td_apptime_heading).html("&nbsp"+localStorage.getItem("patient_app_time"));
                   var tr_address = document.createElement('tr');
                   $(tr_address).css('lineHeight','2');
                   $(tr_address).addClass("ptnt_preview_info");
@@ -1837,7 +1839,7 @@ function tabledata_handler(pageNum)
                   $(td_address_heading).css('width','50%');
                   $(td_address_heading).css('border','1px solid rgb(221, 221, 221)');
                   var td_address = document.createElement('td');
-                  $(td_address).html("&nbsp"+localStorage.getItem("hotdeal_pkg_address"));
+                  $(td_address).html("&nbsp"+localStorage.getItem("patient_address"));
                   $(tr_address).append(td_address_heading);
                   $(tr_address).append(td_address);
                   var back_button = document.createElement('button');
@@ -1967,9 +1969,9 @@ function tabledata_handler(pageNum)
  function confirm_pagehandler(labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea)
  {
  	 var pnt_name =localStorage.getItem("patient_name");
-    var pnt_mobileno = localStorage.getItem("phone");
-    var mail = localStorage.getItem("email");
-    var appt_time = localStorage.getItem("app_time");
+    var pnt_mobileno = localStorage.getItem("patient_phone");
+    var mail = localStorage.getItem("patient_email");
+    var appt_time = localStorage.getItem("patient_app_time");
     var sel_month_name = appt_time.substr(3,3);
     
     
