@@ -1,4 +1,4 @@
-var host_api ="http://zotey.com/m-api" ;
+var host_api ="http://localzotey.com/m-api" ;
 function tabledata_handler(pageNum)
     {
       
@@ -8,13 +8,12 @@ function tabledata_handler(pageNum)
          dataType: 'json',
          data:{pageNum:pageNum},
          success:function(data){
-         	var load = document.getElementById("loading");
-         	$(load).css('display','none');
-     	  
+         var load = document.getElementById("loading");
+         $(load).css('display','none');
+     	  console.log(data);
          if(data.error)
          {
-           	  
-              var error_modal = document.createElement('div');
+           	 var error_modal = document.createElement('div');
                $(error_modal).addClass("modal");
                $(error_modal).attr('id', 'modal_firstpage');
                $(error_modal).css('position','relative');
@@ -138,6 +137,9 @@ function tabledata_handler(pageNum)
           	 var dataToStore = JSON.stringify(data);
              localStorage.setItem('someData',dataToStore);
              console.log(data);
+             var hotdeal_consultations = data.Consultations;
+             var hotdeal_groups = data.GroupsInfo;
+             var hotdeals_tests = data.TestsInfo;
               var deal_details_modal = document.createElement('div');
                $(deal_details_modal).addClass("modal");
                $(deal_details_modal).attr('id', 'modal_firstpage');
@@ -280,8 +282,7 @@ function tabledata_handler(pageNum)
                  $(tr_labs).append(td_lab_pin);
                  $(tr_labs).append(td_lab_btn);
                  $(labs_list).append(tr_labs); 
-                	
-                	$(tr_labs).on('click',function () 
+                 $(tr_labs).on('click',function () 
                 	{
                 		 var labname = $(this).data('labname');
                   	 var labslug = $(this).data('labslug');
@@ -295,15 +296,14 @@ function tabledata_handler(pageNum)
                   	 var visit_type = $(this).data('visittype');
                 		form_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
                 		});
-              
-               }//for offeringlabs
+                  }//for offeringlabs
                  $(deal_details_modal).append(offer_labs);
                  $(deal_details_modal).append(labs_list);
                  var deal_contents = document.createElement('div');
                  $(deal_contents).css('marginTop','13px');
-                 $(deal_contents).addClass("deal_heading");
-                 $(deal_contents).css('marginRight','20px');
-                 var contents_heading = document.createElement('h5');
+                 $(deal_contents).addClass("row deal_heading");
+                 $(deal_contents).css('paddingRight','20px');
+                 var contents_heading = document.createElement('div');
                  $(contents_heading).html("Deal Contents");
                  $(contents_heading).css('fontWeight','bold');
                  $(contents_heading).css('textAlign','center');
@@ -311,199 +311,11 @@ function tabledata_handler(pageNum)
                  $(contents_heading).css('backgroundColor','#41A7B3');
                  $(contents_heading).css('color','white');
                  $(deal_contents).append(contents_heading);
-                 $(deal_details_modal).append(deal_contents);
-                 var count_var = 1;
-                 var counter_element = document.createElement('div');
-                 $(counter_element).addClass("tests-list");
-                 $(counter_element).css('marginRight','20px');
-                 var left_element = document.createElement('div');
-                 $(left_element).addClass("left_list");
-                 var right_element = document.createElement('div');
-                 $(right_element).addClass("right_list");
-                 var totalcount =0;
-                 for(var i=0;i<data.GroupsInfo.length;i++)
+                 if (data.Consultations.length+data.GroupsInfo.length+data.OfferingLabs.length > 0)  
                  {
-                 	  var new_str  =  data.GroupsInfo[i].testsInGroup;
-                 	  var temp_str = new_str.split(",");
-                 	  totalcount = totalcount+temp_str.length+1;
-                  }//for groupsinfo
-                 if(data.TestsInfo.length !=0)
-                 {
-                    totalcount = data.TestsInfo.length+1+totalcount;                 
-                 }//if testslength
-                 if(data.Consultations.length !=0)
-                 {
-                    totalcount = data.Consultations.length+1+totalcount;                 
-                 }//if consultationslength
-                
-                 if ((totalcount%2) =="0") 
-             {
-             	 count_var = 1;
-             }
-             if ((totalcount%2) !="0") 
-             {
-             	 count_var = 0;
-             }
-              if(data.GroupsInfo.length !=0)
-               {
-                for(var i=0;i<data.GroupsInfo.length;i++)
-                 {
-                 	 
-                    if((totalcount >20) && (count_var >(totalcount/2)) ) 
-                    {  
-                        var group_heading = document.createElement('div');
-                 	      $(group_heading).addClass("deal_data");
-                        $(group_heading).html(data.GroupsInfo[i].GroupName);
-                        $(group_heading).css('fontWeight', 'bold');
-                        $(right_element).append(group_heading);
-                        $(left_element).css('float','left');
-                        count_var++;
-                    }//if groupheading
-                  else 
-                   {
-                   	 var group_heading = document.createElement('div');
-                 	    $(group_heading).addClass("deal_data");
-                      $(group_heading).html(data.GroupsInfo[i].GroupName);
-                      $(group_heading).css('fontWeight', 'bold');
-                   	 $(left_element).append(group_heading);
-                	    count_var++;
-                	 }//else groupheading
-                   var new_str = data.GroupsInfo[i].testsInGroup;
-                   var temp_str = new_str.split(",");
-                   for(j=0;j<temp_str.length;j++)
-                    {
-                      
-                       if((totalcount > 20)&& (count_var>(totalcount/2)))
-                       { 
-                         var group_data = document.createElement('div');
-                         $(group_data).addClass("deal_data");
-                         $(group_data).html(temp_str[j]);
-                         $(group_data).css('textIndent','20pt');
-                         $(right_element).append(group_data);
-                         $(left_element).css('float','left');
-                         count_var++;  
-                       }//if groupdata
-                       else 
-                        { 
-                           var group_data = document.createElement('div');
-                           $(group_data).addClass("deal_data");
-                           $(group_data).html(temp_str[j]);
-                           $(group_data).css('textIndent','20pt');
-                           $(left_element).append(group_data);
-                           count_var++;
-                        }//else groupdata
-                    }//for strlength
-                 } //for groupslength 
-                }//if groupsinfolength
-              if(data.TestsInfo.length != 0)
-              {
-                if((totalcount >20) && (count_var >(totalcount/2)) ) 
-                 {        
-                    var tests_heading = document.createElement('div'); 
-                    $(tests_heading).addClass("deal_data");
-                    $(tests_heading).html("Individual Tests");
-                    $(tests_heading).css('fontWeight','bold');
-                    $(right_element).append(tests_heading);
-                    $(left_element).css('float','left');
-                    count_var++;
-                 }//if testsheading
-               else 
-               {
-               	 var tests_heading = document.createElement('div');
-               	 $(tests_heading).addClass("deal_data");
-                   $(tests_heading).html("Individual Tests");
-                   $(tests_heading).css('fontWeight','bold');
-                   $(left_element).append(tests_heading);
-                   count_var++;               	
-               }//else testsheading
-                 
-                for(var  i=0;i<data.TestsInfo.length;i++)
-                 {
-                    
-                     if((totalcount >20) && (count_var >(totalcount/2)) ) 
-                      {
-                      	  var content_data = document.createElement('div');
-                          $(content_data).addClass("deal_data");
-                          $(content_data).html(data.TestsInfo[i]);
-                          $(content_data).css('textIndent','20pt');
-                          $(right_element).append(content_data);
-                          $(left_element).css('float','left');
-                          count_var++;
-                      }//if contentdata
-                    else 
-                     {
-                     	var content_data = document.createElement('div');
-                        $(content_data).addClass("deal_data");
-                        $(content_data).html(data.TestsInfo[i]);
-                        $(content_data).css('textIndent','20pt');
-                    	   $(left_element).append(content_data);
-                    	  count_var++;
-                    	}//else contentdata
-                 }//for TestsInfo
-                }//if testsinfolength
-              if(data.Consultations.length !=0)
-              {
-                if((totalcount >20) && (count_var >(totalcount/2)) ) 
-                   {
-                   	   var consult_heading = document.createElement('div');
-                   	   $(consult_heading).addClass("deal_data");
-                        $(consult_heading).html("Consultations");
-                        $(consult_heading).css('fontWeight','bold');
-                        $(right_element).append(consult_heading);
-                        $(left_element).css('float','left');
-                      count_var++;
-                   }//if consultheading
-                 else  
-                    {
-                   	  var consult_heading = document.createElement('div');
-                   	  $(consult_heading).addClass("deal_data");
-                       $(consult_heading).html("Consultations");
-                       $(consult_heading).css('fontWeight','bold');
-                       $(left_element).append(consult_heading);
-                       count_var++;
-                 	 }//else consultheading
-                      	
-                 for(var i=0;i<data.Consultations.length;i++)
-                 {
-                    
-                    if((totalcount >20) && (count_var >(totalcount/2)) ) 
-                     { 
-                        var consult_data = document.createElement('div');
-                        $(consult_data).addClass("deal_data");
-                        $(consult_data).html(data.Consultations[i]);
-                        $(consult_data).css('textIndent','20pt');
-                        $(right_element).append(consult_data); 
-                        $(left_element).css('float','left');
-                        count_var++;
-                     }//if consultdata
-                   else 
-                    {
-                    	  var consult_data = document.createElement('div');
-                       $(consult_data).addClass("deal_data");
-                       $(consult_data).html(data.Consultations[i]);
-                       $(consult_data).css('textIndent','20pt');
-                   	 $(left_element).append(consult_data);
-                   	 count_var++;        
-                    }//else consultdata
-                 }//for Consultations   
-              }//if dataconsultationslength
-               
-                if((totalcount >20) && ((totalcount%2) !=0))  
-                {
-                var empty_element = document.createElement('div');
-                $(empty_element).addClass("deal_data");
-                $(empty_element).html("-");
-                $(empty_element).css('textIndent','20pt')
-                $(right_element).append(empty_element);
-                }//if odd
-                if(data.GroupsInfo.length ==0 && data.TestsInfo.length ==0 && data.Consultations.length ==0 )
-                {
-                	  $(deal_contents).detach();
-                                  
-                }
-                $(counter_element).append(left_element);
-                $(counter_element).append(right_element);
-                $(deal_details_modal).append(counter_element);    
+                   $(deal_details_modal).append(deal_contents); 
+                    hotdeals_contents_handler(deal_contents,hotdeal_consultations,hotdeal_groups,hotdeals_tests);
+                 }   
                 $(deal_details_modal).modal().open(); 
                 
                  $(".close").on('click',function () 
@@ -515,7 +327,56 @@ function tabledata_handler(pageNum)
            }//success fnctn 
         });//ajax
      }//fnctn handler
-    
+ 
+ function  hotdeals_contents_handler(deal_contents,hotdeal_consultations,hotdeal_groups,hotdeals_tests)
+ {
+ 	 var hotdeal_cnt_totalcount = 0;
+ 	 var hotdeal_cnt_cont_index = 0;
+    var hotdeal_cnt_cont_array = [];
+    var hotdeal_cnt_cont_type;
+    console.log(hotdeal_consultations);
+    console.log(hotdeal_groups);
+    console.log(hotdeals_tests);
+    for (var i=0;i<hotdeal_groups.length;i++) 
+    {
+    	var hotdeal_grp_cnt_str = hotdeal_groups[i].testsInGroup;
+    	if (hotdeal_grp_cnt_str != null && hotdeal_grp_cnt_str != "") 
+    	{
+    		 hotdeal_grp_cnt_temp_str = hotdeal_grp_cnt_str.split(",");
+    		 hotdeal_cnt_totalcount = hotdeal_cnt_totalcount +hotdeal_grp_cnt_temp_str.length+1;
+    	}//if not null and empty string 
+    	else 
+    	{
+    		  hotdeal_cnt_totalcount = hotdeal_cnt_totalcount+1;
+    	}//else
+    }//for groups lnth
+    if (hotdeals_tests.length > 0)  
+    {
+    	  if (hotdeal_groups.length >0) 
+    	  {
+    	  	  hotdeal_cnt_totalcount =hotdeals_tests.length+ hotdeal_cnt_totalcount+1;
+    	  }
+    	  else 
+    	  {
+    	  	  hotdeal_cnt_totalcount =hotdeals_tests.length+ hotdeal_cnt_totalcount;
+    	  }
+    }//if tests length 
+    if (hotdeal_consultations.length >0) 
+    {
+    	 hotdeal_cnt_totalcount = hotdeal_cnt_totalcount +1+hotdeal_consultations.length;
+    }//if consultation length 
+    var hotdeal_cnt_middle_count = Math.ceil(hotdeal_cnt_totalcount/2);
+    if (hotdeal_groups.length >0) 
+    {
+    	 for (var  i=0;i<hotdeal_groups.length;i++) 
+    	 {
+    	 	hotdeal_cnt_grp_name = hotdeal_groups[i].GroupName;
+    	 	var hotdeal_cnt_var = hotdeals_cont_details_append_handler("title",hotdeal_cnt_grp_name,hotdeal_cnt_cont_array,hotdeal_cnt_cont_index,hotdeal_cnt_middle_count);
+    	 	hotdeal_cnt_cont_index = hotdeal_cnt_var[0];
+    	 	hotdeal_cnt_cont_array = hotdeal_cnt_var[1];
+    	 }//for loop
+    }//if grps info lnth
+ }//fnctn endng 
   
   
   
@@ -621,64 +482,190 @@ function tabledata_handler(pageNum)
                   $(input_email).addClass('form-icon form-icon-mail');
                   $(input_email).attr('placeholder','Please enter your email ID');
                   $(input_email).attr('required','required');
-
-                  var address_row = document.createElement('div');
-                  $(address_row).addClass("row");
-                  var address_col_class = document.createElement('div');
-                  $(address_col_class).addClass("col-md-12 col-sm-12");
-                  var fieldset_address = document.createElement('fieldset');
-                  $(fieldset_address).addClass("input-block");
-                  var label_address = document.createElement('label');
-                  $(label_address).attr('for','Address');
-                  $(label_address).html("Address");
-                  var input_address = document.createElement('input');
-                  $(input_address).attr('type','text');
-                  $(input_address).attr('id','hotdeal_pkg_address');
-                  $(input_address).attr('name','patient_address');
-                  $(input_address).attr('value','');
-                  $(input_address).css('width','468px');
-                  $(input_address).css('border','1px solid #c4cdcf');
-                  
-                  $(input_address).attr('placeholder','Please enter your Address');
-                  $(input_address).attr('required','required');
-                 
-                  
-                  $(input_address).css('paddingRight','11px');
-                  var phno_row = document.createElement('div');
-                  $(phno_row).addClass("row");
-                  var phno_col_class = document.createElement('div');
-                  $(phno_col_class).addClass("col-md-6 col-sm-12");
-                  var fieldset_phno = document.createElement('fieldset');
-                  $(fieldset_phno).addClass("input-block");
-                  var label_phno = document.createElement('label');
-                  $(label_phno).attr('for','phone1');
-                  $(label_phno).html('Mobile No:');
-                  var input_phno = document.createElement('input');
-                  $(input_phno).attr('type','text');
-                  $(input_phno).attr('id','phone');
-                  $(input_phno).attr('name','patient_mobile');
-                  $(input_phno).attr('value','');
-                  $(input_phno).addClass('form-icon form-icon-phone');
-                  $(input_phno).attr('placeholder','Number');
-                  $(input_phno).attr('required','required');
-                  var apptime_col_class = document.createElement('div');
-                  $(apptime_col_class).addClass('col-md-6 col-sm-12');
-                  var fieldset_booking = document.createElement('fieldset');
-                  $(fieldset_booking).addClass("input-block");
-                  var label_booking = document.createElement('label');
-                  $(label_booking).attr('for','app_time');
-                  $(label_booking).html('Appointment Timing:');
-                  var input_booking = document.createElement('input');
-                  $(input_booking).attr('type','text');
-                  $(input_booking).attr('id','app_time');
-                  $(input_booking).attr('name','appointment_time');
-                  $(input_booking).attr('value','');
-                  $(input_booking).attr('placeholder','Select Timeslot');
-                  $(input_booking).addClass("form_datetime");
-                  $(input_booking).attr('required','required');
-                  var information_row = document.createElement('row');
-                  $(information_row).addClass("row");
-                  var note_col_class = document.createElement('div');
+              /*    var tst_pag_gender_row = document.createElement('div');
+    $(tst_pag_gender_row).addClass("row");
+    $(tst_pag_gender_row).css('marginBottom','6px');
+    var tst_pag_age_gender_col_class = document.createElement('div');
+    $(tst_pag_age_gender_col_class).css('width','247px');
+    $(tst_pag_age_gender_col_class).css('paddingLeft','15px');
+    $(tst_pag_age_gender_col_class).css('paddingRight','15px');
+    $(tst_pag_age_gender_col_class).css('float','left');
+    var tst_pag_age_col_class = document.createElement('div');
+    $(tst_pag_age_col_class).css('paddingLeft','0px');
+    $(tst_pag_age_col_class).css('paddingRight','0px');
+    $(tst_pag_age_col_class).css('float','left');
+    $(tst_pag_age_col_class).css('width','85px');
+    $(tst_pag_age_col_class).css('marginRight','34px');
+    var tst_pag_fieldset_age = document.createElement('fieldset');
+    $(tst_pag_fieldset_age).addClass("input-block");
+    tst_pag_label_ptntage = document.createElement('label');
+    $(tst_pag_label_ptntage).attr('for','patient_age');
+    $(tst_pag_label_ptntage).html("Age");
+    var tst_pag_input_age = document.createElement('input');
+    $(tst_pag_input_age).attr('type','text');
+    $(tst_pag_input_age).attr('id', 'tst_pag_patient_age');
+    $(tst_pag_input_age).attr('name','patient_age');
+    $(tst_pag_input_age).attr('value','');
+    $(tst_pag_input_age).attr('placeholder','Age');
+    $(tst_pag_input_age).attr('required','');
+    $(tst_pag_input_age).attr('maxlength','2');
+    $(tst_pag_input_age).css('paddingRight','6px');
+    var tst_pag_gender_col_class = document.createElement('div');
+    $(tst_pag_gender_col_class).css('float','right');
+    $(tst_pag_gender_col_class).css('width','90px');
+    $(tst_pag_gender_col_class).css('paddingLeft','0px');
+    var tst_pag_fieldset_gender = document.createElement('fieldset');
+    $(tst_pag_fieldset_gender).addClass("input-block");
+    var tst_pag_label_gender = document.createElement('label');
+    $(tst_pag_label_gender).html("Gender");
+    var tst_pag_gender_dropdown = document.createElement('div');
+    $(tst_pag_gender_dropdown).addClass("dropdown");
+    var tst_pag_gender_select = document.createElement('select');
+    $(tst_pag_gender_select).attr('id','tst_pag_ptnt_gender');
+    $(tst_pag_gender_select).css('width','100%');
+    $(tst_pag_gender_select).css('backgroundPosition','100% center');
+    $(tst_pag_gender_select).css('background','white');
+    $(tst_pag_gender_select).css('height','34px');
+    var tst_pag_gender_empty_option = document.createElement('option');
+    $(tst_pag_gender_empty_option).html("select");
+    $(tst_pag_gender_empty_option).attr('value','1');
+    var tst_pag_gender_male_option = document.createElement('option');
+    $(tst_pag_gender_male_option).attr('value','2');
+    $(tst_pag_gender_male_option).html("Male");
+    var tst_pag_gender_female_option = document.createElement('option');
+    $(tst_pag_gender_female_option).attr('value','3');
+    $(tst_pag_gender_female_option).html("Female");
+    $(tst_pag_gender_select).append(tst_pag_gender_empty_option);
+    $(tst_pag_gender_select).append(tst_pag_gender_male_option);
+    $(tst_pag_gender_select).append(tst_pag_gender_female_option);
+    $(tst_pag_gender_dropdown).append(tst_pag_gender_select);
+    var tst_pag_pin_col_class = document.createElement('div');
+    $(tst_pag_pin_col_class).css('width','247px');
+    $(tst_pag_pin_col_class).css('paddingLeft','15px');
+    $(tst_pag_pin_col_class).css('paddingRight','15px');
+    $(tst_pag_pin_col_class).css('float','right');
+    var tst_pag_fieldset_pin = document.createElement('fieldset');
+    $(tst_pag_fieldset_pin).addClass("input-block");
+    var tst_pag_label_ptnt_pin = document.createElement('label');
+    $(tst_pag_label_ptnt_pin).attr('for','patient_age');
+    $(tst_pag_label_ptnt_pin).html("Pin Code");
+    var tst_pag_input_ptnt_pin = document.createElement('input');
+    $(tst_pag_input_ptnt_pin).attr('type','text');
+    $(tst_pag_input_ptnt_pin).attr('id', 'tst_pag_patient_pincode');
+    $(tst_pag_input_ptnt_pin).attr('name','patient_pincode');
+    $(tst_pag_input_ptnt_pin).attr('value','');
+    $(tst_pag_input_ptnt_pin).attr('placeholder','Pin Code');
+    $(tst_pag_input_ptnt_pin).attr('required','');
+    $(tst_pag_input_ptnt_pin).attr('maxlength','6');
+    $(tst_pag_input_ptnt_pin).css('paddingRight','6px');
+    var tst_pag_hardcopy_row = document.createElement('div');
+    $(tst_pag_hardcopy_row).addClass("row");
+    $(tst_pag_hardcopy_row).css('marginTop','6px');
+    $(tst_pag_hardcopy_row).css('marginBottom','6px');
+    var tst_pag_hardcopy_class = document.createElement('div');
+    $(tst_pag_hardcopy_class).addClass("col-md-12 col-sm-12");
+    var tst_pag_hardcopy_head = document.createElement('div');
+    $(tst_pag_hardcopy_head).addClass("col-md-9 col-sm-9");
+    $(tst_pag_hardcopy_head).html("Do you need hard copy report"+"&nbsp;"+" (Charges applicable) ?");
+    $(tst_pag_hardcopy_head).css('color','#748286');
+    $(tst_pag_hardcopy_head).css('fontSize','12px');
+    $(tst_pag_hardcopy_head).css('fontWeight','bold');
+    $(tst_pag_hardcopy_head).css('paddingLeft','0px');
+    $(tst_pag_hardcopy_head).css('paddingRight','0px');
+    $(tst_pag_hardcopy_class).append(tst_pag_hardcopy_head);
+    var tst_pag_hardcopy_select = document.createElement('div');
+    $(tst_pag_hardcopy_select).addClass("col-md-3 col-sm-3");
+    $(tst_pag_hardcopy_select).css('paddingLeft','0px');
+    var tst_pag_hardcopy_yes_element = document.createElement('div');
+    $(tst_pag_hardcopy_yes_element).css('float','left');
+    var tst_pag_hardcopy_yes_ip = document.createElement('input');
+    $(tst_pag_hardcopy_yes_ip).attr('type','radio');
+    $(tst_pag_hardcopy_yes_ip).attr('name','tst_pag_hardcopy');
+    $(tst_pag_hardcopy_yes_ip).attr('value','yes');
+    $(tst_pag_hardcopy_yes_ip).css('float','left');
+    $(tst_pag_hardcopy_yes_ip).css('height','16px');
+    $(tst_pag_hardcopy_yes_ip).css('width','16px');
+    $(tst_pag_hardcopy_yes_ip).css('display','block');
+    var tst_pag_hardcopy_yes_p_element = document.createElement('div');
+    $(tst_pag_hardcopy_yes_p_element).html("&nbsp;"+"&nbsp;"+"Yes"+"&nbsp;"+"&nbsp;");
+    $(tst_pag_hardcopy_yes_p_element).css('float','left');
+    $(tst_pag_hardcopy_yes_p_element).css('fontSize','12px');
+    var tst_pag_hardcopy_no_element = document.createElement('div');
+    $(tst_pag_hardcopy_no_element).css('float','left');
+    var tst_pag_hardcopy_no_ip = document.createElement('input');
+    $(tst_pag_hardcopy_no_ip).attr('type','radio');
+    $(tst_pag_hardcopy_no_ip).attr('name','tst_pag_hardcopy');
+    $(tst_pag_hardcopy_no_ip).attr('value','no');
+    $(tst_pag_hardcopy_no_ip).css('float','left');
+    $(tst_pag_hardcopy_no_ip).css('width','16px');
+    $(tst_pag_hardcopy_no_ip).css('height','16px');
+    $(tst_pag_hardcopy_no_ip).css('display','block');
+    var tst_pag_hardcopy_no_p_element = document.createElement('div');
+    $(tst_pag_hardcopy_no_p_element).html("&nbsp;"+"&nbsp;"+"No");
+    $(tst_pag_hardcopy_no_p_element).css('float','left');
+    $(tst_pag_hardcopy_no_p_element).css('fontSize','12px');
+    $(tst_pag_hardcopy_yes_element).append(tst_pag_hardcopy_yes_ip);
+    $(tst_pag_hardcopy_yes_element).append(tst_pag_hardcopy_yes_p_element);
+    $(tst_pag_hardcopy_no_element).append(tst_pag_hardcopy_no_ip);
+    $(tst_pag_hardcopy_no_element).append(tst_pag_hardcopy_no_p_element);
+    $(tst_pag_hardcopy_select).append(tst_pag_hardcopy_yes_element);
+    $(tst_pag_hardcopy_select).append(tst_pag_hardcopy_no_element);
+    $(tst_pag_hardcopy_class).append(tst_pag_hardcopy_select);
+    $(tst_pag_hardcopy_row).append(tst_pag_hardcopy_class); */
+    var address_row = document.createElement('div');
+    $(address_row).addClass("row");
+    var address_col_class = document.createElement('div');
+    $(address_col_class).addClass("col-md-12 col-sm-12");
+    var fieldset_address = document.createElement('fieldset');
+    $(fieldset_address).addClass("input-block");
+    var label_address = document.createElement('label');
+    $(label_address).attr('for','Address');
+    $(label_address).html("Address");
+    var input_address = document.createElement('input');
+    $(input_address).attr('type','text');
+    $(input_address).attr('id','hotdeal_pkg_address');
+    $(input_address).attr('name','patient_address');
+    $(input_address).attr('value','');
+    $(input_address).css('width','468px');
+    $(input_address).css('border','1px solid #c4cdcf');
+    $(input_address).attr('placeholder','Please enter your Address');
+    $(input_address).attr('required','required');
+    $(input_address).css('paddingRight','11px');
+    var phno_row = document.createElement('div');
+    $(phno_row).addClass("row");
+    var phno_col_class = document.createElement('div');
+    $(phno_col_class).addClass("col-md-6 col-sm-12");
+    var fieldset_phno = document.createElement('fieldset');
+    $(fieldset_phno).addClass("input-block");
+    var label_phno = document.createElement('label');
+    $(label_phno).attr('for','phone1');
+    $(label_phno).html('Mobile No:');
+    var input_phno = document.createElement('input');
+    $(input_phno).attr('type','text');
+    $(input_phno).attr('id','phone');
+    $(input_phno).attr('name','patient_mobile');
+    $(input_phno).attr('value','');
+    $(input_phno).addClass('form-icon form-icon-phone');
+    $(input_phno).attr('placeholder','Number');
+    $(input_phno).attr('required','required');
+    var apptime_col_class = document.createElement('div');
+    $(apptime_col_class).addClass('col-md-6 col-sm-12');
+    var fieldset_booking = document.createElement('fieldset');
+    $(fieldset_booking).addClass("input-block");
+    var label_booking = document.createElement('label');
+    $(label_booking).attr('for','app_time');
+    $(label_booking).html('Appointment Timing:');
+    var input_booking = document.createElement('input');
+    $(input_booking).attr('type','text');
+    $(input_booking).attr('id','app_time');
+    $(input_booking).attr('name','appointment_time');
+    $(input_booking).attr('value','');
+    $(input_booking).attr('placeholder','Select Timeslot');
+    $(input_booking).addClass("form_datetime");
+    $(input_booking).attr('required','required');
+    var information_row = document.createElement('row');
+    $(information_row).addClass("row");
+    var note_col_class = document.createElement('div');
                   $(note_col_class).addClass("col-md-12 col-sm-12");
                   var font_element = document.createElement('font');
                   $(font_element).html("*Note: Patient Information is kept confidential and is used only for booking appointments and to improve the service.");
@@ -717,7 +704,6 @@ function tabledata_handler(pageNum)
                   $(fieldset_booking).append(input_booking);
                   $(fieldset_address).append(label_address);
                   $(fieldset_address).append(input_address);
-                 
                   $(name_col_class).append(fieldset_element);
                   $(email_col_class).append(fieldset_email);
                   $(phno_col_class).append(fieldset_phno);
@@ -824,7 +810,6 @@ function tabledata_handler(pageNum)
                   $(error_address_element).html('Enter your address');
                   $(address_element).append(star_address);
                   $(address_element).append(error_address_element);
-
                   var apptime_element = document.createElement('div');
                  	$(apptime_element).attr('id','err_apptime');
                  	$(apptime_element).addClass("err_msg");
