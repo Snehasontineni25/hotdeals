@@ -60,7 +60,6 @@ function tabledata_handler(pageNum)
          }//id data error
          else 
          {
-         	 console.log(data);
          	for(var i=0;i<data.length;i++)
              {	
                var table_row = document.createElement('tr');
@@ -136,10 +135,10 @@ function tabledata_handler(pageNum)
           success:function(data){
           	 var dataToStore = JSON.stringify(data);
              localStorage.setItem('someData',dataToStore);
-             console.log(data);
              var hotdeal_consultations = data.Consultations;
              var hotdeal_groups = data.GroupsInfo;
              var hotdeals_tests = data.TestsInfo;
+             console.log(data);
               var deal_details_modal = document.createElement('div');
                $(deal_details_modal).addClass("modal");
                $(deal_details_modal).attr('id', 'modal_firstpage');
@@ -160,78 +159,91 @@ function tabledata_handler(pageNum)
                $(head_name).css('fontWeight','bold');
                $(head_name).css('color','#5cb0cf');
                var price_heading = document.createElement('div');
-               $(price_heading).css('background','#41A7B3');
+               $(price_heading).css('width','554px');
+               $(price_heading).css("background", "#41A7B3");
                $(price_heading).css('color','white');
                $(price_heading).css('fontWeight','bold');
                $(price_heading).css('marginTop','11px');
                $(price_heading).css('marginRight','20px');
-               var price_element = document.createElement('div');
-               $(price_element).html("Price Information");
-               $(price_element).css('float','left');
-               $(price_element).css('paddingRight','375px');
+               $(price_heading).css('marginBottom','6px');
                var valid_element = document.createElement('div');
                $(valid_element).html("Validity");
-               var price_table = document.createElement('table');
-               $(price_table).addClass("pricetable");
-               $(price_table).css('float','left');
-                var tr_price = document.createElement('tr');
-               var td_finalprice = document.createElement('td');
-               var td_finalprice_data = document.createElement('td');
-               $(td_finalprice).html("&nbsp"+"Final Price"+"&nbsp"+"&nbsp"+":");
-               $(td_finalprice_data).addClass("fa fa-inr");
-               $(td_finalprice_data).html(data.HotDealFinalPrice);
-               $(td_finalprice_data).css('paddingLeft','10px');
-               var td_mrp_start = document.createElement('td');
-               $(td_mrp_start).html("&nbsp"+"(");
-               var td_mrp_data = document.createElement('td');
-               $(td_mrp_data).html(data.HotDealMRP);
-               $(td_mrp_data).css('textDecoration','line-through');
-               $(td_mrp_data).css('color','rgb(236,73,73)');
-               var td_mrp_end = document.createElement('td');
-               $(td_mrp_end).html(")");
-               var tr_discount= document.createElement('tr');
-               var td_discount = document.createElement('td');
-               var td_discount_data = document.createElement('td');
-               $(td_discount).html("&nbsp"+"Discount"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+":");
-               $(td_discount_data).html(data.HotDealDiscount+"%");
-               $(td_discount_data).css('paddingLeft','11px');
-               var validity_table = document.createElement('table');
-               $(validity_table).css('marginBottom','30px');
-               var tr_date = document.createElement('tr');
-               var td_date = document.createElement('td');
-               var td_from_date = document.createElement('td');
-               $(td_date).html("From"+"&nbsp"+"&nbsp"+":");
-               $(td_from_date).html(data.HotDealStartDate);
-               $(td_from_date).css('paddingLeft',"6px");
-               var tr_enddate = document.createElement('tr');
-               var td_to_date = document.createElement('td');
-               var td_end_date = document.createElement('td');
-               $(td_to_date).html("To"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+":");
-               $(td_end_date).html(data.HotDealEndDate);
-               $(td_end_date).css("paddingLeft","8px");
-               $(tr_discount).append(td_discount);
-               $(tr_discount).append(td_discount_data);
-               $(tr_price).append(td_finalprice);
-               $(tr_price).append(td_finalprice_data);
-               $(tr_price).append(td_mrp_start);
-               $(tr_price).append(td_mrp_data);
-               $(tr_price).append(td_mrp_end);
-               $(tr_date).append(td_date);
-               $(tr_date).append(td_from_date);
-               $(tr_enddate).append(td_to_date);
-               $(tr_enddate).append(td_end_date);
-               $(price_table).append(tr_price);
-               $(price_table).append(tr_discount);
-               $(price_heading).append(price_element);
+                $(valid_element).css('float','left');
+                $(valid_element).css('paddingLeft','11px');
+                $(valid_element).css('width','412px');
+                 var price_element = document.createElement('div');
+               $(price_element).html("Price Information");
+               $(price_element).css('paddingRight','11px');
+               var deal_price_valid_row = document.createElement('div');
+               $(deal_price_valid_row).addClass("row");
+               $(deal_price_valid_row).css('paddingRight','20px');
+               var validity_element = document.createElement('div');
+               $(validity_element).css('float','left');
+               var from_date_element = document.createElement('div');
+               var from_date_head = document.createElement('div');
+               $(from_date_head).html("From"+"&nbsp"+"&nbsp"+":"+"&nbsp");
+               $(from_date_head).css('fontWeight','bold');
+               $(from_date_head).css('float','left');
+               var from_date = document.createElement('div');
+               $(from_date).html(data.HotDealStartDate);
+               $(from_date).css('float','right');
+               $(from_date_element).append(from_date_head);
+               $(from_date_element).append(from_date);
+               var end_date = document.createElement('div');
+               var end_date_element = document.createElement('div');
+               var end_date_head = document.createElement('div');
+               $(end_date_head).html("To"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+":"+"&nbsp");
+               $(end_date_head).css('fontWeight','bold');
+               $(end_date_head).css('float','left');
+               var end_date = document.createElement('div');
+               $(end_date).html(data.HotDealEndDate);
+               $(end_date).css('float','right');
+               $(end_date_element).append(end_date_head);
+               $(end_date_element).append(end_date);
+            var deal_price_details = document.createElement('div');
+            $(deal_price_details).css('float','right');
+            $(deal_price_details).css('paddingRight','12px');
+            $(deal_price_details).css('marginBottom','11px');
+            var deal_price_details_price = document.createElement('div');
+            $(deal_price_details_price).html("Rs."+data.HotDealMRP);
+            $(deal_price_details_price).css('textAlign','center');
+            $(deal_price_details_price).css('fontSize','22px');
+            $(deal_price_details_price).css('color','rgb(236,73,73)');
+            var deal_price_details_mrp = document.createElement('div');
+            $(deal_price_details_mrp).css('fontSize','18px');
+            var deal_mrp_bracket_div = document.createElement('div');
+            $(deal_mrp_bracket_div).css('float','left');
+            var deal_mrp_openbracket = document.createElement('div');
+            $(deal_mrp_openbracket).html("("+"&nbsp");
+            $(deal_mrp_openbracket).css('float','left');
+            var deal_mrp_price = document.createElement('div');
+            $(deal_mrp_price).html("Rs."+"&nbsp"+data.HotDealFinalPrice);
+            $(deal_mrp_price).css('textDecoration','line-through');
+            $(deal_mrp_price).css('float','left');
+            var deal_mrp_closebracket = document.createElement('div');
+            $(deal_mrp_closebracket).html("&nbsp"+")");
+            $(deal_mrp_closebracket).css('float','right');
+            $(deal_mrp_bracket_div).append(deal_mrp_openbracket);
+            $(deal_mrp_bracket_div).append(deal_mrp_price);
+            $(deal_mrp_bracket_div).append(deal_mrp_closebracket);
+            $(deal_price_details_mrp).append(deal_mrp_bracket_div);
+            var deal_discount_det = document.createElement('div');
+             $(deal_discount_det).html("&nbsp"+data.HotDealDiscount+"%");
+             $(deal_discount_det).css('float','right');
+             $(deal_price_details_mrp).append(deal_discount_det);
+             $(deal_price_details).append(deal_price_details_price);
+             $(deal_price_details).append(deal_price_details_mrp);
+             $(validity_element).append(from_date_element);
+               $(validity_element).append(end_date_element);
+               $(deal_price_valid_row).append(validity_element);
+               $(deal_price_valid_row).append(deal_price_details);
                $(price_heading).append(valid_element);
-               $(validity_table).append(tr_date);
-               $(validity_table).append(tr_enddate);
+               $(price_heading).append(price_element);
                $(deal_details_modal).append(close_element);
                $(deal_details_modal).append(head_name);
                $(deal_details_modal).append(price_heading);
-               $(deal_details_modal).append(price_table);
-               $(deal_details_modal).append(validity_table);
-               var offer_labs = document.createElement('div');
+               $(deal_details_modal).append(deal_price_valid_row);
+                var offer_labs = document.createElement('div');
                  $(offer_labs).html("Offering Labs");
                  $(offer_labs).css("background", "#41A7B3");
                  $(offer_labs).css("color","white");
@@ -315,7 +327,7 @@ function tabledata_handler(pageNum)
                  {
                    $(deal_details_modal).append(deal_contents); 
                     hotdeals_contents_handler(deal_contents,hotdeal_consultations,hotdeal_groups,hotdeals_tests);
-                 }   
+                 }//if    
                 $(deal_details_modal).modal().open(); 
                 
                  $(".close").on('click',function () 
@@ -334,9 +346,6 @@ function tabledata_handler(pageNum)
  	 var hotdeal_cnt_cont_index = 0;
     var hotdeal_cnt_cont_array = [];
     var hotdeal_cnt_cont_type;
-    console.log(hotdeal_consultations);
-    console.log(hotdeal_groups);
-    console.log(hotdeals_tests);
     for (var i=0;i<hotdeal_groups.length;i++) 
     {
     	var hotdeal_grp_cnt_str = hotdeal_groups[i].testsInGroup;
@@ -374,244 +383,548 @@ function tabledata_handler(pageNum)
     	 	var hotdeal_cnt_var = hotdeals_cont_details_append_handler("title",hotdeal_cnt_grp_name,hotdeal_cnt_cont_array,hotdeal_cnt_cont_index,hotdeal_cnt_middle_count);
     	 	hotdeal_cnt_cont_index = hotdeal_cnt_var[0];
     	 	hotdeal_cnt_cont_array = hotdeal_cnt_var[1];
+    	 	var hotdeal_cnt_str =  hotdeal_groups[i].testsInGroup;
+    	 	if (hotdeal_cnt_str != null && hotdeal_cnt_str !="") 
+    	 	{
+    	 		var hotdeal_cnt_str_split =  hotdeal_cnt_str.split(",");
+    	 		for (var j=0;j<hotdeal_cnt_str_split.length;j++) 
+    	 		{
+    	 			var hotdeal_cnt_grp_name = hotdeal_cnt_str_split[j];
+    	 			var hotdeal_cnt_var = hotdeals_cont_details_append_handler("value",hotdeal_cnt_grp_name,hotdeal_cnt_cont_array,hotdeal_cnt_cont_index,hotdeal_cnt_middle_count);
+    	 	      hotdeal_cnt_cont_index = hotdeal_cnt_var[0];
+    	 	      hotdeal_cnt_cont_array = hotdeal_cnt_var[1];
+    	 		}//for grp split lnth
+    	 	}//if grp not empty and null
     	 }//for loop
     }//if grps info lnth
- }//fnctn endng 
-  
-  
-  
-  
-      function form_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea)
+    if (hotdeals_tests.length > 0) 
+    {
+    	if (hotdeal_groups.length >0) 
+    	{
+    		 hotdeal_cnt_grp_name = "Individual Tests";
+    		 var hotdeal_cnt_var = hotdeals_cont_details_append_handler("title",hotdeal_cnt_grp_name,hotdeal_cnt_cont_array,hotdeal_cnt_cont_index,hotdeal_cnt_middle_count);
+    	 	hotdeal_cnt_cont_index = hotdeal_cnt_var[0];
+    	 	hotdeal_cnt_cont_array = hotdeal_cnt_var[1];
+    	}//if groups info
+    	for (var tst=0;tst<hotdeals_tests.length;tst++) 
+    	{
+    		hotdeal_cnt_grp_name = hotdeals_tests[tst];
+    		var hotdeal_cnt_var = hotdeals_cont_details_append_handler("value",hotdeal_cnt_grp_name,hotdeal_cnt_cont_array,hotdeal_cnt_cont_index,hotdeal_cnt_middle_count);
+    	   hotdeal_cnt_cont_index = hotdeal_cnt_var[0];
+    	 	hotdeal_cnt_cont_array = hotdeal_cnt_var[1];
+    	}//for tst lnth 
+    }//if tests info
+    if (hotdeal_consultations.length >0) 
+    {
+    	hotdeal_cnt_grp_name = "Consultations";
+    	var hotdeal_cnt_var = hotdeals_cont_details_append_handler("title",hotdeal_cnt_grp_name,hotdeal_cnt_cont_array,hotdeal_cnt_cont_index,hotdeal_cnt_middle_count);
+    	hotdeal_cnt_cont_index = hotdeal_cnt_var[0];
+    	hotdeal_cnt_cont_array = hotdeal_cnt_var[1];
+    	for (var conslt =0;conslt<hotdeal_consultations.length;conslt++) 
+    	{
+    		hotdeal_cnt_grp_name = hotdeal_consultations[conslt];
+    		var hotdeal_cnt_var = hotdeals_cont_details_append_handler("value",hotdeal_cnt_grp_name,hotdeal_cnt_cont_array,hotdeal_cnt_cont_index,hotdeal_cnt_middle_count);
+    	   hotdeal_cnt_cont_index = hotdeal_cnt_var[0];
+    	 	hotdeal_cnt_cont_array = hotdeal_cnt_var[1];
+    	}//for  conslt lnth 
+    }//if consltnts lnth 
+    for (var i=0;i<hotdeal_cnt_cont_array.length;i++) 
+    {
+    	 var hotdeal_cnt_row = document.createElement('div');
+      $(hotdeal_cnt_row).addClass("row deal_pfl_cnt_data");
+      $(hotdeal_cnt_row).css('border','1px solid #ddd');
+      $(hotdeal_cnt_row).append(hotdeal_cnt_cont_array[i][0]);
+      if (hotdeal_cnt_cont_array[i][1] != undefined) 
       {
-                  var booking_page = document.createElement('div');
-                  $(booking_page).addClass("modal");
-                  $(booking_page).attr('id','modal_secondpage');
-                  $(booking_page).css('backgroundColor','#fff');
-                  $(booking_page).css('height','128%');
-                  $(booking_page).css('paddingRight','0px');
-                  $(booking_page).modal().open();
-                  var close_element = document.createElement('a');
-                  $(close_element).addClass("close");
-                  $(close_element).attr('href','#');
-                  $(close_element).html("&times;");
-                  $(close_element).css('marginTop' ,'-19px');
-                  $(close_element).css('fontSize','26px');
-                  $(close_element).css('marginRight','7px');
-                  $(close_element).attr('id','modal_close');
-                  var contact_heading = document.createElement('h4');
-                  $(contact_heading).html("Patient Information");
-                  $(contact_heading).css('textAlign','center');
-                  $(contact_heading).css('fontSize','18px');
-                  $(contact_heading).css('fontWeight','bold');
-                  $(contact_heading).css('color','#5cb0cf');
-                  var lab_details = document.createElement('div');
-                  $(lab_details).html(labname);
-                  $(lab_details).css('textAlign' ,'right');
-                  $(lab_details).css('paddingRight','17px');
-                  $(lab_details).css('fontWeight','bold');
-                  $(lab_details).css('marginTop','6px');  
-                  $(lab_details).css('marginRight','20px');
-                  $(lab_details).css('fontSize','12px');
-                  var deal_name  = document.createElement('div');
-                  $(deal_name).html(dealname);
-                  $(deal_name).css('textAlign' ,'right');
-                  $(deal_name).css('paddingRight','14px');
-                  $(deal_name).css('fontWeight','bold');
-                  $(deal_name).css('marginTop','6px');
-                  $(deal_name).css('marginRight','20px');
-                  $(deal_name).css('fontSize','12px');
-                  var parent_wizard = document.createElement('div');
-                  $(parent_wizard).attr('id','tmm-form-wizard');
-                  $(parent_wizard).addClass('container substrate');
-                  $(parent_wizard).css('width','100%');
-                  $(parent_wizard).css('paddingTop','1px');
-                  var form_element = document.createElement('form');
-                  $(form_element).attr('method','post');
-                  $(form_element).attr('id','patient_info'); 
-                  $(form_element).attr('name','patient_info');
-                  $(form_element).attr('action','#');
-                  $(form_element).attr('role','form');
-                  $(form_element).css('marginRight','20px');
-                  var wizard_element = document.createElement('div');
-                  $(wizard_element).addClass("form-wizard");
-                  $(wizard_element).css('padding-top','0px');
-                  var row_element = document.createElement('div');
-                  $(row_element).addClass("row");
-                  var col_element = document.createElement('div');
-                  $(col_element).addClass("col-md-12 no-pad");
-                  var form_class = document.createElement('form-wizard');
-                  $(form_class).addClass("form-wizard");
-                  $(form_class).css('border','0px');
-                  $(form_class).css('paddingTop','4px');
-                  var second_row = document.createElement('div');
-                  $(second_row).addClass("row");
-                   var col_class_element = document.createElement('div');
-                  $(col_class_element).addClass("col-md-12 col-sm-12");
-                  $(col_class_element).css('paddingTop','5px');
-                  var name_row = document.createElement('div');
-                  $(name_row).addClass("row");
-                  var name_col_class = document.createElement('div');
-                  $(name_col_class).addClass("col-md-12 col-sm-12");
-                  var fieldset_element = document.createElement('fieldset');
-                  $(fieldset_element).addClass("input-block");
-                  var label_ptntname = document.createElement('label');
-                  $(label_ptntname).attr('for','patient_name');
-                  $(label_ptntname).html("Full Name");
-                  var input_element = document.createElement('input');
-                  $(input_element).attr('type','text');
-                  $(input_element).attr('id', 'patient_name');
-                  $(input_element).attr('name','patient_name');
-                  $(input_element).attr('value','');
-                  $(input_element).addClass("form-icon form-icon-user");
-                  $(input_element).attr('placeholder','Please enter your name');
-                  $(input_element).attr('required','');
-                  var email_row = document.createElement('div');
-                  $(email_row).addClass("row");
-                  var email_col_class = document.createElement('div');
-                  $(email_col_class).addClass("col-md-12 col-sm-12");
-                  var fieldset_email = document.createElement('fieldset');
-                  $(fieldset_email).addClass("input-block");
-                  var label_email = document.createElement('label');
-                  $(label_email).attr('for','email');
-                  $(label_email).html("Email");
-                  var input_email = document.createElement('input');
-                  $(input_email).attr('type','text');
-                  $(input_email).attr('id','email');
-                  $(input_email).attr('name','patient_email');
-                  $(input_email).attr('value','');
-                  $(input_email).addClass('form-icon form-icon-mail');
-                  $(input_email).attr('placeholder','Please enter your email ID');
-                  $(input_email).attr('required','required');
-              /*    var tst_pag_gender_row = document.createElement('div');
-    $(tst_pag_gender_row).addClass("row");
-    $(tst_pag_gender_row).css('marginBottom','6px');
-    var tst_pag_age_gender_col_class = document.createElement('div');
-    $(tst_pag_age_gender_col_class).css('width','247px');
-    $(tst_pag_age_gender_col_class).css('paddingLeft','15px');
-    $(tst_pag_age_gender_col_class).css('paddingRight','15px');
-    $(tst_pag_age_gender_col_class).css('float','left');
-    var tst_pag_age_col_class = document.createElement('div');
-    $(tst_pag_age_col_class).css('paddingLeft','0px');
-    $(tst_pag_age_col_class).css('paddingRight','0px');
-    $(tst_pag_age_col_class).css('float','left');
-    $(tst_pag_age_col_class).css('width','85px');
-    $(tst_pag_age_col_class).css('marginRight','34px');
-    var tst_pag_fieldset_age = document.createElement('fieldset');
-    $(tst_pag_fieldset_age).addClass("input-block");
-    tst_pag_label_ptntage = document.createElement('label');
-    $(tst_pag_label_ptntage).attr('for','patient_age');
-    $(tst_pag_label_ptntage).html("Age");
-    var tst_pag_input_age = document.createElement('input');
-    $(tst_pag_input_age).attr('type','text');
-    $(tst_pag_input_age).attr('id', 'tst_pag_patient_age');
-    $(tst_pag_input_age).attr('name','patient_age');
-    $(tst_pag_input_age).attr('value','');
-    $(tst_pag_input_age).attr('placeholder','Age');
-    $(tst_pag_input_age).attr('required','');
-    $(tst_pag_input_age).attr('maxlength','2');
-    $(tst_pag_input_age).css('paddingRight','6px');
-    var tst_pag_gender_col_class = document.createElement('div');
-    $(tst_pag_gender_col_class).css('float','right');
-    $(tst_pag_gender_col_class).css('width','90px');
-    $(tst_pag_gender_col_class).css('paddingLeft','0px');
-    var tst_pag_fieldset_gender = document.createElement('fieldset');
-    $(tst_pag_fieldset_gender).addClass("input-block");
-    var tst_pag_label_gender = document.createElement('label');
-    $(tst_pag_label_gender).html("Gender");
-    var tst_pag_gender_dropdown = document.createElement('div');
-    $(tst_pag_gender_dropdown).addClass("dropdown");
-    var tst_pag_gender_select = document.createElement('select');
-    $(tst_pag_gender_select).attr('id','tst_pag_ptnt_gender');
-    $(tst_pag_gender_select).css('width','100%');
-    $(tst_pag_gender_select).css('backgroundPosition','100% center');
-    $(tst_pag_gender_select).css('background','white');
-    $(tst_pag_gender_select).css('height','34px');
-    var tst_pag_gender_empty_option = document.createElement('option');
-    $(tst_pag_gender_empty_option).html("select");
-    $(tst_pag_gender_empty_option).attr('value','1');
-    var tst_pag_gender_male_option = document.createElement('option');
-    $(tst_pag_gender_male_option).attr('value','2');
-    $(tst_pag_gender_male_option).html("Male");
-    var tst_pag_gender_female_option = document.createElement('option');
-    $(tst_pag_gender_female_option).attr('value','3');
-    $(tst_pag_gender_female_option).html("Female");
-    $(tst_pag_gender_select).append(tst_pag_gender_empty_option);
-    $(tst_pag_gender_select).append(tst_pag_gender_male_option);
-    $(tst_pag_gender_select).append(tst_pag_gender_female_option);
-    $(tst_pag_gender_dropdown).append(tst_pag_gender_select);
-    var tst_pag_pin_col_class = document.createElement('div');
-    $(tst_pag_pin_col_class).css('width','247px');
-    $(tst_pag_pin_col_class).css('paddingLeft','15px');
-    $(tst_pag_pin_col_class).css('paddingRight','15px');
-    $(tst_pag_pin_col_class).css('float','right');
-    var tst_pag_fieldset_pin = document.createElement('fieldset');
-    $(tst_pag_fieldset_pin).addClass("input-block");
-    var tst_pag_label_ptnt_pin = document.createElement('label');
-    $(tst_pag_label_ptnt_pin).attr('for','patient_age');
-    $(tst_pag_label_ptnt_pin).html("Pin Code");
-    var tst_pag_input_ptnt_pin = document.createElement('input');
-    $(tst_pag_input_ptnt_pin).attr('type','text');
-    $(tst_pag_input_ptnt_pin).attr('id', 'tst_pag_patient_pincode');
-    $(tst_pag_input_ptnt_pin).attr('name','patient_pincode');
-    $(tst_pag_input_ptnt_pin).attr('value','');
-    $(tst_pag_input_ptnt_pin).attr('placeholder','Pin Code');
-    $(tst_pag_input_ptnt_pin).attr('required','');
-    $(tst_pag_input_ptnt_pin).attr('maxlength','6');
-    $(tst_pag_input_ptnt_pin).css('paddingRight','6px');
-    var tst_pag_hardcopy_row = document.createElement('div');
-    $(tst_pag_hardcopy_row).addClass("row");
-    $(tst_pag_hardcopy_row).css('marginTop','6px');
-    $(tst_pag_hardcopy_row).css('marginBottom','6px');
-    var tst_pag_hardcopy_class = document.createElement('div');
-    $(tst_pag_hardcopy_class).addClass("col-md-12 col-sm-12");
-    var tst_pag_hardcopy_head = document.createElement('div');
-    $(tst_pag_hardcopy_head).addClass("col-md-9 col-sm-9");
-    $(tst_pag_hardcopy_head).html("Do you need hard copy report"+"&nbsp;"+" (Charges applicable) ?");
-    $(tst_pag_hardcopy_head).css('color','#748286');
-    $(tst_pag_hardcopy_head).css('fontSize','12px');
-    $(tst_pag_hardcopy_head).css('fontWeight','bold');
-    $(tst_pag_hardcopy_head).css('paddingLeft','0px');
-    $(tst_pag_hardcopy_head).css('paddingRight','0px');
-    $(tst_pag_hardcopy_class).append(tst_pag_hardcopy_head);
-    var tst_pag_hardcopy_select = document.createElement('div');
-    $(tst_pag_hardcopy_select).addClass("col-md-3 col-sm-3");
-    $(tst_pag_hardcopy_select).css('paddingLeft','0px');
-    var tst_pag_hardcopy_yes_element = document.createElement('div');
-    $(tst_pag_hardcopy_yes_element).css('float','left');
-    var tst_pag_hardcopy_yes_ip = document.createElement('input');
-    $(tst_pag_hardcopy_yes_ip).attr('type','radio');
-    $(tst_pag_hardcopy_yes_ip).attr('name','tst_pag_hardcopy');
-    $(tst_pag_hardcopy_yes_ip).attr('value','yes');
-    $(tst_pag_hardcopy_yes_ip).css('float','left');
-    $(tst_pag_hardcopy_yes_ip).css('height','16px');
-    $(tst_pag_hardcopy_yes_ip).css('width','16px');
-    $(tst_pag_hardcopy_yes_ip).css('display','block');
-    var tst_pag_hardcopy_yes_p_element = document.createElement('div');
-    $(tst_pag_hardcopy_yes_p_element).html("&nbsp;"+"&nbsp;"+"Yes"+"&nbsp;"+"&nbsp;");
-    $(tst_pag_hardcopy_yes_p_element).css('float','left');
-    $(tst_pag_hardcopy_yes_p_element).css('fontSize','12px');
-    var tst_pag_hardcopy_no_element = document.createElement('div');
-    $(tst_pag_hardcopy_no_element).css('float','left');
-    var tst_pag_hardcopy_no_ip = document.createElement('input');
-    $(tst_pag_hardcopy_no_ip).attr('type','radio');
-    $(tst_pag_hardcopy_no_ip).attr('name','tst_pag_hardcopy');
-    $(tst_pag_hardcopy_no_ip).attr('value','no');
-    $(tst_pag_hardcopy_no_ip).css('float','left');
-    $(tst_pag_hardcopy_no_ip).css('width','16px');
-    $(tst_pag_hardcopy_no_ip).css('height','16px');
-    $(tst_pag_hardcopy_no_ip).css('display','block');
-    var tst_pag_hardcopy_no_p_element = document.createElement('div');
-    $(tst_pag_hardcopy_no_p_element).html("&nbsp;"+"&nbsp;"+"No");
-    $(tst_pag_hardcopy_no_p_element).css('float','left');
-    $(tst_pag_hardcopy_no_p_element).css('fontSize','12px');
-    $(tst_pag_hardcopy_yes_element).append(tst_pag_hardcopy_yes_ip);
-    $(tst_pag_hardcopy_yes_element).append(tst_pag_hardcopy_yes_p_element);
-    $(tst_pag_hardcopy_no_element).append(tst_pag_hardcopy_no_ip);
-    $(tst_pag_hardcopy_no_element).append(tst_pag_hardcopy_no_p_element);
-    $(tst_pag_hardcopy_select).append(tst_pag_hardcopy_yes_element);
-    $(tst_pag_hardcopy_select).append(tst_pag_hardcopy_no_element);
-    $(tst_pag_hardcopy_class).append(tst_pag_hardcopy_select);
-    $(tst_pag_hardcopy_row).append(tst_pag_hardcopy_class); */
+        $(hotdeal_cnt_row).append(hotdeal_cnt_cont_array[i][1]);
+      }//if arry undefnd
+      $(deal_contents).append(hotdeal_cnt_row);
+    }//for cont array 
+ }//fnctn endng 
+
+function hotdeals_cont_details_append_handler(name_type,hotdeal_cnt_grp_name,hotdeal_cnt_cont_array,hotdeal_cnt_cont_index,hotdeal_cnt_middle_count)
+{
+    var hotdeal_cnt_element = document.createElement('div');
+ 	  $(hotdeal_cnt_element).addClass("pkg_pfl_cont");
+ 	  $(hotdeal_cnt_element).html(hotdeal_cnt_grp_name);
+ 	  if (name_type == "title") 
+ 	  {
+ 	  	  $(hotdeal_cnt_element).css('fontWeight','bold');
+ 	  	  $(hotdeal_cnt_element).css('paddingLeft','3px');
+ 	  }//if title
+ 	  else 
+ 	  {
+ 	  	 $(hotdeal_cnt_element).css('paddingLeft','12px');
+ 	  }//else title
+ 	  if(hotdeal_cnt_cont_index<hotdeal_cnt_middle_count)
+ 	  {
+ 	  	  $(hotdeal_cnt_element).css('borderRight','1px solid #ddd');
+ 	  	  $(hotdeal_cnt_element).css('float','left');
+ 	  	  $(hotdeal_cnt_element).css('width','50%');
+ 	  	  var hotdeal_cnt_data_array =[];
+ 	  	  hotdeal_cnt_data_array.push(hotdeal_cnt_element);
+ 	  	  hotdeal_cnt_cont_array.push(hotdeal_cnt_data_array);
+ 	   }//if
+ 	   else 
+ 	   {
+ 	   	 $(hotdeal_cnt_element).css('borderLeft','1px solid #ddd');
+ 	   	 $(hotdeal_cnt_element).css('float','right');
+ 	  	    $(hotdeal_cnt_element).css('width','50%');
+ 	   	 var hotdeal_temp_index = hotdeal_cnt_cont_index- hotdeal_cnt_middle_count;
+ 	   	hotdeal_cnt_cont_array[hotdeal_temp_index].push(hotdeal_cnt_element);
+ 	   }
+ 	  hotdeal_cnt_cont_index++;
+ 	  return [hotdeal_cnt_cont_index, hotdeal_cnt_cont_array];
+}//fnctn hotdeals fnctn endng  
+  
+ function form_backbtn(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea)
+    {
+    	         var localData = JSON.parse(localStorage.getItem('someData'));
+    	         var hotdeal_consultations = localData.Consultations;
+               var hotdeal_groups = localData.GroupsInfo;
+               var hotdeals_tests = localData.TestsInfo;
+              var local_deal_details_modal = document.createElement('div');
+               $(local_deal_details_modal).addClass("modal");
+               $(local_deal_details_modal).attr('id', 'modal_firstpage');
+               $(local_deal_details_modal).css('position','relative');
+               $(local_deal_details_modal).css('backgroundColor','#fff');
+               $(local_deal_details_modal).css('paddingRight','0px');
+               var local_close_element = document.createElement('a');
+               $(local_close_element).addClass("close");
+               $(local_close_element).attr('href','#');
+               $(local_close_element).html("&times;");
+               $(local_close_element).css('marginTop' ,'-19px');
+               $(local_close_element).css('fontSize','26px');
+               $(local_close_element).css('marginRight','7px');
+               var local_head_name = document.createElement('h4');
+               $(local_head_name).html(localData.HotDealName);
+               $(local_head_name).css('textAlign','center');
+               $(local_head_name).css('fontSize','18px');
+               $(local_head_name).css('fontWeight','bold');
+               $(local_head_name).css('color','#5cb0cf');
+               var local_price_heading = document.createElement('div');
+               $(local_price_heading).css('width','554px');
+               $(local_price_heading).css("background", "#41A7B3");
+               $(local_price_heading).css('color','white');
+               $(local_price_heading).css('fontWeight','bold');
+               $(local_price_heading).css('marginTop','11px');
+               $(local_price_heading).css('marginRight','20px');
+               $(local_price_heading).css('marginBottom','6px');
+               var local_valid_element = document.createElement('div');
+               $(local_valid_element).html("Validity");
+                $(local_valid_element).css('float','left');
+                $(local_valid_element).css('paddingLeft','11px');
+                $(local_valid_element).css('width','412px');
+                 var local_price_element = document.createElement('div');
+               $(local_price_element).html("Price Information");
+               $(local_price_element).css('paddingRight','11px');
+               var local_deal_price_valid_row = document.createElement('div');
+               $(local_deal_price_valid_row).addClass("row");
+               $(local_deal_price_valid_row).css('paddingRight','20px');
+               var local_validity_element = document.createElement('div');
+               $(local_validity_element).css('float','left');
+               var local_from_date_element = document.createElement('div');
+               var local_from_date_head = document.createElement('div');
+               $(local_from_date_head).html("From"+"&nbsp"+"&nbsp"+":"+"&nbsp");
+               $(local_from_date_head).css('fontWeight','bold');
+               $(local_from_date_head).css('float','left');
+               var local_from_date = document.createElement('div');
+               $(local_from_date).html(localData.HotDealStartDate);
+               $(local_from_date).css('float','right');
+               $(local_from_date_element).append(local_from_date_head);
+               $(local_from_date_element).append(local_from_date);
+               var local_end_date = document.createElement('div');
+               var local_end_date_element = document.createElement('div');
+               var local_end_date_head = document.createElement('div');
+               $(local_end_date_head).html("To"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+":"+"&nbsp");
+               $(local_end_date_head).css('fontWeight','bold');
+               $(local_end_date_head).css('float','left');
+               var local_end_date = document.createElement('div');
+               $(local_end_date).html(localData.HotDealEndDate);
+               $(local_end_date).css('float','right');
+               $(local_end_date_element).append(local_end_date_head);
+               $(local_end_date_element).append(local_end_date);
+            var local_deal_price_details = document.createElement('div');
+            $(local_deal_price_details).css('float','right');
+            $(local_deal_price_details).css('paddingRight','12px');
+            $(local_deal_price_details).css('marginBottom','11px');
+            var local_deal_price_details_price = document.createElement('div');
+            $(local_deal_price_details_price).html("Rs."+localData.HotDealMRP);
+            $(local_deal_price_details_price).css('textAlign','center');
+            $(local_deal_price_details_price).css('fontSize','22px');
+            $(local_deal_price_details_price).css('color','rgb(236,73,73)');
+            var local_deal_price_details_mrp = document.createElement('div');
+            $(local_deal_price_details_mrp).css('fontSize','18px');
+            var local_deal_mrp_bracket_div = document.createElement('div');
+            $(local_deal_mrp_bracket_div).css('float','left');
+            var local_deal_mrp_openbracket = document.createElement('div');
+            $(local_deal_mrp_openbracket).html("("+"&nbsp");
+            $(local_deal_mrp_openbracket).css('float','left');
+            var local_deal_mrp_price = document.createElement('div');
+            $(local_deal_mrp_price).html("Rs."+"&nbsp"+localData.HotDealFinalPrice);
+            $(local_deal_mrp_price).css('textDecoration','line-through');
+            $(local_deal_mrp_price).css('float','left');
+            var local_deal_mrp_closebracket = document.createElement('div');
+            $(local_deal_mrp_closebracket).html("&nbsp"+")");
+            $(local_deal_mrp_closebracket).css('float','right');
+            $(local_deal_mrp_bracket_div).append(local_deal_mrp_openbracket);
+            $(local_deal_mrp_bracket_div).append(local_deal_mrp_price);
+            $(local_deal_mrp_bracket_div).append(local_deal_mrp_closebracket);
+            $(local_deal_price_details_mrp).append(local_deal_mrp_bracket_div);
+            var local_deal_discount_det = document.createElement('div');
+             $(local_deal_discount_det).html("&nbsp"+localData.HotDealDiscount+"%");
+             $(local_deal_discount_det).css('float','right');
+             $(local_deal_price_details_mrp).append(local_deal_discount_det);
+             $(local_deal_price_details).append(local_deal_price_details_price);
+             $(local_deal_price_details).append(local_deal_price_details_mrp);
+             $(local_validity_element).append(local_from_date_element);
+               $(local_validity_element).append(local_end_date_element);
+               $(local_deal_price_valid_row).append(local_validity_element);
+               $(local_deal_price_valid_row).append(local_deal_price_details);
+               $(local_price_heading).append(local_valid_element);
+               $(local_price_heading).append(local_price_element);
+               $(local_deal_details_modal).append(local_close_element);
+               $(local_deal_details_modal).append(local_head_name);
+               $(local_deal_details_modal).append(local_price_heading);
+               $(local_deal_details_modal).append(local_deal_price_valid_row);
+                var local_offer_labs = document.createElement('div');
+                 $(local_offer_labs).html("Offering Labs");
+                 $(local_offer_labs).css("background", "#41A7B3");
+                 $(local_offer_labs).css("color","white");
+                 $(local_offer_labs).css("fontWeight","bold");
+                 $(local_offer_labs).css("marginBottom","11px");
+                 $(local_offer_labs).css("marginRight",'20px');
+                var local_labs_list = document.createElement('table');
+               $(local_labs_list).addClass("offer_labs");
+               $(local_labs_list).css('cursor','pointer');
+               for(var i=0;i<localData.OfferingLabs.length;i++)
+               {
+                 var local_tr_labs = document.createElement('tr');
+                 $(local_tr_labs).addClass("labs_row");
+                 $(local_tr_labs).attr('data-labname',localData.OfferingLabs[i].labName);
+                 $(local_tr_labs).attr('data-labslug',localData.OfferingLabs[i].labSlug);
+                 $(local_tr_labs).attr('data-dealname',localData.HotDealName);
+                 $(local_tr_labs).attr('data-dealslug',localData.HotDealSlug);
+                 $(local_tr_labs).attr('data-dealmrp',localData.HotDealMRP);
+                 $(local_tr_labs).attr('data-dealdiscount',localData.HotDealDiscount);
+                 $(local_tr_labs).attr('data-dealfinalprice',localData.HotDealFinalPrice);
+                 $(local_tr_labs).attr('data-labarea',localData.OfferingLabs[i].labArea);
+                 $(local_tr_labs).attr('data-onlinereports',localData.OfferingLabs[i].onlineReports);
+                 $(local_tr_labs).attr('data-visittype' ,localData.OfferingLabs[i].visitType); 
+                 var local_td_labs = document.createElement('td');
+                 $(local_td_labs).addClass("lab_name");
+                 var local_td_lab_area = document.createElement('td');
+                 var local_td_lab_pin = document.createElement('td');
+                 var local_td_lab_btn = document.createElement('td');
+                 var local_book_button = document.createElement("button");
+                 $(local_book_button).html("Book Now");
+                 $(local_td_lab_btn).append(local_book_button);
+                 $(local_book_button).attr('id','book_deal');
+                 $(local_book_button).addClass("book_lab");
+                 $(local_book_button).css('borderRadius','3px');
+                 $(local_book_button).css('border','none');
+                 $(local_book_button).css('width','80px');
+                 $(local_book_button).css('fontSize','12px');
+                 $(local_book_button).css('background','rgb(236, 73, 73)');
+                 $(local_book_button).css('color','white');
+                 $(local_td_labs).html(localData.OfferingLabs[i].labName);
+                 $(local_td_lab_area).html(localData.OfferingLabs[i].labArea);
+                 $(local_td_lab_pin).html(localData.OfferingLabs[i].labPincode);
+                 $(local_td_labs).css('width','250px');
+                 $(local_td_lab_area).css('width','145px');
+                 $(local_td_lab_pin).css('width','80px');
+                 $(local_tr_labs).append(local_td_labs);
+                 $(local_tr_labs).append(local_td_lab_area);
+                 $(local_tr_labs).append(local_td_lab_pin);
+                 $(local_tr_labs).append(local_td_lab_btn);
+                 $(local_labs_list).append(local_tr_labs); 
+                 $(local_tr_labs).on('click',function () 
+                	{
+                		 var labname = $(this).data('labname');
+                  	 var labslug = $(this).data('labslug');
+                  	 var dealname = $(this).data('dealname');
+                  	 var deal_slug = $(this).data('dealslug');
+                  	 var deal_mrp = $(this).data('dealmrp');
+                  	 var deal_discount = $(this).data('dealdiscount');
+                  	 var deal_finalprice = $(this).data('dealfinalprice');
+                  	 var labarea = $(this).data('labarea');
+                  	 var online_reports = $(this).data('onlinereports');
+                  	 var visit_type = $(this).data('visittype');
+                		form_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
+                		});
+                  }//for offeringlabs
+                 $(local_deal_details_modal).append(local_offer_labs);
+                 $(local_deal_details_modal).append(local_labs_list);
+                 var deal_contents = document.createElement('div');
+                 $(deal_contents).css('marginTop','13px');
+                 $(deal_contents).addClass("row deal_heading");
+                 $(deal_contents).css('paddingRight','20px');
+                 var local_contents_heading = document.createElement('div');
+                 $(local_contents_heading).html("Deal Contents");
+                 $(local_contents_heading).css('fontWeight','bold');
+                 $(local_contents_heading).css('textAlign','center');
+                 $(local_contents_heading).css('height','20px');
+                 $(local_contents_heading).css('backgroundColor','#41A7B3');
+                 $(local_contents_heading).css('color','white');
+                 $(deal_contents).append(local_contents_heading);
+                 if (localData.Consultations.length+localData.GroupsInfo.length+localData.OfferingLabs.length > 0)  
+                 {
+                   $(local_deal_details_modal).append(deal_contents); 
+                    hotdeals_contents_handler(deal_contents,hotdeal_consultations,hotdeal_groups,hotdeals_tests);
+                 }//if    
+                $(local_deal_details_modal).modal().open(); 
+                
+                 $(".close").on('click',function () 
+                 {
+               	  $(local_deal_details_modal).modal().close(); 
+                 });//click
+  }//fnctn handler 
+ 
+ function hotdeal_patient_homevisit_handler()
+{
+  
+  var hotdeal_homevisit_value  = $('input:radio:checked').val();
+  var hotdeal_ptnt_hme_vst_address = document.getElementById("hotdeal_ptnt_address");
+  if (hotdeal_homevisit_value == "yes") 
+  {
+  	   $(hotdeal_ptnt_hme_vst_address).css('display','block');
+  }//if yes
+  else 
+  {
+  	  $(hotdeal_ptnt_hme_vst_address).css('display','none');
+  }//else
+}//homevst fnctn endng
+
+ 
+function form_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea)
+ {
+    var booking_page = document.createElement('div');
+    $(booking_page).addClass("modal");
+    $(booking_page).attr('id','modal_secondpage');
+    $(booking_page).css('backgroundColor','#fff');
+    $(booking_page).css('position','relative');
+    $(booking_page).css('paddingRight','0px');
+    $(booking_page).modal().open();
+    var close_element = document.createElement('a');
+    $(close_element).addClass("close");
+    $(close_element).attr('href','#');
+    $(close_element).html("&times;");
+    $(close_element).css('marginTop' ,'-19px');
+    $(close_element).css('fontSize','26px');
+    $(close_element).css('marginRight','7px');
+    $(close_element).attr('id','modal_close');
+    var contact_heading = document.createElement('h4');
+    $(contact_heading).html("Patient Information");
+    $(contact_heading).css('textAlign','center');
+    $(contact_heading).css('fontSize','18px');
+    $(contact_heading).css('fontWeight','bold');
+    $(contact_heading).css('color','#5cb0cf');
+    var parent_wizard = document.createElement('div');
+    $(parent_wizard).attr('id','tmm-form-wizard');
+    $(parent_wizard).addClass('container substrate');
+    $(parent_wizard).css('width','100%');
+    $(parent_wizard).css('paddingTop','1px');
+    var form_element = document.createElement('form');
+    $(form_element).attr('method','post');
+    $(form_element).attr('id','patient_info'); 
+    $(form_element).attr('name','patient_info');
+    $(form_element).attr('action','#');
+    $(form_element).attr('role','form');
+    $(form_element).css('marginRight','20px');
+    $(form_element).attr('autocomplete','off');
+    var wizard_element = document.createElement('div');
+    $(wizard_element).addClass("form-wizard");
+    $(wizard_element).css('padding-top','0px');
+    var row_element = document.createElement('div');
+    $(row_element).addClass("row");
+    var col_element = document.createElement('div');
+    $(col_element).addClass("col-md-12 no-pad");
+    var form_class = document.createElement('form-wizard');
+    $(form_class).addClass("form-wizard");
+    $(form_class).css('border','0px');
+    $(form_class).css('paddingTop','4px');
+    var second_row = document.createElement('div');
+    $(second_row).addClass("row");
+    var col_class_element = document.createElement('div');
+    $(col_class_element).addClass("col-md-12 col-sm-12");
+    $(col_class_element).css('paddingTop','5px');
+    var name_row = document.createElement('div');
+    $(name_row).addClass("row");
+    var name_col_class = document.createElement('div');
+    $(name_col_class).addClass("col-md-12 col-sm-12");
+    var fieldset_element = document.createElement('fieldset');
+    $(fieldset_element).addClass("input-block");
+    var label_ptntname = document.createElement('label');
+    $(label_ptntname).attr('for','patient_name');
+    $(label_ptntname).html("Full Name");
+    var input_element = document.createElement('input');
+    $(input_element).attr('type','text');
+    $(input_element).attr('id', 'hotdeal_patient_name');
+    $(input_element).attr('name','patient_name');
+    $(input_element).attr('value','');
+    $(input_element).addClass("form-icon form-icon-user");
+    $(input_element).attr('placeholder','Please enter your name');
+    $(input_element).attr('required','');
+    var email_row = document.createElement('div');
+    $(email_row).addClass("row");
+    var email_col_class = document.createElement('div');
+    $(email_col_class).addClass("col-md-12 col-sm-12");
+    var fieldset_email = document.createElement('fieldset');
+    $(fieldset_email).addClass("input-block");
+    var label_email = document.createElement('label');
+    $(label_email).attr('for','email');
+    $(label_email).html("Email");
+    var input_email = document.createElement('input');
+    $(input_email).attr('type','text');
+    $(input_email).attr('id','hotdeal_email');
+    $(input_email).attr('name','patient_email');
+    $(input_email).attr('value','');
+    $(input_email).addClass('form-icon form-icon-mail');
+    $(input_email).attr('placeholder','Please enter your email ID');
+    $(input_email).attr('required','required');
+    var hotdeal_gender_row = document.createElement('div');
+    $(hotdeal_gender_row).addClass("row");
+    $(hotdeal_gender_row).css('marginBottom','6px');
+    var hotdeal_age_gender_col_class = document.createElement('div');
+    $(hotdeal_age_gender_col_class).css('width','247px');
+    $(hotdeal_age_gender_col_class).css('paddingLeft','15px');
+    $(hotdeal_age_gender_col_class).css('paddingRight','15px');
+    $(hotdeal_age_gender_col_class).css('float','left');
+    var hotdeal_age_col_class = document.createElement('div');
+    $(hotdeal_age_col_class).css('paddingLeft','0px');
+    $(hotdeal_age_col_class).css('paddingRight','0px');
+    $(hotdeal_age_col_class).css('float','left');
+    $(hotdeal_age_col_class).css('width','85px');
+    $(hotdeal_age_col_class).css('marginRight','34px');
+    var hotdeal_fieldset_age = document.createElement('fieldset');
+    $(hotdeal_fieldset_age).addClass("input-block");
+    var hotdeal_label_ptntage = document.createElement('label');
+    $(hotdeal_label_ptntage).attr('for','patient_age');
+    $(hotdeal_label_ptntage).html("Age");
+    var hotdeal_input_age = document.createElement('input');
+    $(hotdeal_input_age).attr('type','text');
+    $(hotdeal_input_age).attr('id', 'hotdeal_patient_age');
+    $(hotdeal_input_age).attr('name','patient_age');
+    $(hotdeal_input_age).attr('value','');
+    $(hotdeal_input_age).attr('placeholder','Age');
+    $(hotdeal_input_age).attr('required','');
+    $(hotdeal_input_age).attr('maxlength','2');
+    $(hotdeal_input_age).css('paddingRight','6px');
+    $(hotdeal_fieldset_age).append(hotdeal_label_ptntage);
+    $(hotdeal_fieldset_age).append(hotdeal_input_age);
+    $(hotdeal_age_col_class).append(hotdeal_fieldset_age);
+    var hotdeal_gender_col_class = document.createElement('div');
+    $(hotdeal_gender_col_class).css('float','right');
+    $(hotdeal_gender_col_class).css('width','90px');
+    $(hotdeal_gender_col_class).css('paddingLeft','0px');
+    var hotdeal_fieldset_gender = document.createElement('fieldset');
+    $(hotdeal_fieldset_gender).addClass("input-block");
+    var hotdeal_label_gender = document.createElement('label');
+    $(hotdeal_label_gender).html("Gender");
+    var hotdeal_gender_dropdown = document.createElement('div');
+    $(hotdeal_gender_dropdown).addClass("dropdown");
+    var hotdeal_gender_select = document.createElement('select');
+    $(hotdeal_gender_select).attr('id','hotdeal_ptnt_gender');
+    $(hotdeal_gender_select).css('width','100%');
+    $(hotdeal_gender_select).css('backgroundPosition','100% center');
+    $(hotdeal_gender_select).css('background','white');
+    $(hotdeal_gender_select).css('height','34px');
+    var hotdeal_gender_empty_option = document.createElement('option');
+    $(hotdeal_gender_empty_option).html("select");
+    $(hotdeal_gender_empty_option).attr('value','1');
+    var hotdeal_gender_male_option = document.createElement('option');
+    $(hotdeal_gender_male_option).attr('value','2');
+    $(hotdeal_gender_male_option).html("Male");
+    var hotdeal_gender_female_option = document.createElement('option');
+    $(hotdeal_gender_female_option).attr('value','3');
+    $(hotdeal_gender_female_option).html("Female");
+    $(hotdeal_gender_select).append(hotdeal_gender_empty_option);
+    $(hotdeal_gender_select).append(hotdeal_gender_male_option);
+    $(hotdeal_gender_select).append(hotdeal_gender_female_option);
+    $(hotdeal_gender_dropdown).append(hotdeal_gender_select);
+    $(hotdeal_fieldset_gender).append(hotdeal_label_gender);
+    $(hotdeal_fieldset_gender).append(hotdeal_gender_dropdown);
+    $(hotdeal_gender_col_class).append(hotdeal_fieldset_gender);
+    $(hotdeal_age_gender_col_class).append(hotdeal_age_col_class);
+    $(hotdeal_age_gender_col_class).append(hotdeal_gender_col_class);
+    $(hotdeal_gender_row).append(hotdeal_age_gender_col_class);
+    var hotdeal_pin_col_class = document.createElement('div');
+    $(hotdeal_pin_col_class).css('width','247px');
+    $(hotdeal_pin_col_class).css('paddingLeft','15px');
+    $(hotdeal_pin_col_class).css('paddingRight','15px');
+    $(hotdeal_pin_col_class).css('float','right');
+    var hotdeal_fieldset_pin = document.createElement('fieldset');
+    $(hotdeal_fieldset_pin).addClass("input-block");
+    var hotdeal_label_ptnt_pin = document.createElement('label');
+    $(hotdeal_label_ptnt_pin).attr('for','patient_age');
+    $(hotdeal_label_ptnt_pin).html("Pin Code");
+    var hotdeal_input_ptnt_pin = document.createElement('input');
+    $(hotdeal_input_ptnt_pin).attr('type','text');
+    $(hotdeal_input_ptnt_pin).attr('id', 'hotdeal_patient_pincode');
+    $(hotdeal_input_ptnt_pin).attr('name','patient_pincode');
+    $(hotdeal_input_ptnt_pin).attr('value','');
+    $(hotdeal_input_ptnt_pin).attr('placeholder','Pin Code');
+    $(hotdeal_input_ptnt_pin).attr('required','');
+    $(hotdeal_input_ptnt_pin).attr('maxlength','6');
+    $(hotdeal_input_ptnt_pin).css('paddingRight','6px');
+    $(hotdeal_fieldset_pin).append(hotdeal_label_ptnt_pin);
+    $(hotdeal_fieldset_pin).append(hotdeal_input_ptnt_pin);
+    $(hotdeal_pin_col_class).append(hotdeal_fieldset_pin);
+    $(hotdeal_gender_row).append(hotdeal_pin_col_class);
+    var hotdeal_hardcopy_row = document.createElement('div');
+    $(hotdeal_hardcopy_row).addClass("row");
+    $(hotdeal_hardcopy_row).css('marginTop','6px');
+    $(hotdeal_hardcopy_row).css('marginBottom','6px');
+    var hotdeal_hardcopy_class = document.createElement('div');
+    $(hotdeal_hardcopy_class).addClass("col-md-12 col-sm-12");
+    var hotdeal_hardcopy_head = document.createElement('div');
+    $(hotdeal_hardcopy_head).addClass("col-md-9 col-sm-9");
+    $(hotdeal_hardcopy_head).html("Do you need hard copy report"+"&nbsp;"+" (Charges applicable) ?");
+    $(hotdeal_hardcopy_head).css('color','#748286');
+    $(hotdeal_hardcopy_head).css('fontSize','12px');
+    $(hotdeal_hardcopy_head).css('fontWeight','bold');
+    $(hotdeal_hardcopy_head).css('paddingLeft','0px');
+    $(hotdeal_hardcopy_head).css('paddingRight','0px');
+    $(hotdeal_hardcopy_class).append(hotdeal_hardcopy_head);
+    var hotdeal_hardcopy_select = document.createElement('div');
+    $(hotdeal_hardcopy_select).addClass("col-md-3 col-sm-3");
+    $(hotdeal_hardcopy_select).css('paddingLeft','0px');
+    var hotdeal_hardcopy_yes_element = document.createElement('div');
+    $(hotdeal_hardcopy_yes_element).css('float','left');
+    var hotdeal_hardcopy_yes_ip = document.createElement('input');
+    $(hotdeal_hardcopy_yes_ip).attr('type','radio');
+    $(hotdeal_hardcopy_yes_ip).attr('name','hotdeal_hardcopy');
+    $(hotdeal_hardcopy_yes_ip).attr('value','yes');
+    $(hotdeal_hardcopy_yes_ip).css('float','left');
+    $(hotdeal_hardcopy_yes_ip).css('height','16px');
+    $(hotdeal_hardcopy_yes_ip).css('width','16px');
+    $(hotdeal_hardcopy_yes_ip).css('display','block');
+    var hotdeal_hardcopy_yes_p_element = document.createElement('div');
+    $(hotdeal_hardcopy_yes_p_element).html("&nbsp;"+"&nbsp;"+"Yes"+"&nbsp;"+"&nbsp;");
+    $(hotdeal_hardcopy_yes_p_element).css('float','left');
+    $(hotdeal_hardcopy_yes_p_element).css('fontSize','12px');
+    var hotdeal_hardcopy_no_element = document.createElement('div');
+    $(hotdeal_hardcopy_no_element).css('float','left');
+    var hotdeal_hardcopy_no_ip = document.createElement('input');
+    $(hotdeal_hardcopy_no_ip).attr('type','radio');
+    $(hotdeal_hardcopy_no_ip).attr('name','hotdeal_hardcopy');
+    $(hotdeal_hardcopy_no_ip).attr('value','no');
+    $(hotdeal_hardcopy_no_ip).css('float','left');
+    $(hotdeal_hardcopy_no_ip).css('width','16px');
+    $(hotdeal_hardcopy_no_ip).css('height','16px');
+    $(hotdeal_hardcopy_no_ip).css('display','block');
+    var hotdeal_hardcopy_no_p_element = document.createElement('div');
+    $(hotdeal_hardcopy_no_p_element).html("&nbsp;"+"&nbsp;"+"No");
+    $(hotdeal_hardcopy_no_p_element).css('float','left');
+    $(hotdeal_hardcopy_no_p_element).css('fontSize','12px');
+    $(hotdeal_hardcopy_yes_element).append(hotdeal_hardcopy_yes_ip);
+    $(hotdeal_hardcopy_yes_element).append(hotdeal_hardcopy_yes_p_element);
+    $(hotdeal_hardcopy_no_element).append(hotdeal_hardcopy_no_ip);
+    $(hotdeal_hardcopy_no_element).append(hotdeal_hardcopy_no_p_element);
+    $(hotdeal_hardcopy_select).append(hotdeal_hardcopy_yes_element);
+    $(hotdeal_hardcopy_select).append(hotdeal_hardcopy_no_element);
+    $(hotdeal_hardcopy_class).append(hotdeal_hardcopy_select);
+    $(hotdeal_hardcopy_row).append(hotdeal_hardcopy_class); 
     var address_row = document.createElement('div');
     $(address_row).addClass("row");
     var address_col_class = document.createElement('div');
@@ -642,7 +955,7 @@ function tabledata_handler(pageNum)
     $(label_phno).html('Mobile No:');
     var input_phno = document.createElement('input');
     $(input_phno).attr('type','text');
-    $(input_phno).attr('id','phone');
+    $(input_phno).attr('id','hotdeal_phone');
     $(input_phno).attr('name','patient_mobile');
     $(input_phno).attr('value','');
     $(input_phno).addClass('form-icon form-icon-phone');
@@ -657,7 +970,7 @@ function tabledata_handler(pageNum)
     $(label_booking).html('Appointment Timing:');
     var input_booking = document.createElement('input');
     $(input_booking).attr('type','text');
-    $(input_booking).attr('id','app_time');
+    $(input_booking).attr('id','hotdeal_app_time');
     $(input_booking).attr('name','appointment_time');
     $(input_booking).attr('value','');
     $(input_booking).attr('placeholder','Select Timeslot');
@@ -666,253 +979,519 @@ function tabledata_handler(pageNum)
     var information_row = document.createElement('row');
     $(information_row).addClass("row");
     var note_col_class = document.createElement('div');
-                  $(note_col_class).addClass("col-md-12 col-sm-12");
-                  var font_element = document.createElement('font');
-                  $(font_element).html("*Note: Patient Information is kept confidential and is used only for booking appointments and to improve the service.");
-                  $(font_element).css('fontSize','10px');
-                  var prevbtn_element = document.createElement('div');
-                  $(prevbtn_element).css('marginLeft','30px');
-                  $(prevbtn_element).addClass('prev');
-                  var backbtn = document.createElement('button');
-                  $(backbtn).attr('id','step2_back_btn');
-                  $(backbtn).addClass("button button-control");
-                  $(backbtn).attr('type','button');
-                  var span_backbtn = document.createElement('span');
-                  $(span_backbtn).html("Back");
-                  $(backbtn).append(span_backbtn);
-                  var backbtn_divider = document.createElement('div');
-                  $(backbtn_divider).addClass("button-divider");
-                  var nextbtn_element = document.createElement('div');
-                  $(nextbtn_element).css('marginLeft','50px');
-                  $(nextbtn_element).addClass('next');
-                  var nextbtn = document.createElement('button');
-                  $(nextbtn).attr('id','step2_next_btn');
-                  $(nextbtn).addClass("button button-control");
-                  $(nextbtn).attr('type','button');
-                  var span_nextbtn = document.createElement('span');
-                  $(span_nextbtn).html("Next");
-                  $(nextbtn).append(span_nextbtn);
-                  var nextbtn_divider = document.createElement('div');
-                  $(nextbtn_divider).addClass("button-divider");
-                  $(fieldset_element).append(label_ptntname);
-                  $(fieldset_element).append(input_element);
-                  $(fieldset_email).append(label_email);
-                  $(fieldset_email).append(input_email);
-                  $(fieldset_phno).append(label_phno);
-                  $(fieldset_phno).append(input_phno);
-                  $(fieldset_booking).append(label_booking);
-                  $(fieldset_booking).append(input_booking);
-                  $(fieldset_address).append(label_address);
-                  $(fieldset_address).append(input_address);
-                  $(name_col_class).append(fieldset_element);
-                  $(email_col_class).append(fieldset_email);
-                  $(phno_col_class).append(fieldset_phno);
-                  $(apptime_col_class).append(fieldset_booking);
-                  $(address_col_class).append(fieldset_address);
-                  $(note_col_class).append(font_element);
-                  $(name_row).append(name_col_class);
-                  $(email_row).append(email_col_class);
-                  $(phno_row).append(phno_col_class);
-                  $(phno_row).append(apptime_col_class);
-                  $(address_row).append(address_col_class);
-                  $(information_row).append(note_col_class);
-                  $(col_class_element).append(name_row);
-                  $(col_class_element).append(email_row);
-                  $(col_class_element).append(phno_row);
-                  $(col_class_element).append(address_row);
-                  $(col_class_element).append(information_row);
-                  $(second_row).append(col_class_element);
-                  $(form_class).append(second_row);
-                  $(col_element).append(form_class);
-                  $(row_element).append(col_element);
-                  $(prevbtn_element).append(backbtn);
-                  $(prevbtn_element).append(backbtn_divider);
-                  $(row_element).append(prevbtn_element);
-                  $(nextbtn_element).append(nextbtn);
-                  $(nextbtn_element).append(nextbtn_divider);
-                  $(row_element).append(nextbtn_element);
-                  $(wizard_element).append(row_element);
-                  $(form_element).append(wizard_element);
-                  $(parent_wizard).append(form_element);
-                  var error_display = document.createElement('div');
-                  $(error_display).addClass("display_error");
-                 var name_element = document.createElement('div');
-                 $(name_element).addClass("err_msg");
-                 $(name_element).attr('id','err_name');
-                 $(name_element).css('color','rgb(236,73,73)');
-                 $(name_element).css('textAlign','left');
-                 $(name_element).css('marginLeft','16px');
-                 $(name_element).css('display','none');
-                  var star_element = document.createElement('span');
-                  $(star_element).addClass('star');
-                  $(star_element).html("&#x2605");
-                  $(star_element).css('float','left');
-                  var error_name_element = document.createElement('div');
-                  $(error_name_element).html('Enter Full Name');
-                  $(name_element).append(star_element);
-                  $(name_element).append(error_name_element);
-                  var email_element = document.createElement('div');
-               	$(email_element).addClass("err_msg");
-                  $(email_element).attr('id','err_email');
-                  $(email_element).css('color','rgb(236,73,73)');
-                  $(email_element).css('textAlign','left');
-                  $(email_element).css('marginLeft','16px');
-                  $(email_element).css('display','none');
-                  var star_email = document.createElement('span');
-                  $(star_email).addClass('star');
-                  $(star_email).html("&#x2605");
-                  $(star_email).css('float','left');
-                  var error_email_element = document.createElement('div');
-                  $(error_email_element).html('Enter valid e-mail id');
-                 	$(email_element).append(star_email);
-                 	$(email_element).append(error_email_element);
-                  var mbno_element = document.createElement('div');
-                 	$(mbno_element).addClass("err_msg");
-                 	$(mbno_element).attr('id','err_mbno');
-                  $(mbno_element).css('color','rgb(236,73,73)');
-                  $(mbno_element).css('textAlign','left');
-                 	$(mbno_element).css('marginLeft','16px');
-                  $(mbno_element).css('display','none');
-                  var star_mbno = document.createElement('span');
-                  $(star_mbno).addClass('star');
-                  $(star_mbno).html("&#x2605");
-                  $(star_mbno).css('float','left');
-                  var error_mbno_element = document.createElement('div');
-                  $(error_mbno_element).html('Enter correct mobile number');
-                  $(mbno_element).append(star_mbno);
-                  $(mbno_element).append(error_mbno_element);
-                  var phno_element = document.createElement('div');
-                  $(phno_element).addClass("err_msg");
-                  $(phno_element).css('color','rgb(236,73,73)');
-                  $(phno_element).css('textAlign','left');
-                  $(phno_element).css('marginLeft','16px');
-                  $(phno_element).css('display','none');
-                  var star_phno = document.createElement('span');
-                  $(star_phno).addClass('star');
-                  $(star_phno).html("&#x2605");
-                  $(star_phno).css('float','left');
-                  var error_phno_element = document.createElement('div');
-                  $(error_phno_element).html('Mobile number is not valid');
-                  $(phno_element).append(star_phno);
-                  $(phno_element).append(error_phno_element);
-                  var address_element = document.createElement('div');
-                  $(address_element).addClass("err_msg");
-                  $(address_element).attr('id','err_address');
-                  $(address_element).css('color','rgb(236,73,73)');
-                  $(address_element).css('textAlign','left');
-                  $(address_element).css('marginLeft','16px');
-                  $(address_element).css('display','none');
-                  var star_address = document.createElement('span');
-                  $(star_address).addClass('star');
-                  $(star_address).html("&#x2605");
-                  $(star_address).css('float','left');
-                  var error_address_element = document.createElement('div');
-                  $(error_address_element).html('Enter your address');
-                  $(address_element).append(star_address);
-                  $(address_element).append(error_address_element);
-                  var apptime_element = document.createElement('div');
-                 	$(apptime_element).attr('id','err_apptime');
-                 	$(apptime_element).addClass("err_msg");
-                  $(apptime_element).css('color','rgb(236,73,73)');
-                 	$(apptime_element).css('textAlign','left');
-                 	$(apptime_element).css('marginLeft','16px');
-                 	$(apptime_element).css('display','none');
-                 	var star_apptime = document.createElement('span');
-                 	$(star_apptime).addClass('star');
-                 	$(star_apptime).html("&#x2605");
-                 	$(star_apptime).css('float','left');
-                  var error_apptime_element = document.createElement('div');
-                  $(error_apptime_element).html('Please select Appointment Time');
-               	 $(apptime_element).append(star_apptime);
-                   $(apptime_element).append(error_apptime_element);
-                  var app_time_element = document.createElement('div');
-                   $(app_time_element).attr('id','err_app_time');
-                   $(app_time_element).addClass("err_msg");
-                   $(app_time_element).css('color','rgb(236,73,73)');
-                   $(app_time_element).css('textAlign','left');
-                   $(app_time_element).css('marginLeft','16px');
-                 	 $(app_time_element).css('display','none');
-                   var star_app_time = document.createElement('span');
-                    $(star_app_time).addClass('star');
-                    $(star_app_time).html("&#x2605");
-                    $(star_app_time).css('float','left');
-                    var error_app_time_element = document.createElement('div');
-                     $(error_app_time_element).html('You have given past time.Give future time');
-                     $(app_time_element).append(star_app_time);
-                     $(app_time_element).append(error_app_time_element);
-                     $(error_display).append(name_element);
-                     $(error_display).append(email_element);
-                     $(error_display).append(mbno_element);
-                     $(error_display).append(apptime_element);
-                     $(error_display).append(app_time_element);
-                     $(error_display).append(address_element);
-                     $("#modal_secondpage").append(close_element);
-                     $("#modal_secondpage").append(contact_heading);
-                     $("#modal_secondpage").append(lab_details);
-                     $("#modal_secondpage").append(deal_name);
-                     $("#modal_secondpage").append(error_display);
-                     $("#modal_secondpage").append(parent_wizard);
-                         
-                   $(input_booking).on('keyup' ,function (event)
-                      { 
-                         event.preventDefault();
-                    	 });//keyup
-                   $(input_booking).on('keypress' ,function (event)
-                      {
-                    	    event.preventDefault();
-                      });//keypress	
-                   $(input_booking).on('keydown' ,function (event) 
-                     {
-                   	  event.preventDefault();
-                  	});//keydown
-                  	 
-                  $("#modal_close").on('click',function ()
-                     {
-                     	 if(typeof(Storage)!=="undefined")
-                          {
-                            datastore_handler();
-                          }//if
-               	    $("#modal_secondpage").modal().close(); 
-                     });//click
-                  var body_element = document.getElementsByClassName("themodal-lock")[0];
-                    	 $(body_element).on('keyup' ,function (event)
-                    	 {
-                             if(event.keyCode == 27)
-                             {
-                        	    if(typeof(Storage)!=="undefined")
-                               {
-                                 datastore_handler();
-                                }//if storage
-                              }//if keycode
-                         });//key fnctn
-                          
-                  var today = new Date();  
-                 var minutes = today.getMinutes();
-                 
-                 if((minutes >= '0'))  
-                {
-                     
-               	 $('.form_datetime').datetimepicker
-                   ({ 
-                     
-                     format:'dd/M/yyyy HH:ii P',
-                     startDate: new Date(today.getFullYear(), today.getMonth(), today.getDate(),today.getHours()+1,today.getMinutes()-today.getMinutes()),
-                     weekStart: 1,
-                     todayBtn:  0,
-                     autoclose: 1,
-                     todayHighlight: 1,
-                     startView: 2,
-                     forceParse: 0,
-                     minuteStep: 30,
+    $(note_col_class).addClass("col-md-12 col-sm-12");
+    var font_element = document.createElement('font');
+    $(font_element).html("*Note: Patient Information is kept confidential and is used only for booking appointments and to improve the service.");
+    $(font_element).css('fontSize','10px');
+    var prevbtn_element = document.createElement('div');
+    $(prevbtn_element).css('marginLeft','30px');
+    $(prevbtn_element).addClass('prev');
+    var backbtn = document.createElement('button');
+    $(backbtn).attr('id','step2_back_btn');
+    $(backbtn).addClass("button button-control");
+    $(backbtn).attr('type','button');
+    var span_backbtn = document.createElement('span');
+    $(span_backbtn).html("Back");
+    $(backbtn).append(span_backbtn);
+    var backbtn_divider = document.createElement('div');
+    $(backbtn_divider).addClass("button-divider");
+    var nextbtn_element = document.createElement('div');
+    $(nextbtn_element).css('marginLeft','50px');
+    $(nextbtn_element).addClass('next');
+    var nextbtn = document.createElement('button');
+    $(nextbtn).attr('id','step2_next_btn');
+    $(nextbtn).addClass("button button-control");
+    $(nextbtn).attr('type','button');
+    var span_nextbtn = document.createElement('span');
+    $(span_nextbtn).html("Next");
+    $(nextbtn).append(span_nextbtn);
+    var nextbtn_divider = document.createElement('div');
+    $(nextbtn_divider).addClass("button-divider");
+    $(fieldset_element).append(label_ptntname);
+    $(fieldset_element).append(input_element);
+    $(fieldset_email).append(label_email);
+    $(fieldset_email).append(input_email);
+    $(fieldset_phno).append(label_phno);
+    $(fieldset_phno).append(input_phno);
+    $(fieldset_booking).append(label_booking);
+    $(fieldset_booking).append(input_booking);
+    $(name_col_class).append(fieldset_element);
+    $(email_col_class).append(fieldset_email);
+    $(phno_col_class).append(fieldset_phno);
+    $(apptime_col_class).append(fieldset_booking);
+    $(note_col_class).append(font_element);
+    $(name_row).append(name_col_class);
+    $(email_row).append(email_col_class);
+    $(phno_row).append(phno_col_class);
+    $(phno_row).append(apptime_col_class);
+    $(information_row).append(note_col_class);
+    $(col_class_element).append(name_row);
+    $(col_class_element).append(email_row);
+    $(col_class_element).append(hotdeal_gender_row);
+    $(col_class_element).append(phno_row);
+    console.log(visit_type);
+    if (visit_type == 'homevisitonly') 
+    {
+       var hotdeal_homevisit_row = document.createElement('div');
+       $(hotdeal_homevisit_row).addClass("row");
+       $(hotdeal_homevisit_row).css('marginTop','6px');
+       $(hotdeal_homevisit_row).css('marginBottom','6px');
+       var hotdeal_homevisit_class = document.createElement('div');
+       $(hotdeal_homevisit_class).addClass("col-md-12 col-sm-12");
+       var hotdeal_homevisit_head = document.createElement('div');
+       $(hotdeal_homevisit_head).addClass("col-md-7 col-sm-7");
+       $(hotdeal_homevisit_head).html("Do you want home sample collection ?");
+       $(hotdeal_homevisit_head).css('color','#748286');
+       $(hotdeal_homevisit_head).css('fontSize','12px');
+       $(hotdeal_homevisit_head).css('fontWeight','bold');
+       $(hotdeal_homevisit_head).css('paddingLeft','0px');
+       $(hotdeal_homevisit_head).css('paddingRight','0px');
+       $(hotdeal_homevisit_class).append(hotdeal_homevisit_head);
+       var hotdeal_homevisit_select = document.createElement('div');
+       $(hotdeal_homevisit_select).addClass("col-md-5 col-sm-5");
+       $(hotdeal_homevisit_select).css('paddingLeft','0px');
+       var hotdeal_homevisit_yes_element = document.createElement('div');
+       $(hotdeal_homevisit_yes_element).css('float','left');
+       var hotdeal_homevisit_yes_ip = document.createElement('input');
+       $(hotdeal_homevisit_yes_ip).attr('type','radio');
+       $(hotdeal_homevisit_yes_ip).attr('value','yes');
+       $(hotdeal_homevisit_yes_ip).attr('id','hotdeal_homevisit_yes');
+       $(hotdeal_homevisit_yes_ip).attr('name','hotdeal_homevisit'); 
+       $(hotdeal_homevisit_yes_ip).attr('checked','true');  
+       $(hotdeal_homevisit_yes_ip).css('float','left');
+       $(hotdeal_homevisit_yes_ip).css('height','16px');
+       $(hotdeal_homevisit_yes_ip).css('width','16px');
+       $(hotdeal_homevisit_yes_ip).css('display','block');
+       var hotdeal_homevisit_yes_p_element = document.createElement('div');
+       $(hotdeal_homevisit_yes_p_element).html("&nbsp;"+"&nbsp;"+"Yes"+"&nbsp;"+"&nbsp;");
+       $(hotdeal_homevisit_yes_p_element).css('float','left');
+       $(hotdeal_homevisit_yes_p_element).css('fontSize','12px');
+       var hotdeal_homevisit_no_element = document.createElement('div');
+       $(hotdeal_homevisit_no_element).css('float','left');
+       $(hotdeal_homevisit_no_element).css('display','none');
+       var hotdeal_homevisit_no_ip = document.createElement('input');
+       $(hotdeal_homevisit_no_ip).attr('type','radio');
+       $(hotdeal_homevisit_no_ip).attr('id','hotdeal_homevisit_no');
+       $(hotdeal_homevisit_no_ip).attr('name','hotdeal_homevisit');
+       $(hotdeal_homevisit_no_ip).attr('value','no');
+       $(hotdeal_homevisit_no_ip).css('float','left');
+       $(hotdeal_homevisit_no_ip).css('width','16px');
+       $(hotdeal_homevisit_no_ip).css('height','16px');
+       $(hotdeal_homevisit_no_ip).css('display','block');
+       var hotdeal_homevisit_no_p_element = document.createElement('div');
+       $(hotdeal_homevisit_no_p_element).html("&nbsp;"+"&nbsp;"+"No");
+       $(hotdeal_homevisit_no_p_element).css('float','left');
+       $(hotdeal_homevisit_no_p_element).css('fontSize','12px');
+       $(hotdeal_homevisit_yes_element).append(hotdeal_homevisit_yes_ip);
+       $(hotdeal_homevisit_yes_element).append(hotdeal_homevisit_yes_p_element);
+       $(hotdeal_homevisit_no_element).append(hotdeal_homevisit_no_ip);
+       $(hotdeal_homevisit_no_element).append(hotdeal_homevisit_no_p_element);
+       $(hotdeal_homevisit_select).append(hotdeal_homevisit_yes_element);
+       $(hotdeal_homevisit_class).append(hotdeal_homevisit_select);
+       $(hotdeal_homevisit_row).append(hotdeal_homevisit_class);
+       var hotdeal_address_row = document.createElement('div');
+       $(hotdeal_address_row).addClass("row");
+       $(hotdeal_address_row).attr('id','hotdeal_ptnt_address');
+       var hotdeal_address_col_class = document.createElement('div');
+       $(hotdeal_address_col_class).addClass("col-md-12 col-sm-12");
+       var hotdeal_fieldset_address = document.createElement('fieldset');
+       $(hotdeal_fieldset_address).addClass("input-block");
+       var hotdeal_input_address = document.createElement('input');
+       $(hotdeal_input_address).attr('type','text');
+       $(hotdeal_input_address).attr('id','hotdeal_pfl_address');
+       $(hotdeal_input_address).attr('name','patient_address');
+       $(hotdeal_input_address).attr('value','');
+       $(hotdeal_input_address).css('border','1px solid #c4cdcf');
+       $(hotdeal_input_address).attr('placeholder','Address & LandMark');
+       $(hotdeal_input_address).attr('required','required');
+       $(hotdeal_input_address).css('paddingRight','11px');
+       $(hotdeal_fieldset_address).append(hotdeal_input_address);
+       $(hotdeal_address_col_class).append(hotdeal_fieldset_address);
+       $(hotdeal_address_row).append(hotdeal_address_col_class);
+       $(col_class_element).append(hotdeal_homevisit_row);
+       $(col_class_element).append(hotdeal_address_row);
+    }
+    else if (visit_type =="both") 
+    {
+    	 var hotdeal_homevisit_row = document.createElement('div');
+       $(hotdeal_homevisit_row).addClass("row");
+       $(hotdeal_homevisit_row).css('marginTop','6px');
+       $(hotdeal_homevisit_row).css('marginBottom','6px');
+       var hotdeal_homevisit_class = document.createElement('div');
+       $(hotdeal_homevisit_class).addClass("col-md-12 col-sm-12");
+       var hotdeal_homevisit_head = document.createElement('div');
+       $(hotdeal_homevisit_head).addClass("col-md-7 col-sm-7");
+       $(hotdeal_homevisit_head).html("Do you want home sample collection ?");
+       $(hotdeal_homevisit_head).css('color','#748286');
+       $(hotdeal_homevisit_head).css('fontSize','12px');
+       $(hotdeal_homevisit_head).css('fontWeight','bold');
+       $(hotdeal_homevisit_head).css('paddingLeft','0px');
+       $(hotdeal_homevisit_head).css('paddingRight','0px');
+       $(hotdeal_homevisit_class).append(hotdeal_homevisit_head);
+       var hotdeal_homevisit_select = document.createElement('div');
+       $(hotdeal_homevisit_select).addClass("col-md-5 col-sm-5");
+       $(hotdeal_homevisit_select).css('paddingLeft','0px');
+       var hotdeal_homevisit_yes_element = document.createElement('div');
+       $(hotdeal_homevisit_yes_element).css('float','left');
+       var hotdeal_homevisit_yes_ip = document.createElement('input');
+       $(hotdeal_homevisit_yes_ip).attr('type','radio');
+       $(hotdeal_homevisit_yes_ip).attr('value','yes');
+       $(hotdeal_homevisit_yes_ip).attr('id','hotdeal_homevisit_yes');
+       $(hotdeal_homevisit_yes_ip).attr('name','hotdeal_homevisit');  
+       $(hotdeal_homevisit_yes_ip).css('float','left');
+       $(hotdeal_homevisit_yes_ip).css('height','16px');
+       $(hotdeal_homevisit_yes_ip).css('width','16px');
+       $(hotdeal_homevisit_yes_ip).css('display','block');
+       $(hotdeal_homevisit_yes_ip).on('click',hotdeal_patient_homevisit_handler);
+       var hotdeal_homevisit_yes_p_element = document.createElement('div');
+       $(hotdeal_homevisit_yes_p_element).html("&nbsp;"+"&nbsp;"+"Yes"+"&nbsp;"+"&nbsp;");
+       $(hotdeal_homevisit_yes_p_element).css('float','left');
+       $(hotdeal_homevisit_yes_p_element).css('fontSize','12px');
+       var hotdeal_homevisit_no_element = document.createElement('div');
+       $(hotdeal_homevisit_no_element).css('float','left');
+       var hotdeal_homevisit_no_ip = document.createElement('input');
+       $(hotdeal_homevisit_no_ip).attr('type','radio');
+       $(hotdeal_homevisit_no_ip).attr('id','hotdeal_homevisit_no');
+       $(hotdeal_homevisit_no_ip).attr('name','hotdeal_homevisit');
+       $(hotdeal_homevisit_no_ip).attr('value','no');
+       $(hotdeal_homevisit_no_ip).css('float','left');
+       $(hotdeal_homevisit_no_ip).css('width','16px');
+       $(hotdeal_homevisit_no_ip).css('height','16px');
+       $(hotdeal_homevisit_no_ip).css('display','block');
+       $(hotdeal_homevisit_no_ip).on('click',hotdeal_patient_homevisit_handler);
+       var hotdeal_homevisit_no_p_element = document.createElement('div');
+       $(hotdeal_homevisit_no_p_element).html("&nbsp;"+"&nbsp;"+"No");
+       $(hotdeal_homevisit_no_p_element).css('float','left');
+       $(hotdeal_homevisit_no_p_element).css('fontSize','12px');
+       $(hotdeal_homevisit_yes_element).append(hotdeal_homevisit_yes_ip);
+       $(hotdeal_homevisit_yes_element).append(hotdeal_homevisit_yes_p_element);
+       $(hotdeal_homevisit_no_element).append(hotdeal_homevisit_no_ip);
+       $(hotdeal_homevisit_no_element).append(hotdeal_homevisit_no_p_element);
+       $(hotdeal_homevisit_select).append(hotdeal_homevisit_yes_element);
+       $(hotdeal_homevisit_select).append(hotdeal_homevisit_no_element);
+       $(hotdeal_homevisit_class).append(hotdeal_homevisit_select);
+       $(hotdeal_homevisit_row).append(hotdeal_homevisit_class);
+       var hotdeal_address_row = document.createElement('div');
+       $(hotdeal_address_row).addClass("row");
+       $(hotdeal_address_row).attr('id','hotdeal_ptnt_address');
+       $(hotdeal_address_row).css('display','none');
+       var hotdeal_address_col_class = document.createElement('div');
+       $(hotdeal_address_col_class).addClass("col-md-12 col-sm-12");
+       var hotdeal_fieldset_address = document.createElement('fieldset');
+       $(hotdeal_fieldset_address).addClass("input-block");
+       var hotdeal_input_address = document.createElement('input');
+       $(hotdeal_input_address).attr('type','text');
+       $(hotdeal_input_address).attr('id','hotdeal_pfl_address');
+       $(hotdeal_input_address).attr('name','patient_address');
+       $(hotdeal_input_address).attr('value','');
+       $(hotdeal_input_address).css('border','1px solid #c4cdcf');
+       $(hotdeal_input_address).attr('placeholder','Address & LandMark');
+       $(hotdeal_input_address).attr('required','required');
+       $(hotdeal_input_address).css('paddingRight','11px');
+       $(hotdeal_fieldset_address).append(hotdeal_input_address);
+       $(hotdeal_address_col_class).append(hotdeal_fieldset_address);
+       $(hotdeal_address_row).append(hotdeal_address_col_class);
+       $(col_class_element).append(hotdeal_homevisit_row);
+       $(col_class_element).append(hotdeal_address_row);
+    }//else if 
+    else 
+    {
+      var hotdeal_address_row = document.createElement('div');
+       $(hotdeal_address_row).addClass("row");
+       $(hotdeal_address_row).attr('id','hotdeal_ptnt_address');
+       $(hotdeal_address_row).css('display','none');
+       var hotdeal_address_col_class = document.createElement('div');
+       $(hotdeal_address_col_class).addClass("col-md-12 col-sm-12");
+       var hotdeal_fieldset_address = document.createElement('fieldset');
+       $(hotdeal_fieldset_address).addClass("input-block");
+       var hotdeal_input_address = document.createElement('input');
+       $(hotdeal_input_address).attr('type','text');
+       $(hotdeal_input_address).attr('id','hotdeal_pfl_address');
+       $(hotdeal_input_address).attr('name','patient_address');
+       $(hotdeal_input_address).attr('value','');
+       $(hotdeal_input_address).css('border','1px solid #c4cdcf');
+       $(hotdeal_input_address).attr('placeholder','Address & LandMark');
+       $(hotdeal_input_address).attr('required','required');
+       $(hotdeal_input_address).css('paddingRight','11px');
+       $(hotdeal_fieldset_address).append(hotdeal_input_address);
+       $(hotdeal_address_col_class).append(hotdeal_fieldset_address);
+       $(hotdeal_address_row).append(hotdeal_address_col_class);
+       $(col_class_element).append(hotdeal_address_row);
+    }//else    	
+    $(col_class_element).append(hotdeal_hardcopy_row);
+    $(col_class_element).append(information_row);
+    $(second_row).append(col_class_element);
+    $(form_class).append(second_row);
+    $(col_element).append(form_class);
+    $(row_element).append(col_element);
+    $(prevbtn_element).append(backbtn);
+    $(prevbtn_element).append(backbtn_divider);
+    $(row_element).append(prevbtn_element);
+    $(nextbtn_element).append(nextbtn);
+    $(nextbtn_element).append(nextbtn_divider);
+    $(row_element).append(nextbtn_element);
+    $(wizard_element).append(row_element);
+    $(form_element).append(wizard_element);
+    $(parent_wizard).append(form_element);
+    var error_display = document.createElement('div');
+    $(error_display).addClass("display_error");
+    var name_element = document.createElement('div');
+    $(name_element).addClass("err_msg");
+    $(name_element).attr('id','err_name');
+    $(name_element).css('color','rgb(236,73,73)');
+    $(name_element).css('textAlign','left');
+    $(name_element).css('marginLeft','16px');
+    $(name_element).css('display','none');
+    var star_element = document.createElement('span');
+    $(star_element).addClass('star');
+    $(star_element).html("&#x2605");
+    $(star_element).css('float','left');
+    var error_name_element = document.createElement('div');
+    $(error_name_element).html('Enter Full Name');
+    $(name_element).append(star_element);
+    $(name_element).append(error_name_element);
+    var email_element = document.createElement('div');
+    $(email_element).addClass("err_msg");
+    $(email_element).attr('id','err_email');
+    $(email_element).css('color','rgb(236,73,73)');
+    $(email_element).css('textAlign','left');
+    $(email_element).css('marginLeft','16px');
+    $(email_element).css('display','none');
+    var star_email = document.createElement('span');
+    $(star_email).addClass('star');
+    $(star_email).html("&#x2605");
+    $(star_email).css('float','left');
+    var error_email_element = document.createElement('div');
+    $(error_email_element).html('Enter valid e-mail id');
+    $(email_element).append(star_email);
+    $(email_element).append(error_email_element);
+    var mbno_element = document.createElement('div');
+    $(mbno_element).addClass("err_msg");
+    $(mbno_element).attr('id','err_mbno');
+    $(mbno_element).css('color','rgb(236,73,73)');
+    $(mbno_element).css('textAlign','left');
+    $(mbno_element).css('marginLeft','16px');
+    $(mbno_element).css('display','none');
+    var star_mbno = document.createElement('span');
+    $(star_mbno).addClass('star');
+    $(star_mbno).html("&#x2605");
+    $(star_mbno).css('float','left');
+    var error_mbno_element = document.createElement('div');
+    $(error_mbno_element).html('Enter correct mobile number');
+    $(mbno_element).append(star_mbno);
+    $(mbno_element).append(error_mbno_element);
+    var phno_element = document.createElement('div');
+    $(phno_element).addClass("err_msg");
+    $(phno_element).css('color','rgb(236,73,73)');
+    $(phno_element).css('textAlign','left');
+    $(phno_element).css('marginLeft','16px');
+    $(phno_element).css('display','none');
+    var star_phno = document.createElement('span');
+    $(star_phno).addClass('star');
+    $(star_phno).html("&#x2605");
+    $(star_phno).css('float','left');
+    var error_phno_element = document.createElement('div');
+    $(error_phno_element).html('Mobile number is not valid');
+    $(phno_element).append(star_phno);
+    $(phno_element).append(error_phno_element);
+    var address_element = document.createElement('div');
+    $(address_element).addClass("err_msg");
+    $(address_element).attr('id','err_address');
+    $(address_element).css('color','rgb(236,73,73)');
+    $(address_element).css('textAlign','left');
+    $(address_element).css('marginLeft','16px');
+    $(address_element).css('display','none');
+    var star_address = document.createElement('span');
+    $(star_address).addClass('star');
+    $(star_address).html("&#x2605");
+    $(star_address).css('float','left');
+    var error_address_element = document.createElement('div');
+    $(error_address_element).html('Enter your address');
+    $(address_element).append(star_address);
+    $(address_element).append(error_address_element);
+    var apptime_element = document.createElement('div');
+    $(apptime_element).attr('id','err_apptime');
+    $(apptime_element).addClass("err_msg");
+    $(apptime_element).css('color','rgb(236,73,73)');
+    $(apptime_element).css('textAlign','left');
+    $(apptime_element).css('marginLeft','16px');
+    $(apptime_element).css('display','none');
+    var star_apptime = document.createElement('span');
+    $(star_apptime).addClass('star');
+    $(star_apptime).html("&#x2605");
+    $(star_apptime).css('float','left');
+    var error_apptime_element = document.createElement('div');
+    $(error_apptime_element).html('Please select Appointment Time');
+    $(apptime_element).append(star_apptime);
+    $(apptime_element).append(error_apptime_element);
+    var app_time_element = document.createElement('div');
+    $(app_time_element).attr('id','err_app_time');
+    $(app_time_element).addClass("err_msg");
+    $(app_time_element).css('color','rgb(236,73,73)');
+    $(app_time_element).css('textAlign','left');
+    $(app_time_element).css('marginLeft','16px');
+    $(app_time_element).css('display','none');
+    var star_app_time = document.createElement('span');
+    $(star_app_time).addClass('star');
+    $(star_app_time).html("&#x2605");
+    $(star_app_time).css('float','left');
+    var error_app_time_element = document.createElement('div');
+    $(error_app_time_element).html('You have given past time.Give future time');
+    $(app_time_element).append(star_app_time);
+    $(app_time_element).append(error_app_time_element);
+    var deal_age_element = document.createElement('div');
+    $(deal_age_element).attr('id','err_age');
+    $(deal_age_element).addClass("err_msg");
+    $(deal_age_element).css('color','rgb(236,73,73)');
+    $(deal_age_element).css('textAlign','left');
+    $(deal_age_element).css('marginLeft','16px');
+    $(deal_age_element).css('display','none');
+    var deal_star_age = document.createElement('span');
+    $(deal_star_age).addClass('star');
+    $(deal_star_age).html("&#x2605");
+    $(deal_star_age).css('float','left');
+    var deal_error_age_element = document.createElement('div');
+    $(deal_error_age_element).html('Enter your  age');
+    $(deal_age_element).append(deal_star_age);
+    $(deal_age_element).append(deal_error_age_element);
+    var deal_gender_element = document.createElement('div');
+    $(deal_gender_element).attr('id','err_gender');
+    $(deal_gender_element).addClass("err_msg");
+    $(deal_gender_element).css('color','rgb(236,73,73)');
+    $(deal_gender_element).css('textAlign','left');
+    $(deal_gender_element).css('marginLeft','16px');
+    $(deal_gender_element).css('display','none');
+    var deal_star_gender = document.createElement('span');
+    $(deal_star_gender).addClass('star');
+    $(deal_star_gender).html("&#x2605");
+    $(deal_star_gender).css('float','left');
+    var deal_error_gender_element = document.createElement('div');
+    $(deal_error_gender_element).html('Select your gender');
+    $(deal_gender_element).append(deal_star_gender);
+    $(deal_gender_element).append(deal_error_gender_element);
+    var deal_pincode_element = document.createElement('div');
+    $(deal_pincode_element).attr('id','err_pincode');
+    $(deal_pincode_element).addClass("err_msg");
+    $(deal_pincode_element).css('color','rgb(236,73,73)');
+    $(deal_pincode_element).css('textAlign','left');
+    $(deal_pincode_element).css('marginLeft','16px');
+    $(deal_pincode_element).css('display','none');
+    var deal_star_pincode = document.createElement('span');
+    $(deal_star_pincode).addClass('star');
+    $(deal_star_pincode).html("&#x2605");
+    $(deal_star_pincode).css('float','left');
+    var deal_error_pincode_element = document.createElement('div');
+    $(deal_error_pincode_element).html('Enter correct pin code');
+    $(deal_pincode_element).append(deal_star_pincode);
+    $(deal_pincode_element).append(deal_error_pincode_element);
+    var deal_home_vst_element = document.createElement('div');
+    $(deal_home_vst_element).attr('id','err_home_vst');
+    $(deal_home_vst_element).addClass("err_msg");
+    $(deal_home_vst_element).css('color','rgb(236,73,73)');
+    $(deal_home_vst_element).css('textAlign','left');
+    $(deal_home_vst_element).css('marginLeft','16px');
+    $(deal_home_vst_element).css('display','none');
+    var deal_star_home_vst = document.createElement('span');
+    $(deal_star_home_vst).addClass('star');
+    $(deal_star_home_vst).html("&#x2605");
+    $(deal_star_home_vst).css('float','left');
+    var deal_error_home_vst_element = document.createElement('div');
+    $(deal_error_home_vst_element).html('Select home visit yes or no');
+    $(deal_home_vst_element).append(deal_star_home_vst);
+    $(deal_home_vst_element).append(deal_error_home_vst_element);
+    var deal_hard_cpy_element = document.createElement('div');
+    $(deal_hard_cpy_element).attr('id','err_hard_cpy');
+    $(deal_hard_cpy_element).addClass("err_msg");
+    $(deal_hard_cpy_element).css('color','rgb(236,73,73)');
+    $(deal_hard_cpy_element).css('textAlign','left');
+    $(deal_hard_cpy_element).css('marginLeft','16px');
+    $(deal_hard_cpy_element).css('display','none');
+    var deal_star_hard_cpy= document.createElement('span');
+    $(deal_star_hard_cpy).addClass('star');
+    $(deal_star_hard_cpy).html("&#x2605");
+    $(deal_star_hard_cpy).css('float','left');
+    var deal_error_hard_cpy_element = document.createElement('div');
+    $(deal_error_hard_cpy_element).html('Select hard copy yes or no');
+    $(deal_hard_cpy_element).append(deal_star_hard_cpy);
+    $(deal_hard_cpy_element).append(deal_error_hard_cpy_element);
+    $(error_display).append(name_element);
+    $(error_display).append(email_element);
+    $(error_display).append(mbno_element);
+    $(error_display).append(apptime_element);
+    $(error_display).append(app_time_element);
+    $(error_display).append(address_element);
+    $(error_display).append(deal_age_element);
+    $(error_display).append(deal_gender_element);
+    $(error_display).append(deal_pincode_element);
+    $(error_display).append(deal_home_vst_element);
+    $(error_display).append(deal_hard_cpy_element);
+    $("#modal_secondpage").append(close_element);
+    $("#modal_secondpage").append(contact_heading);
+    $("#modal_secondpage").append(error_display);
+    $("#modal_secondpage").append(parent_wizard);
+    $(input_booking).on('keyup' ,function (event)
+    { 
+        event.preventDefault();
+    });//keyup
+    $(input_booking).on('keypress' ,function (event)
+    {
+          event.preventDefault();
+    });//keypress	
+    $(input_booking).on('keydown' ,function (event) 
+    {
+          event.preventDefault();
+   });//keydown
+   $("input[placeholder]").focusin(function () 
+   {
+    $(this).data('place-holder-text', $(this).attr('placeholder')).attr('placeholder', '');
+  });
+  $("input[placeholder]").focusout(function () 
+  {
+    $(this).attr('placeholder', $(this).data('place-holder-text'));
+  });
+   $("#modal_close").on('click',function ()
+   {
+      if(typeof(Storage)!=="undefined")
+      {
+            datastore_handler();
+       }//if
+       $("#modal_secondpage").modal().close(); 
+    });//click
+    var body_element = document.getElementsByClassName("themodal-lock")[0];
+    $(body_element).on('keyup' ,function (event)
+    {
+        if(event.keyCode == 27)
+        {
+            if(typeof(Storage)!=="undefined")
+            {
+                datastore_handler();
+            }//if storage
+         }//if keycode
+     });//key fnctn
+     var today = new Date();  
+     var minutes = today.getMinutes();
+     if((minutes >= '0'))  
+     {
+        $('.form_datetime').datetimepicker
+        ({ 
+             format:'dd/M/yyyy HH:ii P',
+             startDate: new Date(today.getFullYear(), today.getMonth(), today.getDate(),today.getHours()+1,today.getMinutes()-today.getMinutes()),
+             weekStart: 1,
+             todayBtn:  0,
+             autoclose: 1,
+             todayHighlight: 1,
+             startView: 2,
+             forceParse: 0,
+             minuteStep: 30,
                  }); //datetimepicker	
                 }//if
               
                   $('.form_datetime').datetimepicker('setHoursDisabled', '0,1,2,3,4,5,22,23,24'); 
                    
-                 var pat_name = $("#patient_name").val();
-                 var pat_email = $("#email").val();
-                 var pat_phno = $("#phone").val();
-                 var pat_apptime = $("#app_time").val();
+                 var pat_name = $("#hotdeal_patient_name").val();
+                 var pat_email = $("#hotdeal_email").val();
+                 var pat_phno = $("#hotdeal_phone").val();
+                 var pat_apptime = $("#hotdeal_app_time").val();
                        if ((pat_name == "") && (pat_email =="") && (pat_phno == "") && (pat_apptime == ""))
                      {
                        Filling_localdata(); 
@@ -927,11 +1506,11 @@ function tabledata_handler(pageNum)
                        { 
                      	 datastore_handler();
                        }//if  
-                        var patient_name = $('#patient_name').val();
-                         var patient_email = $('#email').val();
+                        var patient_name = $('#hotdeal_patient_name').val();
+                         var patient_email = $('#hotdeal_email').val();
                        var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-                        var mobile_number = $('#phone').val();
-                         var patient_apptime =  $('#app_time').val();
+                        var mobile_number = $('#hotdeal_phone').val();
+                         var patient_apptime =  $('#hotdeal_app_time').val();
                          if(typeof(Storage)!=="undefined")
                        { 
                      	 datastore_handler();
@@ -966,60 +1545,7 @@ function tabledata_handler(pageNum)
                           var current_hours = addZero(currenttime.getHours());
                           var current_minutes = addZero(currenttime.getMinutes());
                           var current_time = current_year+"-"+current_month+"-"+current_date+" "+current_hours+":"+current_minutes;
-                     if((document.getElementById("err_email").style.display ='none') && (document.getElementById('err_mbno').style.display = 'none') &&(document.getElementById('err_apptime').style.display = 'none') &&(document.getElementById('err_app_time').style.display = 'none') &&(document.getElementById("err_address").style.display ='none'))
-                    { 
-                      if ( !(patient_name.length >= 6 && patient_name.length <= 26) || patient_name.match(/[^a-zA-Z ]/)  )
-                        {
-                           $(name_element).css('display','block');
-                          return false;
-                        
-                        }//if patient name
-                      if(document.getElementById('err_name').style.display = 'block')
-                        {
-                            document.getElementById('err_name').style.display = 'none';
-                          
-                        }//if err_name
-                      }//if 
-                     if((document.getElementById("err_name").style.display ='none') && (document.getElementById('err_mbno').style.display = 'none') &&(document.getElementById('err_apptime').style.display = 'none') &&(document.getElementById('err_app_time').style.display = 'none') &&(document.getElementById("err_address").style.display ='none')) 
-                    {
-                    	 if(!filter.test(patient_email))
-                       {
-                         $(email_element).css('display','block');
-                        return false;
-                       }//if email
-                     if(document.getElementById('err_email').style.display = 'block')
-                       {
-                          document.getElementById('err_email').style.display = 'none';
-                          
-                       }//if err_email
-                       }//if
-                       if((document.getElementById("err_email").style.display ='none') && (document.getElementById('err_name').style.display = 'none') &&(document.getElementById('err_apptime').style.display = 'none') &&(document.getElementById('err_app_time').style.display = 'none') &&(document.getElementById("err_address").style.display ='none'))
-                       {
-                       	 if((mobile_number.match(/[^0-9]/) || mobile_number.length != 10) || (!(mobile_number.charAt(0)=="9" || mobile_number.charAt(0)=="8" || mobile_number.charAt(0)=="7")))
-                       {
-                       	 $(mbno_element).css('display','block');
-                       	 return false;
-                       }//if mble
-                        if(document.getElementById('err_mbno').style.display = 'block')
-                       {
-                       	
-                          document.getElementById('err_mbno').style.display = 'none';
-                         
-                       }//if err_mbno
-                       }//if
-                      
-                       if((document.getElementById("err_email").style.display ='none') && (document.getElementById('err_mbno').style.display = 'none') &&(document.getElementById('err_name').style.display = 'none') &&(document.getElementById('err_app_time').style.display = 'none') &&(document.getElementById("err_address").style.display ='none'))
-                     {
-                     	
-                     	if(! ($('#app_time').val()))   
-                       {
-                         	$(apptime_element).css('display','block');
-                           return false;
-                       }//if app_time
-                       
-                       var val_time = date+"-"+month+"-"+year+" "+hours +":"+ mnt+":"+sec;
-                      
-                         
+                          var val_time = date+"-"+month+"-"+year+" "+hours +":"+ mnt+":"+sec;
                           var sel_month_name = appt_time.substr(3,3);
     
     
@@ -1145,454 +1671,771 @@ function tabledata_handler(pageNum)
                    var sel_time = sel_year+"-"+sel_month+"-"+sel_date+" "+sel_hours+":"+sel_minutes+":"+sel_sec;
                    
                   }// if 09
-                       if(!(sel_time.match(/\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}/)))
-                     
-                        {
-                       	  
-                         $(apptime_element).css('display','block');
-                        
-                         return false;
-                       }//if val time 
-                        if(document.getElementById('err_apptime').style.display = 'block')
-                       {
-                          document.getElementById('err_apptime').style.display = 'none';
-                          
-                       }
-                       }//if
-                          if((document.getElementById("err_email").style.display ='none') && (document.getElementById('err_mbno').style.display = 'none') &&(document.getElementById('err_name').style.display = 'none') &&(document.getElementById('err_apptime').style.display = 'none') &&(document.getElementById("err_address").style.display ='none'))
-                         {
-                          if(current_time > sel_time) 
-                          {
-                          	
-                          	$(app_time_element).css('display','block');
-                          	return false;
-                          	}//if time
-                         if (document.getElementById('err_app_time').style.display = 'block') 
-                          {
-                          	  document.getElementById('err_app_time').style.display = 'none';
-                          	  
-                           }//if err_time
-                         }//if
-                       if(visit_type.length == "13")
-                      {
-                       if((document.getElementById('err_name').style.display = 'none') && (document.getElementById("err_email").style.display ='none') && (document.getElementById('err_mbno').style.display = 'none') &&(document.getElementById('err_apptime').style.display = 'none') &&(document.getElementById('err_app_time').style.display = 'none'))
-                       {
-                            if(! ($('#hotdeal_pkg_address').val()))  
-                          {
-                             $(address_element).css('display','block');
-                              return false;
-                          }// if visit type
-                       
-                         if (document.getElementById('err_address').style.display = 'block') 
-                          {
-                          	  document.getElementById('err_address').style.display = 'none';
-                          	  
-                           }//if err_visittype
-                       }
-                      }
-                       preview_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
-                 
-                    });//btn onclick handler
+                  if (visit_type == "both") 
+                  {   
+                     hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea,deal_hard_cpy_element,deal_home_vst_element,app_time_element,apptime_element,mbno_element,sel_time,current_time,name_element,email_element,deal_age_element,deal_gender_element,deal_pincode_element); 
+                  }//if both       
+                  else if (visit_type == "homevisitonly") 
+                  {
+                  	 hotdeal_hme_vst_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea,deal_hard_cpy_element,deal_home_vst_element,app_time_element,apptime_element,mbno_element,sel_time,current_time,name_element,email_element,deal_age_element,deal_gender_element,deal_pincode_element);
+                  }
+                  else 
+                  {
+                  	 hotdeal_lab_vst_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea,deal_hard_cpy_element,deal_home_vst_element,app_time_element,apptime_element,mbno_element,sel_time,current_time,name_element,email_element,deal_age_element,deal_gender_element,deal_pincode_element);
+                  }   
+             });//btn onclick handler
                     
                 
           }//form_handler
           
-    function form_backbtn(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea)
-    {
-    	         var localData = JSON.parse(localStorage.getItem('someData'));
-               var deal_details_element = document.createElement('div');
-               $(deal_details_element).addClass("modal");
-               $(deal_details_element).attr('id', 'modal_firstpage');
-               $(deal_details_element).css('position','relative');
-               $(deal_details_element).css('backgroundColor','#fff');
-               $(deal_details_element).css('paddingRight','0px');
-               var close_element = document.createElement('a');
-               $(close_element).addClass("close");
-               $(close_element).attr('href','#');
-               $(close_element).html("&times;");
-               $(close_element).css('marginTop' ,'-19px');
-               $(close_element).css('fontSize','26px');
-               $(close_element).css('marginRight','7px');
-               var head_name = document.createElement('h4');
-               $(head_name).html(localData.HotDealName);
-               $(head_name).css('textAlign','center');
-               $(head_name).css('fontSize','18px');
-               $(head_name).css('fontWeight','bold');
-               $(head_name).css('color','#5cb0cf');
-               var price_heading = document.createElement('div');
-               $(price_heading).css('background','#41A7B3');
-               $(price_heading).css('color','white');
-               $(price_heading).css('fontWeight','bold');
-               $(price_heading).css('marginTop','11px');
-               $(price_heading).css('marginRight','20px');
-               var price_element = document.createElement('div');
-               $(price_element).html("Price Information");
-               $(price_element).css('float','left');
-               $(price_element).css('paddingRight','375px');
-               var valid_element = document.createElement('div');
-               $(valid_element).html("Validity");
-               var table_element = document.createElement('table');
-               $(table_element).css('float','left');
-               $(table_element).css('marginRight','256px');
-                var tr_price = document.createElement('tr');
-               var td_finalprice = document.createElement('td');
-               var td_finalprice_data = document.createElement('td');
-               $(td_finalprice).html("&nbsp"+"Final Price"+"&nbsp"+"&nbsp"+":");
-               $(td_finalprice_data).addClass("fa fa-inr");
-               $(td_finalprice_data).html(localData.HotDealFinalPrice);
-               $(td_finalprice_data).css('paddingLeft','10px');
-               var td_mrp_start = document.createElement('td');
-               $(td_mrp_start).html("&nbsp"+"(");
-               var td_mrp_data = document.createElement('td');
-               $(td_mrp_data).html(localData.HotDealMRP);
-               $(td_mrp_data).css('textDecoration','line-through');
-               $(td_mrp_data).css('color','rgb(236,73,73)');
-               var td_mrp_end = document.createElement('td');
-               $(td_mrp_end).html(")");
-               var tr_discount = document.createElement('tr');
-               var td_discount = document.createElement('td');
-               var td_discount_data = document.createElement('td');
-               $(td_discount).html("&nbsp"+"Discount"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+":");
-               $(td_discount_data).html(localData.HotDealDiscount+"%");
-               $(td_discount_data).css('paddingLeft','11px');
-               var validity_table = document.createElement('table');
-               $(validity_table).css('marginBottom','30px');
-               var tr_date = document.createElement('tr');
-               var td_date = document.createElement('td');
-               var td_from_date = document.createElement('td');
-               $(td_date).html("From"+"&nbsp"+"&nbsp"+":");
-               $(td_from_date).html(localData.HotDealStartDate);
-               $(td_from_date).css('paddingLeft',"6px");
-               var tr_enddate = document.createElement('tr');
-               var td_to_date = document.createElement('td');
-               var td_end_date = document.createElement('td');
-               $(td_to_date).html("To"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+":");
-               $(td_end_date).html(localData.HotDealEndDate);
-               $(td_end_date).css("paddingLeft","8px");
-               $(tr_discount).append(td_discount);
-               $(tr_discount).append(td_discount_data);
-               $(tr_price).append(td_finalprice);
-               $(tr_price).append(td_finalprice_data);
-               $(tr_price).append(td_mrp_start);
-               $(tr_price).append(td_mrp_data);
-               $(tr_price).append(td_mrp_end);
-               $(tr_date).append(td_date);
-               $(tr_date).append(td_from_date);
-               $(tr_enddate).append(td_to_date);
-               $(tr_enddate).append(td_end_date);
-               $(table_element).append(tr_price);
-               $(table_element).append(tr_discount);
-               $(price_heading).append(price_element);
-               $(price_heading).append(valid_element);
-               $(validity_table).append(tr_date);
-               $(validity_table).append(tr_enddate);
-               $(deal_details_element).append(close_element);
-               $(deal_details_element).append(head_name);
-               $(deal_details_element).append(price_heading);
-               $(deal_details_element).append(table_element);
-               $(deal_details_element).append(validity_table);
-               var labs_list = document.createElement('table');
-               $(labs_list).addClass("offer_labs");
-               $(labs_list).css('cursor','pointer');
-               var offer_labs = document.createElement('div');
-                 $(offer_labs).html("Offering Labs");
-                 $(offer_labs).css("background", "#41A7B3");
-                 $(offer_labs).css("color","white");
-                 $(offer_labs).css("fontWeight","bold");
-                 $(offer_labs).css("marginBottom","11px");
-                 $(offer_labs).css("marginRight",'20px');
-               for(var i=0;i<localData.OfferingLabs.length;i++)
-               {
-                 var tr_labs = document.createElement('tr');
-                 $(tr_labs).addClass("labs_row");
-                 var td_labs = document.createElement('td');
-                 $(td_labs).addClass("lab_name");
-                 var td_lab_area = document.createElement('td');
-                 var td_lab_pin = document.createElement('td');
-                 var td_lab_btn = document.createElement('td');
-                 var book_button = document.createElement("button");
-                 $(book_button).html("Book Now");
-                 $(book_button).attr('id','book_deal');
-                 $(book_button).css('borderRadius','3px');
-                 $(book_button).css('border','none');
-                 $(book_button).css('width','80px');
-                 $(book_button).css('background','rgb(236, 73, 73)');
-                 $(book_button).css('color','white');
-                 $(book_button).css('fontSize','12px');
-                 $(tr_labs).attr('data-labname',localData.OfferingLabs[i].labName);
-                 $(tr_labs).attr('data-labslug',localData.OfferingLabs[i].labSlug);
-                 $(tr_labs).attr('data-dealname',localData.HotDealName);
-                 $(tr_labs).attr('data-dealslug',localData.HotDealSlug);
-                 $(tr_labs).attr('data-dealmrp',localData.HotDealMRP);
-                 $(tr_labs).attr('data-dealdiscount',localData.HotDealDiscount);
-                 $(tr_labs).attr('data-dealfinalprice',localData.HotDealFinalPrice);
-                 $(tr_labs).attr('data-labarea',localData.OfferingLabs[i].labArea);
-                 $(tr_labs).attr('data-onlinereports',localData.OfferingLabs[i].onlineReports);
-                 $(tr_labs).attr('data-visittype' ,localData.OfferingLabs[i].visitType); 
-
-                 $(td_labs).html(localData.OfferingLabs[i].labName);
-                 $(td_lab_area).html(localData.OfferingLabs[i].labArea);
-                 $(td_lab_pin).html(localData.OfferingLabs[i].labPincode);
-                 $(td_labs).css('width','250px');
-                 $(td_lab_area).css('width','145px');
-                 $(td_lab_pin).css('width','80px');
-                 $(td_lab_btn).append(book_button);
-                 $(tr_labs).append(td_labs);
-                 $(tr_labs).append(td_lab_area);
-                 $(tr_labs).append(td_lab_pin);
-                 $(tr_labs).append(td_lab_btn);
-                 $(labs_list).append(tr_labs); 
-                 $(tr_labs).on('click',function ()
-                  {
-                  	 var labname = $(this).data('labname');
-                  	 var labslug = $(this).data('labslug');
-                  	 var dealname = $(this).data('dealname');
-                  	 var deal_slug = $(this).data('dealslug');
-                  	 var deal_mrp = $(this).data('dealmrp');
-                  	 var deal_discount = $(this).data('dealdiscount');
-                  	 var deal_finalprice = $(this).data('dealfinalprice');
-                  	 var labarea = $(this).data('labarea');
-                  	 var online_reports = $(this).data('onlinereports');
-                  	 var visit_type = $(this).data('visittype');
-                  	 form_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
-                	});//labs_tr onclick
-               }//for offeringlabs
-                 $(deal_details_element).append(offer_labs);
-                 $(deal_details_element).append(labs_list);
-                  var deal_contents = document.createElement('div');
-                 $(deal_contents).css('marginTop','13px');
-                 $(deal_contents).addClass("deal_heading");
-                 $(deal_contents).css('marginRight','20px');
-                 var contents_heading = document.createElement('h5');
-                 $(contents_heading).html("Deal Contents");
-                 $(contents_heading).css('fontWeight','bold');
-                 $(contents_heading).css('textAlign','center');
-                 $(contents_heading).css('height','20px');
-                 $(contents_heading).css('backgroundColor','#41A7B3');
-                 $(contents_heading).css('color','white');
-                 $(deal_contents).append(contents_heading);
-                 $(deal_details_element).append(deal_contents);
-                 var count_var = 1;
-                 var counter_element = document.createElement('div');
-                 $(counter_element).addClass("tests-list");
-                 $(counter_element).css('marginRight','20px');
-                 var left_element = document.createElement('div');
-                 $(left_element).addClass("left_list");
-                 var right_element = document.createElement('div');
-                 $(right_element).addClass("right_list");
-                 var totalcount =0;
-                 for(var i=0;i<localData.GroupsInfo.length;i++)
-                 {
-                 	  var new_str  =  localData.GroupsInfo[i].testsInGroup;
-                 	  var temp_str = new_str.split(",");
-                 	  totalcount = totalcount+temp_str.length+1;
-                  }//for groupsinfo
-                 if(localData.TestsInfo.length !=0)
-                 {
-                    totalcount = localData.TestsInfo.length+1+totalcount;                 
-                 }//if testslength
-                 if(localData.Consultations.length !=0)
-                 {
-                    totalcount = localData.Consultations.length+1+totalcount;                 
-                 }//if consultationslength
-                
-              if(localData.GroupsInfo.length !=0)
-               {
-                for(var i=0;i<localData.GroupsInfo.length;i++)
-                 {
-                 	 
-                    if((totalcount >20) && (count_var >(totalcount/2)) ) 
-                    {  
-                        var group_heading = document.createElement('div');
-                 	      $(group_heading).addClass("deal_data");
-                        $(group_heading).html(localData.GroupsInfo[0].GroupName);
-                        $(group_heading).css('fontWeight', 'bold');
-                        $(right_element).append(group_heading);
-                        $(left_element).css('float','left');
-                        count_var++;
-                    }//if groupheading
-                  else 
-                   {
-                   	 var group_heading = document.createElement('div');
-                 	    $(group_heading).addClass("deal_data");
-                      $(group_heading).html(localData.GroupsInfo[0].GroupName);
-                      $(group_heading).css('fontWeight', 'bold');
-                   	 $(left_element).append(group_heading);
-                	    count_var++;
-                	 }//else groupheading
-                   var new_str = localData.GroupsInfo[i].testsInGroup;
-                   var temp_str = new_str.split(",");
-                   for(i=0;i<temp_str.length;i++)
-                    {
-                      
-                       if((totalcount > 20)&& (count_var>(totalcount/2)))
-                       { 
-                         var group_data = document.createElement('div');
-                         $(group_data).addClass("deal_data");
-                         $(group_data).html(temp_str[i]);
-                         $(group_data).css('textIndent','20pt');
-                         $(right_element).append(group_data);
-                         $(left_element).css('float','left');
-                         count_var++;  
-                       }//if groupdata
-                       else 
-                        { 
-                           var group_data = document.createElement('div');
-                           $(group_data).addClass("deal_data");
-                           $(group_data).html(temp_str[i]);
-                           $(group_data).css('textIndent','20pt');
-                           $(left_element).append(group_data);
-                           count_var++;
-                        }//else groupdata
-                    }//for strlength
-                 } //for groupslength 
-                }//if groupsinfolength
-              if(localData.TestsInfo.length != 0)
+function  hotdeal_hme_vst_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea,deal_hard_cpy_element,deal_home_vst_element,app_time_element,apptime_element,mbno_element,sel_time,current_time,name_element,email_element,deal_age_element,deal_gender_element,deal_pincode_element)
+{
+   var patient_name = $("#hotdeal_patient_name").val();
+   var patient_email = $("#hotdeal_email").val();
+   var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+   var mobile_number = $("#hotdeal_phone").val();
+   var patient_apptime = $("#hotdeal_app_time").val();
+   var pat_age = $("#hotdeal_patient_age").val();
+   var pat_gender = $("#hotdeal_ptnt_gender").val();
+   var pat_pinno = $("#hotdeal_patient_pincode").val();
+   var pat_address = $("#hotdeal_ptnt_address").val();
+    if((document.getElementById("err_email").style.display ='none') &&
+     (document.getElementById('err_mbno').style.display = 'none') &&
+     (document.getElementById('err_apptime').style.display = 'none') &&
+     (document.getElementById('err_app_time').style.display = 'none') &&
+     (document.getElementById("err_address").style.display ='none') &&
+     (document.getElementById("err_age").style.display = 'none') &&
+     (document.getElementById("err_gender").style.display = 'none') &&
+     (document.getElementById("err_pincode").style.display = 'none') &&
+     (document.getElementById("err_home_vst").style.display = 'none') &&
+     (document.getElementById("err_hard_cpy").style.display = 'none'))
+     { 
+         if (!(patient_name.length >= 6 && patient_name.length <= 26) || patient_name.match(/[^a-zA-Z ]/))
+         {
+             $(name_element).css('display','block');
+             return false;
+          }//if patient name
+          if(document.getElementById('err_name').style.display = 'block')
+          {
+              document.getElementById('err_name').style.display = 'none';
+          }//if err_name
+      }//if 
+      if((document.getElementById("err_name").style.display ='none') &&
+       (document.getElementById('err_mbno').style.display = 'none') &&
+       (document.getElementById('err_apptime').style.display = 'none') &&
+       (document.getElementById('err_app_time').style.display = 'none') &&
+       (document.getElementById("err_address").style.display ='none') &&
+       (document.getElementById("err_age").style.display = 'none') &&
+       (document.getElementById("err_gender").style.display = 'none') &&
+       (document.getElementById("err_pincode").style.display = 'none') &&
+       (document.getElementById("err_home_vst").style.display = 'none') &&
+       (document.getElementById("err_hard_cpy").style.display = 'none'))
+       {
+            if(!filter.test(patient_email))
+            {
+               $(email_element).css('display','block');
+               return false;
+            }//if email
+            if(document.getElementById('err_email').style.display = 'block')
+            {
+                document.getElementById('err_email').style.display = 'none';
+            }//if err_email
+          }//if
+         if((document.getElementById("err_name").style.display ='none') &&
+       (document.getElementById('err_mbno').style.display = 'none') &&
+       (document.getElementById('err_apptime').style.display = 'none') &&
+       (document.getElementById('err_app_time').style.display = 'none') &&
+       (document.getElementById("err_address").style.display ='none') &&
+       (document.getElementById("err_email").style.display = 'none') &&
+       (document.getElementById("err_gender").style.display = 'none') &&
+       (document.getElementById("err_pincode").style.display = 'none') &&
+       (document.getElementById("err_home_vst").style.display = 'none') &&
+       (document.getElementById("err_hard_cpy").style.display = 'none'))
+       {
+       	 if (!pat_age.match(/^[0-9]+$/) || (pat_age == "") || (pat_age >100) || (pat_age <=0))
+          {
+              $(deal_age_element).css('display','block');  
+              return false; 
+          }//if age
+          if (document.getElementById("err_age").style.display = 'block') 
+          {
+          	 document.getElementById("err_age").style.display = 'none';
+          }//if err_age 
+       }//if 
+        if((document.getElementById("err_name").style.display ='none') &&
+       (document.getElementById('err_mbno').style.display = 'none') &&
+       (document.getElementById('err_apptime').style.display = 'none') &&
+       (document.getElementById('err_app_time').style.display = 'none') &&
+       (document.getElementById("err_address").style.display ='none') &&
+       (document.getElementById("err_email").style.display = 'none') &&
+       (document.getElementById("err_age").style.display = 'none') &&
+       (document.getElementById("err_pincode").style.display = 'none') &&
+       (document.getElementById("err_home_vst").style.display = 'none') &&
+       (document.getElementById("err_hard_cpy").style.display = 'none'))
+       {
+       	 if (pat_gender !=2 && pat_gender !=3) 
+       	 {
+       	 	 $(deal_gender_element).css('display','block');
+       	 	 return false;
+       	 }//if gender 
+       	 if (document.getElementById("err_gender").style.display = 'block') 
+       	 {
+       	 	 document.getElementById("err_gender").style.display = 'none';
+       	 }//if gender
+       }//if 
+       var hodeal_ptnt_pin_substr = pat_pinno.substr(0,2); 
+            if((document.getElementById("err_name").style.display ='none') &&
+            (document.getElementById('err_mbno').style.display = 'none') &&
+            (document.getElementById('err_apptime').style.display = 'none') &&
+            (document.getElementById('err_app_time').style.display = 'none') &&
+            (document.getElementById("err_address").style.display ='none') &&
+            (document.getElementById("err_email").style.display = 'none') &&
+            (document.getElementById("err_age").style.display = 'none') &&
+            (document.getElementById("err_gender").style.display = 'none') &&
+            (document.getElementById("err_home_vst").style.display = 'none') &&
+            (document.getElementById("err_hard_cpy").style.display = 'none'))
+           {
+       	   if (pat_pinno == null || pat_pinno == "" || !pat_pinno.match(/^[0-9]+$/) || pat_pinno.length != 6 || hodeal_ptnt_pin_substr != "56")
+       	   {
+       	 	 $(deal_pincode_element).css('display','block');
+       	 	 return false;
+       	   }//if pin num
+       	  if (document.getElementById("err_pincode").style.display = 'block') 
+       	  {
+       	 	 document.getElementById("err_pincode").style.display = 'none';
+       	  }//if pin no 
+         }//if 
+        if((document.getElementById("err_email").style.display ='none') &&
+          (document.getElementById('err_name').style.display = 'none') &&
+          (document.getElementById('err_apptime').style.display = 'none') &&
+          (document.getElementById('err_app_time').style.display = 'none') &&
+          (document.getElementById("err_address").style.display ='none') &&
+          (document.getElementById("err_age").style.display = 'none') &&
+          (document.getElementById("err_gender").style.display = 'none') &&
+          (document.getElementById("err_pincode").style.display = 'none') &&
+          (document.getElementById("err_home_vst").style.display = 'none') &&
+          (document.getElementById("err_hard_cpy").style.display = 'none'))
+          {
+              if((mobile_number.match(/[^0-9]/) || mobile_number.length != 10) || (!(mobile_number.charAt(0)=="9" || mobile_number.charAt(0)=="8" || mobile_number.charAt(0)=="7")))
               {
-                if((totalcount >20) && (count_var >(totalcount/2)) ) 
-                 {        
-                    var tests_heading = document.createElement('div'); 
-                    $(tests_heading).addClass("deal_data");
-                    $(tests_heading).html("Individual Tests");
-                    $(tests_heading).css('fontWeight','bold');
-                    $(right_element).append(tests_heading);
-                    $(left_element).css('float','left');
-                    count_var++;
-                 }//if testsheading
-               else 
-               {
-               	 var tests_heading = document.createElement('div');
-               	 $(tests_heading).addClass("deal_data");
-                   $(tests_heading).html("Individual Tests");
-                   $(tests_heading).css('fontWeight','bold');
-                   $(left_element).append(tests_heading);
-                   count_var++;               	
-               }//else testsheading
-                 
-                for(var  i=0;i<localData.TestsInfo.length;i++)
-                 {
-                    
-                     if((totalcount >20) && (count_var >(totalcount/2)) ) 
-                      {
-                      	  var content_data = document.createElement('div');
-                          $(content_data).addClass("deal_data");
-                          $(content_data).html(localData.TestsInfo[i]);
-                          $(content_data).css('textIndent','20pt');
-                          $(right_element).append(content_data);
-                          $(left_element).css('float','left');
-                          count_var++;
-                      }//if contentdata
-                    else 
-                     {
-                     	var content_data = document.createElement('div');
-                        $(content_data).addClass("deal_data");
-                        $(content_data).html(localData.TestsInfo[i]);
-                        $(content_data).css('textIndent','20pt');
-                    	   $(left_element).append(content_data);
-                    	  count_var++;
-                    	}//else contentdata
-                 }//for TestsInfo
-                }//if testsinfolength
-              if(localData.Consultations.length !=0)
+                  $(mbno_element).css('display','block');
+                  return false;
+               }//if mble
+              if(document.getElementById('err_mbno').style.display = 'block')
               {
-                if((totalcount >20) && (count_var >(totalcount/2)) ) 
-                   {
-                   	   var consult_heading = document.createElement('div');
-                   	   $(consult_heading).addClass("deal_data");
-                        $(consult_heading).html("Consultations");
-                        $(consult_heading).css('fontWeight','bold');
-                        $(right_element).append(consult_heading);
-                        $(left_element).css('float','left');
-                      count_var++;
-                   }//if consultheading
-                 else  
-                    {
-                   	  var consult_heading = document.createElement('div');
-                   	  $(consult_heading).addClass("deal_data");
-                       $(consult_heading).html("Consultations");
-                       $(consult_heading).css('fontWeight','bold');
-                       $(left_element).append(consult_heading);
-                       count_var++;
-                 	 }//else consultheading
-                      	
-                 for(var i=0;i<localData.Consultations.length;i++)
-                 {
-                    
-                    if((totalcount >20) && (count_var >(totalcount/2)) ) 
-                     { 
-                        var consult_data = document.createElement('div');
-                        $(consult_data).addClass("deal_data");
-                        $(consult_data).html(localData.Consultations[i]);
-                        $(consult_data).css('textIndent','20pt');
-                        $(right_element).append(consult_data); 
-                        $(left_element).css('float','left');
-                        count_var++;
-                     }//if consultdata
-                   else 
-                    {
-                    	  var consult_data = document.createElement('div');
-                       $(consult_data).addClass("deal_data");
-                       $(consult_data).html(localData.Consultations[i]);
-                       $(consult_data).css('textIndent','20pt');
-                   	 $(left_element).append(consult_data);
-                   	 count_var++;        
-                    }//else consultdata
-                 }//for Consultations   
-              }//if dataconsultationslength
-               
-                if((totalcount >20) && ((totalcount%2) !=0))  
+                   document.getElementById('err_mbno').style.display = 'none';
+               }//if err_mbno
+           }//if
+         if((document.getElementById("err_email").style.display ='none') && 
+         (document.getElementById('err_mbno').style.display = 'none') &&
+         (document.getElementById('err_name').style.display = 'none') &&
+         (document.getElementById('err_app_time').style.display = 'none') &&
+         (document.getElementById("err_address").style.display ='none') &&
+         (document.getElementById("err_age").style.display = 'none') &&
+         (document.getElementById("err_gender").style.display = 'none') &&
+         (document.getElementById("err_pincode").style.display = 'none') &&
+         (document.getElementById("err_home_vst").style.display = 'none') &&
+         (document.getElementById("err_hard_cpy").style.display = 'none'))
+         {
+              if(! ($('#hotdeal_app_time').val()))   
+              {
+                 $(apptime_element).css('display','block');
+                 return false;
+              }//if app_time
+              if(!(sel_time.match(/\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}/)))
+              {
+                    $(apptime_element).css('display','block');
+                     return false;
+              }//if val time 
+              if(document.getElementById('err_apptime').style.display = 'block')
+              {
+                  document.getElementById('err_apptime').style.display = 'none';
+              }
+          }//if
+           if((document.getElementById("err_email").style.display ='none') && 
+           (document.getElementById('err_mbno').style.display = 'none') &&
+           (document.getElementById('err_name').style.display = 'none') &&
+           (document.getElementById('err_apptime').style.display = 'none') &&
+           (document.getElementById("err_address").style.display ='none') &&
+           (document.getElementById("err_age").style.display = 'none') &&
+           (document.getElementById("err_gender").style.display = 'none') &&
+           (document.getElementById("err_pincode").style.display = 'none') &&
+           (document.getElementById("err_home_vst").style.display = 'none') &&
+           (document.getElementById("err_hard_cpy").style.display = 'none'))
+           {
+              if(current_time > sel_time) 
+              {
+                  $(app_time_element).css('display','block');
+                   return false;
+              	}//if time
+              if (document.getElementById('err_app_time').style.display = 'block') 
+              {
+                  document.getElementById('err_app_time').style.display = 'none';
+              }//if err_time
+           }//if
+            if((document.getElementById('err_name').style.display = 'none') &&
+            (document.getElementById("err_email").style.display ='none') &&
+             (document.getElementById('err_mbno').style.display = 'none') &&
+             (document.getElementById('err_apptime').style.display = 'none') &&
+             (document.getElementById('err_app_time').style.display = 'none') &&
+             (document.getElementById("err_age").style.display = 'none') &&
+             (document.getElementById("err_gender").style.display = 'none') &&
+             (document.getElementById("err_pincode").style.display = 'none') &&
+             (document.getElementById("err_home_vst").style.display = 'none') &&
+             (document.getElementById("err_hard_cpy").style.display = 'none'))
+             {
+                if((!($('#hotdeal_pkg_address').val()))  ||  pat_address.length <10)
                 {
-                var empty_element = document.createElement('div');
-                $(empty_element).addClass("deal_data");
-                $(empty_element).html("-");
-                $(empty_element).css('textIndent','20pt')
-                $(right_element).append(empty_element);
-                }//if odd
-                if(localData.GroupsInfo.length ==0 && localData.TestsInfo.length ==0 && localData.Consultations.length ==0 )
-                {
-                	  $(deal_contents).detach();
-                                  
-                }
-                $(counter_element).append(left_element);
-                $(counter_element).append(right_element);
-                $(deal_details_element).append(counter_element);    
-                $(deal_details_element).modal().open(); 
-                
-                 $(".close").on('click',function () 
+                     $(address_element).css('display','block');
+                      return false;
+                 }// if visit type
+                 if (document.getElementById('err_address').style.display = 'block') 
                  {
-               	  $(deal_details_element).modal().close(); 
-                 });//click
+                      document.getElementById('err_address').style.display = 'none';
+                 }//if err_visittype
+             }
+          var hotdeal_hardcopy = document.getElementsByName("hotdeal_hardcopy");
+          if((document.getElementById('err_name').style.display = 'none') &&
+            (document.getElementById("err_email").style.display ='none') &&
+             (document.getElementById('err_mbno').style.display = 'none') &&
+             (document.getElementById('err_apptime').style.display = 'none') &&
+             (document.getElementById('err_app_time').style.display = 'none') &&
+             (document.getElementById("err_age").style.display = 'none') &&
+             (document.getElementById("err_gender").style.display = 'none') &&
+             (document.getElementById("err_pincode").style.display = 'none') &&
+             (document.getElementById("err_home_vst").style.display = 'none') &&
+             (document.getElementById("err_address").style.display = 'none'))
+             {
+             	 if (hotdeal_hardcopy[0].checked == false && hotdeal_hardcopy[1].checked == false) 
+             	 {
+             	 	 $(deal_hard_cpy_element).css('display','block');
+             	 	 return false;
+             	 }//if 
+             	 if (document.getElementById("err_hard_cpy").style.display = 'block') 
+             	 {
+             	 	 document.getElementById("err_hard_cpy").style.display = 'none';
+             	 }
+             }//if 
+             var  hme_vst = "yes";
+             if (hotdeal_hardcopy[0].checked == true)
+             {
+                var hrd_cpy = "yes";
+             }
+             else 
+             {
+             	 var hrd_cpy = "no";
+             }
+           preview_handler(hme_vst,hrd_cpy,dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
+}//fncnt endng  
+function hotdeal_lab_vst_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea,deal_hard_cpy_element,deal_home_vst_element,app_time_element,apptime_element,mbno_element,sel_time,current_time,name_element,email_element,deal_age_element,deal_gender_element,deal_pincode_element)
+{
+   var patient_name = $("#hotdeal_patient_name").val();
+   var patient_email = $("#hotdeal_email").val();
+   var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+   var mobile_number = $("#hotdeal_phone").val();
+   var patient_apptime = $("#hotdeal_app_time").val();
+   var pat_age = $("#hotdeal_patient_age").val();
+   var pat_gender = $("#hotdeal_ptnt_gender").val();
+   var pat_pinno = $("#hotdeal_patient_pincode").val();
+   var pat_address = $("#hotdeal_ptnt_address").val();
+    if((document.getElementById("err_email").style.display ='none') &&
+     (document.getElementById('err_mbno').style.display = 'none') &&
+     (document.getElementById('err_apptime').style.display = 'none') &&
+     (document.getElementById('err_app_time').style.display = 'none') &&
+     (document.getElementById("err_address").style.display ='none') &&
+     (document.getElementById("err_age").style.display = 'none') &&
+     (document.getElementById("err_gender").style.display = 'none') &&
+     (document.getElementById("err_pincode").style.display = 'none') &&
+     (document.getElementById("err_home_vst").style.display = 'none') &&
+     (document.getElementById("err_hard_cpy").style.display = 'none'))
+     { 
+         if (!(patient_name.length >= 6 && patient_name.length <= 26) || patient_name.match(/[^a-zA-Z ]/))
+         {
+             $(name_element).css('display','block');
+             return false;
+          }//if patient name
+          if(document.getElementById('err_name').style.display = 'block')
+          {
+              document.getElementById('err_name').style.display = 'none';
+          }//if err_name
+      }//if 
+      if((document.getElementById("err_name").style.display ='none') &&
+       (document.getElementById('err_mbno').style.display = 'none') &&
+       (document.getElementById('err_apptime').style.display = 'none') &&
+       (document.getElementById('err_app_time').style.display = 'none') &&
+       (document.getElementById("err_address").style.display ='none') &&
+       (document.getElementById("err_age").style.display = 'none') &&
+       (document.getElementById("err_gender").style.display = 'none') &&
+       (document.getElementById("err_pincode").style.display = 'none') &&
+       (document.getElementById("err_home_vst").style.display = 'none') &&
+       (document.getElementById("err_hard_cpy").style.display = 'none'))
+       {
+            if(!filter.test(patient_email))
+            {
+               $(email_element).css('display','block');
+               return false;
+            }//if email
+            if(document.getElementById('err_email').style.display = 'block')
+            {
+                document.getElementById('err_email').style.display = 'none';
+            }//if err_email
+          }//if
+         if((document.getElementById("err_name").style.display ='none') &&
+       (document.getElementById('err_mbno').style.display = 'none') &&
+       (document.getElementById('err_apptime').style.display = 'none') &&
+       (document.getElementById('err_app_time').style.display = 'none') &&
+       (document.getElementById("err_address").style.display ='none') &&
+       (document.getElementById("err_email").style.display = 'none') &&
+       (document.getElementById("err_gender").style.display = 'none') &&
+       (document.getElementById("err_pincode").style.display = 'none') &&
+       (document.getElementById("err_home_vst").style.display = 'none') &&
+       (document.getElementById("err_hard_cpy").style.display = 'none'))
+       {
+       	 if (!pat_age.match(/^[0-9]+$/) || (pat_age == "") || (pat_age >100) || (pat_age <=0))
+          {
+              $(deal_age_element).css('display','block');  
+              return false; 
+          }//if age
+          if (document.getElementById("err_age").style.display = 'block') 
+          {
+          	 document.getElementById("err_age").style.display = 'none';
+          }//if err_age 
+       }//if 
+        if((document.getElementById("err_name").style.display ='none') &&
+       (document.getElementById('err_mbno').style.display = 'none') &&
+       (document.getElementById('err_apptime').style.display = 'none') &&
+       (document.getElementById('err_app_time').style.display = 'none') &&
+       (document.getElementById("err_address").style.display ='none') &&
+       (document.getElementById("err_email").style.display = 'none') &&
+       (document.getElementById("err_age").style.display = 'none') &&
+       (document.getElementById("err_pincode").style.display = 'none') &&
+       (document.getElementById("err_home_vst").style.display = 'none') &&
+       (document.getElementById("err_hard_cpy").style.display = 'none'))
+       {
+       	 if (pat_gender !=2 && pat_gender !=3) 
+       	 {
+       	 	 $(deal_gender_element).css('display','block');
+       	 	 return false;
+       	 }//if gender 
+       	 if (document.getElementById("err_gender").style.display = 'block') 
+       	 {
+       	 	 document.getElementById("err_gender").style.display = 'none';
+       	 }//if gender
+       }//if 
+        if((document.getElementById("err_email").style.display ='none') &&
+          (document.getElementById('err_name').style.display = 'none') &&
+          (document.getElementById('err_apptime').style.display = 'none') &&
+          (document.getElementById('err_app_time').style.display = 'none') &&
+          (document.getElementById("err_address").style.display ='none') &&
+          (document.getElementById("err_age").style.display = 'none') &&
+          (document.getElementById("err_gender").style.display = 'none') &&
+          (document.getElementById("err_pincode").style.display = 'none') &&
+          (document.getElementById("err_home_vst").style.display = 'none') &&
+          (document.getElementById("err_hard_cpy").style.display = 'none'))
+          {
+              if((mobile_number.match(/[^0-9]/) || mobile_number.length != 10) || (!(mobile_number.charAt(0)=="9" || mobile_number.charAt(0)=="8" || mobile_number.charAt(0)=="7")))
+              {
+                  $(mbno_element).css('display','block');
+                  return false;
+               }//if mble
+              if(document.getElementById('err_mbno').style.display = 'block')
+              {
+                   document.getElementById('err_mbno').style.display = 'none';
+               }//if err_mbno
+           }//if
+         if((document.getElementById("err_email").style.display ='none') && 
+         (document.getElementById('err_mbno').style.display = 'none') &&
+         (document.getElementById('err_name').style.display = 'none') &&
+         (document.getElementById('err_app_time').style.display = 'none') &&
+         (document.getElementById("err_address").style.display ='none') &&
+         (document.getElementById("err_age").style.display = 'none') &&
+         (document.getElementById("err_gender").style.display = 'none') &&
+         (document.getElementById("err_pincode").style.display = 'none') &&
+         (document.getElementById("err_home_vst").style.display = 'none') &&
+         (document.getElementById("err_hard_cpy").style.display = 'none'))
+         {
+              if(! ($('#hotdeal_app_time').val()))   
+              {
+                 $(apptime_element).css('display','block');
+                 return false;
+              }//if app_time
+              if(!(sel_time.match(/\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}/)))
+              {
+                    $(apptime_element).css('display','block');
+                     return false;
+              }//if val time 
+              if(document.getElementById('err_apptime').style.display = 'block')
+              {
+                  document.getElementById('err_apptime').style.display = 'none';
+              }
+          }//if
+           if((document.getElementById("err_email").style.display ='none') && 
+           (document.getElementById('err_mbno').style.display = 'none') &&
+           (document.getElementById('err_name').style.display = 'none') &&
+           (document.getElementById('err_apptime').style.display = 'none') &&
+           (document.getElementById("err_address").style.display ='none') &&
+           (document.getElementById("err_age").style.display = 'none') &&
+           (document.getElementById("err_gender").style.display = 'none') &&
+           (document.getElementById("err_pincode").style.display = 'none') &&
+           (document.getElementById("err_home_vst").style.display = 'none') &&
+           (document.getElementById("err_hard_cpy").style.display = 'none'))
+           {
+              if(current_time > sel_time) 
+              {
+                  $(app_time_element).css('display','block');
+                   return false;
+              	}//if time
+              if (document.getElementById('err_app_time').style.display = 'block') 
+              {
+                  document.getElementById('err_app_time').style.display = 'none';
+              }//if err_time
+           }//if
+          var hotdeal_hardcopy = document.getElementsByName("hotdeal_hardcopy");
+          if((document.getElementById('err_name').style.display = 'none') &&
+            (document.getElementById("err_email").style.display ='none') &&
+             (document.getElementById('err_mbno').style.display = 'none') &&
+             (document.getElementById('err_apptime').style.display = 'none') &&
+             (document.getElementById('err_app_time').style.display = 'none') &&
+             (document.getElementById("err_age").style.display = 'none') &&
+             (document.getElementById("err_gender").style.display = 'none') &&
+             (document.getElementById("err_pincode").style.display = 'none') &&
+             (document.getElementById("err_home_vst").style.display = 'none') &&
+             (document.getElementById("err_address").style.display = 'none'))
+             {
+             	 if (hotdeal_hardcopy[0].checked == false && hotdeal_hardcopy[1].checked == false) 
+             	 {
+             	 	 $(deal_hard_cpy_element).css('display','block');
+             	 	 return false;
+             	 }//if 
+             	 if (document.getElementById("err_hard_cpy").style.display = 'block') 
+             	 {
+             	 	 document.getElementById("err_hard_cpy").style.display = 'none';
+             	 }
+             }//if 
              
-     }//fnctn handler
-    
+             	 var  hme_vst = "no";
+             if (hotdeal_hardcopy[0].checked == true)
+             {
+                var hrd_cpy = "yes";
+             }
+             else 
+             {
+             	 var hrd_cpy = "no";
+             }
+           preview_handler(hme_vst,hrd_cpy,dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
+
+}//fnctn endng 
+function hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea,deal_hard_cpy_element,deal_home_vst_element,app_time_element,apptime_element,mbno_element,sel_time,current_time,name_element,email_element,deal_age_element,deal_gender_element,deal_pincode_element)
+{
+	var patient_name = $("#hotdeal_patient_name").val();
+   var patient_email = $("#hotdeal_email").val();
+   var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+   var mobile_number = $("#hotdeal_phone").val();
+   var patient_apptime = $("#hotdeal_app_time").val();
+   var pat_age = $("#hotdeal_patient_age").val();
+   var pat_gender = $("#hotdeal_ptnt_gender").val();
+   var pat_pinno = $("#hotdeal_patient_pincode").val();
+   var pat_address = $("#hotdeal_ptnt_address").val();
+    if((document.getElementById("err_email").style.display ='none') &&
+     (document.getElementById('err_mbno').style.display = 'none') &&
+     (document.getElementById('err_apptime').style.display = 'none') &&
+     (document.getElementById('err_app_time').style.display = 'none') &&
+     (document.getElementById("err_address").style.display ='none') &&
+     (document.getElementById("err_age").style.display = 'none') &&
+     (document.getElementById("err_gender").style.display = 'none') &&
+     (document.getElementById("err_pincode").style.display = 'none') &&
+     (document.getElementById("err_home_vst").style.display = 'none') &&
+     (document.getElementById("err_hard_cpy").style.display = 'none'))
+     { 
+         if (!(patient_name.length >= 6 && patient_name.length <= 26) || patient_name.match(/[^a-zA-Z ]/))
+         {
+             $(name_element).css('display','block');
+             return false;
+          }//if patient name
+          if(document.getElementById('err_name').style.display = 'block')
+          {
+              document.getElementById('err_name').style.display = 'none';
+          }//if err_name
+      }//if 
+      if((document.getElementById("err_name").style.display ='none') &&
+       (document.getElementById('err_mbno').style.display = 'none') &&
+       (document.getElementById('err_apptime').style.display = 'none') &&
+       (document.getElementById('err_app_time').style.display = 'none') &&
+       (document.getElementById("err_address").style.display ='none') &&
+       (document.getElementById("err_age").style.display = 'none') &&
+       (document.getElementById("err_gender").style.display = 'none') &&
+       (document.getElementById("err_pincode").style.display = 'none') &&
+       (document.getElementById("err_home_vst").style.display = 'none') &&
+       (document.getElementById("err_hard_cpy").style.display = 'none'))
+       {
+            if(!filter.test(patient_email))
+            {
+               $(email_element).css('display','block');
+               return false;
+            }//if email
+            if(document.getElementById('err_email').style.display = 'block')
+            {
+                document.getElementById('err_email').style.display = 'none';
+            }//if err_email
+          }//if
+         if((document.getElementById("err_name").style.display ='none') &&
+       (document.getElementById('err_mbno').style.display = 'none') &&
+       (document.getElementById('err_apptime').style.display = 'none') &&
+       (document.getElementById('err_app_time').style.display = 'none') &&
+       (document.getElementById("err_address").style.display ='none') &&
+       (document.getElementById("err_email").style.display = 'none') &&
+       (document.getElementById("err_gender").style.display = 'none') &&
+       (document.getElementById("err_pincode").style.display = 'none') &&
+       (document.getElementById("err_home_vst").style.display = 'none') &&
+       (document.getElementById("err_hard_cpy").style.display = 'none'))
+       {
+       	 if (!pat_age.match(/^[0-9]+$/) || (pat_age == "") || (pat_age >100) || (pat_age <=0))
+          {
+              $(deal_age_element).css('display','block');  
+              return false; 
+          }//if age
+          if (document.getElementById("err_age").style.display = 'block') 
+          {
+          	 document.getElementById("err_age").style.display = 'none';
+          }//if err_age 
+       }//if 
+        if((document.getElementById("err_name").style.display ='none') &&
+       (document.getElementById('err_mbno').style.display = 'none') &&
+       (document.getElementById('err_apptime').style.display = 'none') &&
+       (document.getElementById('err_app_time').style.display = 'none') &&
+       (document.getElementById("err_address").style.display ='none') &&
+       (document.getElementById("err_email").style.display = 'none') &&
+       (document.getElementById("err_age").style.display = 'none') &&
+       (document.getElementById("err_pincode").style.display = 'none') &&
+       (document.getElementById("err_home_vst").style.display = 'none') &&
+       (document.getElementById("err_hard_cpy").style.display = 'none'))
+       {
+       	 if (pat_gender !=2 && pat_gender !=3) 
+       	 {
+       	 	 $(deal_gender_element).css('display','block');
+       	 	 return false;
+       	 }//if gender 
+       	 if (document.getElementById("err_gender").style.display = 'block') 
+       	 {
+       	 	 document.getElementById("err_gender").style.display = 'none';
+       	 }//if gender
+       }//if 
+        if((document.getElementById("err_email").style.display ='none') &&
+          (document.getElementById('err_name').style.display = 'none') &&
+          (document.getElementById('err_apptime').style.display = 'none') &&
+          (document.getElementById('err_app_time').style.display = 'none') &&
+          (document.getElementById("err_address").style.display ='none') &&
+          (document.getElementById("err_age").style.display = 'none') &&
+          (document.getElementById("err_gender").style.display = 'none') &&
+          (document.getElementById("err_pincode").style.display = 'none') &&
+          (document.getElementById("err_home_vst").style.display = 'none') &&
+          (document.getElementById("err_hard_cpy").style.display = 'none'))
+          {
+              if((mobile_number.match(/[^0-9]/) || mobile_number.length != 10) || (!(mobile_number.charAt(0)=="9" || mobile_number.charAt(0)=="8" || mobile_number.charAt(0)=="7")))
+              {
+                  $(mbno_element).css('display','block');
+                  return false;
+               }//if mble
+              if(document.getElementById('err_mbno').style.display = 'block')
+              {
+                   document.getElementById('err_mbno').style.display = 'none';
+               }//if err_mbno
+           }//if
+         if((document.getElementById("err_email").style.display ='none') && 
+         (document.getElementById('err_mbno').style.display = 'none') &&
+         (document.getElementById('err_name').style.display = 'none') &&
+         (document.getElementById('err_app_time').style.display = 'none') &&
+         (document.getElementById("err_address").style.display ='none') &&
+         (document.getElementById("err_age").style.display = 'none') &&
+         (document.getElementById("err_gender").style.display = 'none') &&
+         (document.getElementById("err_pincode").style.display = 'none') &&
+         (document.getElementById("err_home_vst").style.display = 'none') &&
+         (document.getElementById("err_hard_cpy").style.display = 'none'))
+         {
+              if(! ($('#hotdeal_app_time').val()))   
+              {
+                 $(apptime_element).css('display','block');
+                 return false;
+              }//if app_time
+              if(!(sel_time.match(/\d{4}\-\d{2}\-\d{2} \d{2}:\d{2}:\d{2}/)))
+              {
+                    $(apptime_element).css('display','block');
+                     return false;
+              }//if val time 
+              if(document.getElementById('err_apptime').style.display = 'block')
+              {
+                  document.getElementById('err_apptime').style.display = 'none';
+              }
+          }//if
+           if((document.getElementById("err_email").style.display ='none') && 
+           (document.getElementById('err_mbno').style.display = 'none') &&
+           (document.getElementById('err_name').style.display = 'none') &&
+           (document.getElementById('err_apptime').style.display = 'none') &&
+           (document.getElementById("err_address").style.display ='none') &&
+           (document.getElementById("err_age").style.display = 'none') &&
+           (document.getElementById("err_gender").style.display = 'none') &&
+           (document.getElementById("err_pincode").style.display = 'none') &&
+           (document.getElementById("err_home_vst").style.display = 'none') &&
+           (document.getElementById("err_hard_cpy").style.display = 'none'))
+           {
+              if(current_time > sel_time) 
+              {
+                  $(app_time_element).css('display','block');
+                   return false;
+              	}//if time
+              if (document.getElementById('err_app_time').style.display = 'block') 
+              {
+                  document.getElementById('err_app_time').style.display = 'none';
+              }//if err_time
+           }//if
+            var hotdeal_homevisit_checking = document.getElementsByName("hotdeal_homevisit");
+            if((document.getElementById('err_name').style.display = 'none') &&
+            (document.getElementById("err_email").style.display ='none') &&
+             (document.getElementById('err_mbno').style.display = 'none') &&
+             (document.getElementById('err_apptime').style.display = 'none') &&
+             (document.getElementById('err_app_time').style.display = 'none') &&
+             (document.getElementById("err_age").style.display = 'none') &&
+             (document.getElementById("err_gender").style.display = 'none') &&
+             (document.getElementById("err_pincode").style.display = 'none') &&
+             (document.getElementById("err_address").style.display = 'none') &&
+             (document.getElementById("err_hard_cpy").style.display = 'none'))
+             {
+             	if (hotdeal_homevisit_checking[0].checked == false && hotdeal_homevisit_checking[1].checked == false) 
+             	{
+             		 $(deal_home_vst_element).css('display','block');
+             		 return false;
+             	}//if 
+             	if (document.getElementById("err_home_vst").style.display = 'block') 
+             	{
+             		 document.getElementById("err_home_vst").style.display = 'none';
+             	}//if 
+             }//if 
+             var hodeal_ptnt_pin_substr = pat_pinno.substr(0,2); 
+            if (hotdeal_homevisit_checking[0].checked == true)
+         {
+            if((document.getElementById("err_name").style.display ='none') &&
+            (document.getElementById('err_mbno').style.display = 'none') &&
+            (document.getElementById('err_apptime').style.display = 'none') &&
+            (document.getElementById('err_app_time').style.display = 'none') &&
+            (document.getElementById("err_address").style.display ='none') &&
+            (document.getElementById("err_email").style.display = 'none') &&
+            (document.getElementById("err_age").style.display = 'none') &&
+            (document.getElementById("err_gender").style.display = 'none') &&
+            (document.getElementById("err_home_vst").style.display = 'none') &&
+            (document.getElementById("err_hard_cpy").style.display = 'none'))
+           {
+       	   if (pat_pinno == null || pat_pinno == "" || !pat_pinno.match(/^[0-9]+$/) || pat_pinno.length != 6 || hodeal_ptnt_pin_substr != "56")
+       	   {
+       	 	 $(deal_pincode_element).css('display','block');
+       	 	 return false;
+       	   }//if pin num
+       	  if (document.getElementById("err_pincode").style.display = 'block') 
+       	  {
+       	 	 document.getElementById("err_pincode").style.display = 'none';
+       	  }//if pin no 
+         }//if 
+        }//if home visit checked
+          if (hotdeal_homevisit_checking[0].checked == true)
+         {
+           if((document.getElementById('err_name').style.display = 'none') &&
+            (document.getElementById("err_email").style.display ='none') &&
+             (document.getElementById('err_mbno').style.display = 'none') &&
+             (document.getElementById('err_apptime').style.display = 'none') &&
+             (document.getElementById('err_app_time').style.display = 'none') &&
+             (document.getElementById("err_age").style.display = 'none') &&
+             (document.getElementById("err_gender").style.display = 'none') &&
+             (document.getElementById("err_pincode").style.display = 'none') &&
+             (document.getElementById("err_home_vst").style.display = 'none') &&
+             (document.getElementById("err_hard_cpy").style.display = 'none'))
+             {
+                if((!($('#hotdeal_pkg_address').val()))  ||  pat_address.length <10)
+                {
+                     $(address_element).css('display','block');
+                      return false;
+                 }// if visit type
+                 if (document.getElementById('err_address').style.display = 'block') 
+                 {
+                      document.getElementById('err_address').style.display = 'none';
+                 }//if err_visittype
+             }
+          }//if checked 
+          var hotdeal_hardcopy = document.getElementsByName("hotdeal_hardcopy");
+          if((document.getElementById('err_name').style.display = 'none') &&
+            (document.getElementById("err_email").style.display ='none') &&
+             (document.getElementById('err_mbno').style.display = 'none') &&
+             (document.getElementById('err_apptime').style.display = 'none') &&
+             (document.getElementById('err_app_time').style.display = 'none') &&
+             (document.getElementById("err_age").style.display = 'none') &&
+             (document.getElementById("err_gender").style.display = 'none') &&
+             (document.getElementById("err_pincode").style.display = 'none') &&
+             (document.getElementById("err_home_vst").style.display = 'none') &&
+             (document.getElementById("err_address").style.display = 'none'))
+             {
+             	 if (hotdeal_hardcopy[0].checked == false && hotdeal_hardcopy[1].checked == false) 
+             	 {
+             	 	 $(deal_hard_cpy_element).css('display','block');
+             	 	 return false;
+             	 }//if 
+             	 if (document.getElementById("err_hard_cpy").style.display = 'block') 
+             	 {
+             	 	 document.getElementById("err_hard_cpy").style.display = 'none';
+             	 }
+             }//if 
+              if (hotdeal_homevisit_checking[0].checked == true)
+             {
+             	var  hme_vst = "yes";
+             }
+             else 
+             {
+             	 var  hme_vst = "no";
+             }
+             if (hotdeal_hardcopy[0].checked == true)
+             {
+                var hrd_cpy = "yes";
+             }
+             else 
+             {
+             	 var hrd_cpy = "no";
+             }
+           preview_handler(hme_vst,hrd_cpy,dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
+  }//vst bth fnctn endng
   
       
             
                
     function datastore_handler()
     {
-   	  var ptnt_name = document.getElementById("patient_name");
-        var ptnt_email = document.getElementById("email");
-        var ptnt_phone = document.getElementById("phone");
-        var ptnt_apptime = document.getElementById("app_time");
-         var ptnt_address = document.getElementById("hotdeal_pkg_address");
+   	  var ptnt_name = document.getElementById("hotdeal_patient_name");
+        var ptnt_email = document.getElementById("hotdeal_email");
+        var ptnt_phone = document.getElementById("hotdeal_phone");
+        var ptnt_apptime = document.getElementById("hotdeal_app_time");
+        var ptnt_address = document.getElementById("hotdeal_pfl_address");
+        var ptnt_age = document.getElementById("hotdeal_patient_age");
+        var ptnt_gender = document.getElementById("hotdeal_ptnt_gender");
+        var ptnt_pinnum = document.getElementById("hotdeal_patient_pincode");
         localStorage.setItem("patient_name",ptnt_name.value);
         localStorage.setItem("patient_email" ,ptnt_email.value);
         localStorage.setItem("patient_phone" ,ptnt_phone.value);
         localStorage.setItem("patient_app_time" ,ptnt_apptime.value);
         localStorage.setItem("patient_address",ptnt_address.value);
+        localStorage.setItem("patient_age",ptnt_age.value);
+        localStorage.setItem("patient_gender",ptnt_gender.value);
+        localStorage.setItem("patient_pincode",ptnt_pinnum.value);
     } //fnctn handler
 
     function Filling_localdata()
     {
-     	    document.getElementById("patient_name").value = localStorage.getItem("patient_name");
-          document.getElementById("email").value = localStorage.getItem("patient_email");
-          document.getElementById("phone").value = localStorage.getItem("patient_phone");
-          document.getElementById("app_time").value = localStorage.getItem("patient_app_time");
-          document.getElementById("hotdeal_pkg_address").value = localStorage.getItem("patient_address");
+     	    document.getElementById("hotdeal_patient_name").value = localStorage.getItem("patient_name");
+          document.getElementById("hotdeal_email").value = localStorage.getItem("patient_email");
+          document.getElementById("hotdeal_phone").value = localStorage.getItem("patient_phone");
+          document.getElementById("hotdeal_app_time").value = localStorage.getItem("patient_app_time");
+          document.getElementById("hotdeal_pfl_address").value = localStorage.getItem("patient_address");
+          document.getElementById("hotdeal_patient_age").value = localStorage.getItem("patient_age");
+          document.getElementById("hotdeal_ptnt_gender").value = localStorage.getItem("patient_gender");
+          document.getElementById("hotdeal_patient_pincode").value = localStorage.getItem("patient_pincode");
     }//fnctn handler
     
-   function preview_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea)
+   function preview_handler(hme_vst,hrd_cpy,dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea)
    {
    	            console.log(online_reports);
    	            console.log(visit_type);
@@ -1731,10 +2574,6 @@ function tabledata_handler(pageNum)
                           
                   }//if home visit
                   
-                   if ((online_reports == "yes" && visit_type.length  == "13") || (online_reports == "yes" && visit_type.length  > "13")) 
-                   {
-                      $(ptnt_info).css('marginTop','16%');
-                   } 
                    
                   var price_table = document.createElement('table');
                   $(price_table).css('float','right');
