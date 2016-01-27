@@ -578,7 +578,23 @@ function hotdeals_cont_details_append_handler(name_type,hotdeal_cnt_grp_name,hot
                $(local_from_date_head).css('fontWeight','bold');
                $(local_from_date_head).css('float','left');
                var local_from_date = document.createElement('div');
-               $(local_from_date).html(localData.HotDealStartDate);
+               var local_from_deal_date =localData.HotDealStartDate;
+               var local_from_deal_date_length = localData.HotDealStartDate.length;
+               if (local_from_deal_date_length %2 == 0) 
+               {
+               	 
+               	var local_from_deal_date_start = local_from_deal_date.substr(0,1);
+               	var local_from_deal_date_sub = local_from_deal_date.substr(1,2);
+               	var local_from_deal_date_end = local_from_deal_date.substr(3,local_from_deal_date_length);
+               }
+               else 
+               {
+               	
+               	  var local_from_deal_date_start = local_from_deal_date.substr(0,2);
+               	  var local_from_deal_date_sub = local_from_deal_date.substr(2,3);
+               	  var local_from_deal_date_end = local_from_deal_date.substr(4,local_from_deal_date_length);
+               }
+               $(local_from_date).html(local_from_deal_date_start+"<sup>"+ local_from_deal_date_sub+"</sup>"+local_from_deal_date_end);
                $(local_from_date).css('float','right');
                $(local_from_date_element).append(local_from_date_head);
                $(local_from_date_element).append(local_from_date);
@@ -589,7 +605,23 @@ function hotdeals_cont_details_append_handler(name_type,hotdeal_cnt_grp_name,hot
                $(local_end_date_head).css('fontWeight','bold');
                $(local_end_date_head).css('float','left');
                var local_end_date = document.createElement('div');
-               $(local_end_date).html(localData.HotDealEndDate);
+               var local_deal_date = localData.HotDealEndDate;
+               var local_deal_date_length = localData.HotDealEndDate.length;
+               if (local_deal_date_length %2 == 0) 
+               {
+               	 
+               	var local_deal_date_start = local_deal_date.substr(0,1);
+               	var local_deal_date_sub = local_deal_date.substr(1,2);
+               	var local_deal_date_end = local_deal_date.substr(3,local_deal_date_length);
+               }
+               else 
+               {
+               	
+               	  var local_deal_date_start = local_deal_date.substr(0,2);
+               	  var local_deal_date_sub = local_deal_date.substr(2,3);
+               	  var local_deal_date_end = local_deal_date.substr(4,local_deal_date_length);
+               }
+               $(local_end_date).html(local_deal_date_start+"<sup>"+local_deal_date_sub+"</sup>"+local_deal_date_end);
                $(local_end_date).css('float','right');
                $(local_end_date_element).append(local_end_date_head);
                $(local_end_date_element).append(local_end_date);
@@ -650,7 +682,7 @@ function hotdeals_cont_details_append_handler(name_type,hotdeal_cnt_grp_name,hot
                {
                  var local_tr_labs = document.createElement('tr');
                  $(local_tr_labs).addClass("labs_row");
-                 $(local_tr_labs).css('lineHeight','24px');
+                 $(local_tr_labs).css('border','5px solid white');
                  $(local_tr_labs).attr('data-labname',localData.OfferingLabs[i].labName);
                  $(local_tr_labs).attr('data-labslug',localData.OfferingLabs[i].labSlug);
                  $(local_tr_labs).attr('data-dealname',localData.HotDealName);
