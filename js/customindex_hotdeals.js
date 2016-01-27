@@ -10,7 +10,6 @@ function tabledata_handler(pageNum)
          success:function(data){
          var load = document.getElementById("loading");
          $(load).css('display','none');
-     	  console.log(data);
          if(data.error)
          {
            	 var error_modal = document.createElement('div');
@@ -138,7 +137,6 @@ function tabledata_handler(pageNum)
              var hotdeal_consultations = data.Consultations;
              var hotdeal_groups = data.GroupsInfo;
              var hotdeals_tests = data.TestsInfo;
-             console.log(data);
               var deal_details_modal = document.createElement('div');
                $(deal_details_modal).addClass("modal");
                $(deal_details_modal).attr('id', 'modal_firstpage');
@@ -266,7 +264,9 @@ function tabledata_handler(pageNum)
                  $(tr_labs).attr('data-dealfinalprice',data.HotDealFinalPrice);
                  $(tr_labs).attr('data-labarea',data.OfferingLabs[i].labArea);
                  $(tr_labs).attr('data-onlinereports',data.OfferingLabs[i].onlineReports);
-                 $(tr_labs).attr('data-visittype' ,data.OfferingLabs[i].visitType); 
+                 $(tr_labs).attr('data-visittype' ,data.OfferingLabs[i].visitType);
+                 $(tr_labs).attr('data-labaddress',data.OfferingLabs[i].labAddress);
+                 $(tr_labs).attr('data-labpin',data.OfferingLabs[i].labPincode);
                  var td_labs = document.createElement('td');
                  $(td_labs).addClass("lab_name");
                  var td_lab_area = document.createElement('td');
@@ -306,7 +306,9 @@ function tabledata_handler(pageNum)
                   	 var labarea = $(this).data('labarea');
                   	 var online_reports = $(this).data('onlinereports');
                   	 var visit_type = $(this).data('visittype');
-                		form_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
+                  	 var lab_address = $(this).data('labaddress');
+                  	 var lab_pin = $(this).data('labpin');
+                		form_handler(lab_address,lab_pin,dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
                 		});
                   }//for offeringlabs
                  $(deal_details_modal).append(offer_labs);
@@ -477,7 +479,7 @@ function hotdeals_cont_details_append_handler(name_type,hotdeal_cnt_grp_name,hot
  	  return [hotdeal_cnt_cont_index, hotdeal_cnt_cont_array];
 }//fnctn hotdeals fnctn endng  
   
- function form_backbtn(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea)
+ function form_backbtn(lab_address,lab_pin,dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea)
     {
     	         var localData = JSON.parse(localStorage.getItem('someData'));
     	         var hotdeal_consultations = localData.Consultations;
@@ -611,6 +613,8 @@ function hotdeals_cont_details_append_handler(name_type,hotdeal_cnt_grp_name,hot
                  $(local_tr_labs).attr('data-labarea',localData.OfferingLabs[i].labArea);
                  $(local_tr_labs).attr('data-onlinereports',localData.OfferingLabs[i].onlineReports);
                  $(local_tr_labs).attr('data-visittype' ,localData.OfferingLabs[i].visitType); 
+                 $(local_tr_labs).attr('data-labaddress',localData.OfferingLabs[i].labAddress);
+                 $(local_tr_labs).attr('data-labpin',localData.OfferingLabs[i].labPincode);
                  var local_td_labs = document.createElement('td');
                  $(local_td_labs).addClass("lab_name");
                  var local_td_lab_area = document.createElement('td');
@@ -650,7 +654,9 @@ function hotdeals_cont_details_append_handler(name_type,hotdeal_cnt_grp_name,hot
                   	 var labarea = $(this).data('labarea');
                   	 var online_reports = $(this).data('onlinereports');
                   	 var visit_type = $(this).data('visittype');
-                		form_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
+                  	 var lab_address = $(this).data('labaddress');
+                  	 var lab_pin = $(this).data('labpin');
+                		form_handler(lab_address,lab_pin,dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
                 		});
                   }//for offeringlabs
                  $(local_deal_details_modal).append(local_offer_labs);
@@ -696,7 +702,7 @@ function hotdeals_cont_details_append_handler(name_type,hotdeal_cnt_grp_name,hot
 }//homevst fnctn endng
 
  
-function form_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea)
+function form_handler(lab_address,lab_pin,dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea)
  {
     var booking_page = document.createElement('div');
     $(booking_page).addClass("modal");
@@ -967,7 +973,7 @@ function form_handler(dataid,online_reports,visit_type,labname,labslug,dealname,
     $(fieldset_booking).addClass("input-block");
     var label_booking = document.createElement('label');
     $(label_booking).attr('for','app_time');
-    $(label_booking).html('Appointment Timing:');
+    $(label_booking).html('Preferred Appointment Time:');
     var input_booking = document.createElement('input');
     $(input_booking).attr('type','text');
     $(input_booking).attr('id','hotdeal_app_time');
@@ -1029,7 +1035,6 @@ function form_handler(dataid,online_reports,visit_type,labname,labslug,dealname,
     $(col_class_element).append(email_row);
     $(col_class_element).append(hotdeal_gender_row);
     $(col_class_element).append(phno_row);
-    console.log(visit_type);
     if (visit_type == 'homevisitonly') 
     {
        var hotdeal_homevisit_row = document.createElement('div');
@@ -1673,22 +1678,22 @@ function form_handler(dataid,online_reports,visit_type,labname,labslug,dealname,
                   }// if 09
                   if (visit_type == "both") 
                   {   
-                     hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea,deal_hard_cpy_element,deal_home_vst_element,app_time_element,apptime_element,mbno_element,sel_time,current_time,name_element,email_element,deal_age_element,deal_gender_element,deal_pincode_element); 
+                     hotdeal_both_vst_handler(lab_address,lab_pin,address_element,dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea,deal_hard_cpy_element,deal_home_vst_element,app_time_element,apptime_element,mbno_element,sel_time,current_time,name_element,email_element,deal_age_element,deal_gender_element,deal_pincode_element); 
                   }//if both       
                   else if (visit_type == "homevisitonly") 
                   {
-                  	 hotdeal_hme_vst_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea,deal_hard_cpy_element,deal_home_vst_element,app_time_element,apptime_element,mbno_element,sel_time,current_time,name_element,email_element,deal_age_element,deal_gender_element,deal_pincode_element);
+                  	 hotdeal_hme_vst_handler(lab_address,lab_pin,address_element,dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea,deal_hard_cpy_element,deal_home_vst_element,app_time_element,apptime_element,mbno_element,sel_time,current_time,name_element,email_element,deal_age_element,deal_gender_element,deal_pincode_element);
                   }
                   else 
                   {
-                  	 hotdeal_lab_vst_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea,deal_hard_cpy_element,deal_home_vst_element,app_time_element,apptime_element,mbno_element,sel_time,current_time,name_element,email_element,deal_age_element,deal_gender_element,deal_pincode_element);
+                  	 hotdeal_lab_vst_handler(lab_address,lab_pin,address_element,dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea,deal_hard_cpy_element,deal_home_vst_element,app_time_element,apptime_element,mbno_element,sel_time,current_time,name_element,email_element,deal_age_element,deal_gender_element,deal_pincode_element);
                   }   
              });//btn onclick handler
                     
                 
           }//form_handler
           
-function  hotdeal_hme_vst_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea,deal_hard_cpy_element,deal_home_vst_element,app_time_element,apptime_element,mbno_element,sel_time,current_time,name_element,email_element,deal_age_element,deal_gender_element,deal_pincode_element)
+function  hotdeal_hme_vst_handler(lab_address,lab_pin,address_element,dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea,deal_hard_cpy_element,deal_home_vst_element,app_time_element,apptime_element,mbno_element,sel_time,current_time,name_element,email_element,deal_age_element,deal_gender_element,deal_pincode_element)
 {
    var patient_name = $("#hotdeal_patient_name").val();
    var patient_email = $("#hotdeal_email").val();
@@ -1698,7 +1703,7 @@ function  hotdeal_hme_vst_handler(dataid,online_reports,visit_type,labname,labsl
    var pat_age = $("#hotdeal_patient_age").val();
    var pat_gender = $("#hotdeal_ptnt_gender").val();
    var pat_pinno = $("#hotdeal_patient_pincode").val();
-   var pat_address = $("#hotdeal_ptnt_address").val();
+   var pat_address = $("#hotdeal_pfl_address").val();
     if((document.getElementById("err_email").style.display ='none') &&
      (document.getElementById('err_mbno').style.display = 'none') &&
      (document.getElementById('err_apptime').style.display = 'none') &&
@@ -1884,7 +1889,7 @@ function  hotdeal_hme_vst_handler(dataid,online_reports,visit_type,labname,labsl
              (document.getElementById("err_home_vst").style.display = 'none') &&
              (document.getElementById("err_hard_cpy").style.display = 'none'))
              {
-                if((!($('#hotdeal_pkg_address').val()))  ||  pat_address.length <10)
+                if((!($('#hotdeal_pfl_address').val()))  ||  pat_address.length <10)
                 {
                      $(address_element).css('display','block');
                       return false;
@@ -1925,9 +1930,9 @@ function  hotdeal_hme_vst_handler(dataid,online_reports,visit_type,labname,labsl
              {
              	 var hrd_cpy = "no";
              }
-           preview_handler(hme_vst,hrd_cpy,dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
+           preview_handler(lab_address,lab_pin,hme_vst,hrd_cpy,dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
 }//fncnt endng  
-function hotdeal_lab_vst_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea,deal_hard_cpy_element,deal_home_vst_element,app_time_element,apptime_element,mbno_element,sel_time,current_time,name_element,email_element,deal_age_element,deal_gender_element,deal_pincode_element)
+function hotdeal_lab_vst_handler(lab_address,lab_pin,address_element,dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea,deal_hard_cpy_element,deal_home_vst_element,app_time_element,apptime_element,mbno_element,sel_time,current_time,name_element,email_element,deal_age_element,deal_gender_element,deal_pincode_element)
 {
    var patient_name = $("#hotdeal_patient_name").val();
    var patient_email = $("#hotdeal_email").val();
@@ -1937,7 +1942,7 @@ function hotdeal_lab_vst_handler(dataid,online_reports,visit_type,labname,labslu
    var pat_age = $("#hotdeal_patient_age").val();
    var pat_gender = $("#hotdeal_ptnt_gender").val();
    var pat_pinno = $("#hotdeal_patient_pincode").val();
-   var pat_address = $("#hotdeal_ptnt_address").val();
+   var pat_address = $("#hotdeal_pfl_address").val();
     if((document.getElementById("err_email").style.display ='none') &&
      (document.getElementById('err_mbno').style.display = 'none') &&
      (document.getElementById('err_apptime').style.display = 'none') &&
@@ -2122,10 +2127,10 @@ function hotdeal_lab_vst_handler(dataid,online_reports,visit_type,labname,labslu
              {
              	 var hrd_cpy = "no";
              }
-           preview_handler(hme_vst,hrd_cpy,dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
+           preview_handler(lab_address,lab_pin,hme_vst,hrd_cpy,dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
 
 }//fnctn endng 
-function hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea,deal_hard_cpy_element,deal_home_vst_element,app_time_element,apptime_element,mbno_element,sel_time,current_time,name_element,email_element,deal_age_element,deal_gender_element,deal_pincode_element)
+function hotdeal_both_vst_handler(lab_address,lab_pin,address_element,dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea,deal_hard_cpy_element,deal_home_vst_element,app_time_element,apptime_element,mbno_element,sel_time,current_time,name_element,email_element,deal_age_element,deal_gender_element,deal_pincode_element)
 {
 	var patient_name = $("#hotdeal_patient_name").val();
    var patient_email = $("#hotdeal_email").val();
@@ -2135,7 +2140,7 @@ function hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labsl
    var pat_age = $("#hotdeal_patient_age").val();
    var pat_gender = $("#hotdeal_ptnt_gender").val();
    var pat_pinno = $("#hotdeal_patient_pincode").val();
-   var pat_address = $("#hotdeal_ptnt_address").val();
+   var pat_address = $("#hotdeal_pfl_address").val();
     if((document.getElementById("err_email").style.display ='none') &&
      (document.getElementById('err_mbno').style.display = 'none') &&
      (document.getElementById('err_apptime').style.display = 'none') &&
@@ -2348,7 +2353,7 @@ function hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labsl
              (document.getElementById("err_home_vst").style.display = 'none') &&
              (document.getElementById("err_hard_cpy").style.display = 'none'))
              {
-                if((!($('#hotdeal_pkg_address').val()))  ||  pat_address.length <10)
+                if((!($('#hotdeal_pfl_address').val()))  ||  pat_address.length <10)
                 {
                      $(address_element).css('display','block');
                       return false;
@@ -2397,7 +2402,7 @@ function hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labsl
              {
              	 var hrd_cpy = "no";
              }
-           preview_handler(hme_vst,hrd_cpy,dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
+           preview_handler(lab_address,lab_pin,hme_vst,hrd_cpy,dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
   }//vst bth fnctn endng
   
       
@@ -2435,10 +2440,8 @@ function hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labsl
           document.getElementById("hotdeal_patient_pincode").value = localStorage.getItem("patient_pincode");
     }//fnctn handler
     
-   function preview_handler(hme_vst,hrd_cpy,dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea)
+   function preview_handler(lab_address,lab_pin,hme_vst,hrd_cpy,dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea)
    {
-   	            console.log(online_reports);
-   	            console.log(visit_type);
    	            var hotdeal_ptnt_address = localStorage.getItem("patient_address"); 
    	            var order_page = document.createElement('div');
                   $(order_page).addClass("modal");
@@ -2457,7 +2460,6 @@ function hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labsl
                   $(closing_element).attr('id','modal_close');
                   var preview_box = document.createElement('div');
                   $(preview_box).addClass("preview_details");
-                  $(preview_box).css('height','388px')
                   $(preview_box).css('padding','10px');
                   $(preview_box).css('marginRight','20px');
                   var preview_div_element = document.createElement('div');
@@ -2468,7 +2470,7 @@ function hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labsl
                   $(preview_heading).css('fontWeight','bold');
                   $(preview_heading).css('color','#5cb0cf');
                   var deal_info = document.createElement('div');
-                  $(deal_info).html("Deal Information");
+                  $(deal_info).html("Lab & price  Information");
                   $(deal_info).css('background','rgb(65, 167, 179)');
                   $(deal_info).css('color','white');
                   $(deal_info).css('fontWeight','bold');
@@ -2477,29 +2479,33 @@ function hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labsl
                   var table_dealname = document.createElement('table');
                   $(table_dealname).css('float','left');
                   $(table_dealname).css('marginBottom','15px');
-                  //$(table_dealname).css('marginTop','21px');
-                  var deal_th = document.createElement('th');
-                  $(deal_th).html("Deal Information");
-                  //$(table_dealname).append(deal_th);
+                  $(table_dealname).css('width','316px');
                    var tr_dealname = document.createElement('tr');
                   var td_dealname = document.createElement('td');
-                  $(td_dealname).html("&nbsp"+"&nbsp"+"&nbsp"+dealname);
+                  $(td_dealname).html("&nbsp"+"&nbsp"+"&nbsp"+labname);
                   $(td_dealname).css('paddingTop','3px');
+                  $(td_dealname).css('fontWeight','bold');
+                  $(tr_dealname).append(td_dealname);
                   var tr_labname = document.createElement('tr');
                   var td_labname = document.createElement('td');
-                  $(td_labname).html("&nbsp"+"&nbsp"+"&nbsp"+"Lab"+"&nbsp"+":"+"&nbsp"+labname+"&nbsp"+"&nbsp"+"("+labarea+")");
-                  var td_labarea = document.createElement('td');
-                  $(tr_dealname).append(td_dealname);
+                  var deal_pfl_td_loc_div = document.createElement('div');
+                  $(deal_pfl_td_loc_div).css('float','left');
+                  $(deal_pfl_td_loc_div).html("&nbsp"+"&nbsp"+"&nbsp");
+                  var deal_pfl_td_loc_img = document.createElement('img');
+                  $(deal_pfl_td_loc_img).attr('src','images/location-bi.png');
+                  $(deal_pfl_td_loc_img).css('height','17px');
+                  $(deal_pfl_td_loc_img).css('width','12px');
+                  $(deal_pfl_td_loc_div).append(deal_pfl_td_loc_img);
+                  var deal_pfl_td_loc_detail = document.createElement('div');
+                 $(deal_pfl_td_loc_detail).html("&nbsp;"+lab_address+","+labarea+","+lab_pin);
+                 $(deal_pfl_td_loc_detail).css('float','right');
+                  $(deal_pfl_td_loc_detail).css('width','290px');
+                  $(td_labname).append(deal_pfl_td_loc_div);
+                  $(td_labname).append(deal_pfl_td_loc_detail);
+                  $(tr_dealname).append(td_labname);
                   $(tr_labname).append(td_labname);
                   $(table_dealname).append(tr_dealname);
                   $(table_dealname).append(tr_labname);
-                  var ptnt_info = document.createElement('div');
-                  $(ptnt_info).html("Patient Information");
-                  $(ptnt_info).css('fontWeight' ,'bold');
-                  $(ptnt_info).css('background','rgb(65, 167, 179)');
-                  $(ptnt_info).css('color','white');
-                  $(ptnt_info).css('marginTop','12%');
-                  $(ptnt_info).css('paddingLeft','6px');
                    if (online_reports == "yes") 
                 {
                  	 var onlinereports_tr = document.createElement('tr');
@@ -2523,7 +2529,7 @@ function hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labsl
                     $(ptnt_info).css('marginTop','14%');
                 	}
                 	
-                	  if(visit_type.length == "13")
+                	  if(visit_type== "homevisitonly")
                    {
                    	   var homevisit_tr_one_element = document.createElement('tr');
                       var homevisit_one_element = document.createElement('td');
@@ -2531,10 +2537,8 @@ function hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labsl
                       $(homevisit_one_element).attr('id','pkg_reports_msg');
                        $(homevisit_one_element).css('color','rgb(236,73,73)');
                      $(homevisit_one_element).css('textAlign','left');
-                     
                     $(homevisit_one_element).css('fontSize','10px');
-                    
-                    $(homevisit_one_element).css('display','block');
+                     $(homevisit_one_element).css('display','block');
                     var star_homevisit_one = document.createElement('span');
                     $(star_homevisit_one).addClass('star');
                     $(star_homevisit_one).html("&nbsp"+"&nbsp"+"&nbsp"+"&#x2605");
@@ -2544,87 +2548,131 @@ function hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labsl
                  	  $(homevisit_one_element).append(star_homevisit_one);
                  	  $(homevisit_one_element).append(error_homevisit_one_element);
                   $(homevisit_tr_one_element).append(homevisit_one_element);   
-                  $(table_dealname).append(homevisit_tr_one_element); 
-                   $(ptnt_info).css('marginTop','14%');       
+                  $(table_dealname).append(homevisit_tr_one_element);        
                   }//if home visit
-                  
-                   if(visit_type.length > "13")
+                  else  if(visit_type == "both")
                    {
-                   	   var labvisit_homevisit_tr_one_element = document.createElement('tr');
+                   	  var labvisit_homevisit_tr_one_element = document.createElement('tr');
                       var labvisit_homevisit_one_element = document.createElement('td');
                	    $(labvisit_homevisit_one_element).addClass("err_msg");
                       $(labvisit_homevisit_one_element).attr('id','pkg_reports_msg');
                        $(labvisit_homevisit_one_element).css('color','rgb(236,73,73)');
                      $(labvisit_homevisit_one_element).css('textAlign','left');
-                     
-                    $(labvisit_homevisit_one_element).css('fontSize','10px');
-                    
-                    $(labvisit_homevisit_one_element).css('display','block');
+                     $(labvisit_homevisit_one_element).css('fontSize','10px');
+                     $(labvisit_homevisit_one_element).css('display','block');
                     var star_labvisit_homevisit_one = document.createElement('span');
                     $(star_labvisit_homevisit_one).addClass('star');
                     $(star_labvisit_homevisit_one).html("&nbsp"+"&nbsp"+"&nbsp"+"&#x2605");
                     $(star_labvisit_homevisit_one).css('float','left');
                     var error_labvisit_homevisit_one_element = document.createElement('div');
-                    $(error_labvisit_homevisit_one_element).html('Home visit and lab visit available');
+                    $(error_labvisit_homevisit_one_element).html('Home visit  available');
                  	  $(labvisit_homevisit_one_element).append(star_labvisit_homevisit_one);
                  	  $(labvisit_homevisit_one_element).append(error_labvisit_homevisit_one_element);
                   $(labvisit_homevisit_tr_one_element).append(labvisit_homevisit_one_element);   
                   $(table_dealname).append(labvisit_homevisit_tr_one_element); 
-                  $(ptnt_info).css('marginTop','14%');  
-                          
                   }//if home visit
-                  
-                   
-                  var price_table = document.createElement('table');
-                  $(price_table).css('float','right');
-                  $(price_table).css('marginBottom','15px');
-                  //$(price_table).css('marginTop','44px');
-                  var tr_price = document.createElement('tr');
-                  var td_price = document.createElement('td');
-                  $(td_price).html("Price");
-                  var td_fp = document.createElement('td');
-                  $(td_fp).html(":"+"&nbsp"+"Rs."+deal_finalprice);
-                  $(td_fp).css('paddingLeft','11px');
-                  var td_mrp_openbracket = document.createElement('td');
-                  $(td_mrp_openbracket).html("&nbsp"+"(");
-                  var td_mrp_price = document.createElement('td');
-                  $(td_mrp_price).html(deal_mrp);
-                  $(td_mrp_price).css('textDecoration','line-through');
-                  $(td_mrp_price).css('color','rgb(236,73,73)');
-                  var td_mrp_closebracket = document.createElement('td');
-                  $(td_mrp_closebracket).html(")");
-                  var tr_discount = document.createElement('tr');
-                  var td_dealdiscount = document.createElement('td');
-                  $(td_dealdiscount).html("Discount");
-                  var td_deal_discount = document.createElement('td');
-                  $(td_deal_discount).html(":"+"&nbsp"+deal_discount+"%");
-                  $(td_deal_discount).css('paddingLeft','11px');
-                  
-                  //online_reports,visit_type
-                 // if hme_vst , online rpts 
+                  else 
+                  {
+                    var labvisit_tr_one_element = document.createElement('tr');
+                      var labvisit_one_element = document.createElement('td');
+               	    $(labvisit_one_element).addClass("err_msg");
+                      $(labvisit_one_element).attr('id','pkg_reports_msg');
+                       $(labvisit_one_element).css('color','rgb(236,73,73)');
+                     $(labvisit_one_element).css('textAlign','left');
+                     $(labvisit_one_element).css('fontSize','10px');
+                     $(labvisit_one_element).css('display','block');
+                    var star_labvisit_one = document.createElement('span');
+                    $(star_labvisit_one).addClass('star');
+                    $(star_labvisit_one).html("&nbsp"+"&nbsp"+"&nbsp"+"&#x2605");
+                    $(star_labvisit_one).css('float','left');
+                    var error_labvisit_one_element = document.createElement('div');
+                    $(error_labvisit_one_element).html('Home visit not available');
+                 	  $(labvisit_one_element).append(star_labvisit_one);
+                 	  $(labvisit_one_element).append(error_labvisit_one_element);
+                  $(labvisit_tr_one_element).append(labvisit_one_element);   
+                  $(table_dealname).append(labvisit_tr_one_element); 
+                   }
+             var deal_pfl_price_details = document.createElement('div');
+             $(deal_pfl_price_details).css('float','right');
+             $(deal_pfl_price_details).css('paddingTop','6px');
+             $(deal_pfl_price_details).css('paddingRight','12px');
+             $(deal_pfl_price_details).css('marginBottom','11px');
+             var deal_pfl_price_details_price = document.createElement('div');
+             $(deal_pfl_price_details_price).html("Rs."+deal_mrp);
+             $(deal_pfl_price_details_price).css('textAlign','center');
+             $(deal_pfl_price_details_price).css('fontSize','22px');
+             $(deal_pfl_price_details_price).css('color','rgb(236,73,73)');
+             var deal_pfl_price_details_mrp = document.createElement('div');
+             $(deal_pfl_price_details_mrp).css('fontSize','18px');
+             var deal_pfl_mrp_bracket_div = document.createElement('div');
+             $(deal_pfl_mrp_bracket_div).css('float','left');
+             var deal_pfl_mrp_openbracket = document.createElement('div');
+             $(deal_pfl_mrp_openbracket).html("("+"&nbsp");
+             $(deal_pfl_mrp_openbracket).css('float','left');
+             var deal_pfl_mrp_price = document.createElement('div');
+             $(deal_pfl_mrp_price).html("Rs."+"&nbsp"+deal_finalprice);
+             $(deal_pfl_mrp_price).css('textDecoration','line-through');
+             $(deal_pfl_mrp_price).css('float','left');
+             var deal_pfl_mrp_closebracket = document.createElement('div');
+             $(deal_pfl_mrp_closebracket).html("&nbsp"+")");
+             $(deal_pfl_mrp_closebracket).css('float','right');
+             $(deal_pfl_mrp_bracket_div).append(deal_pfl_mrp_openbracket);
+             $(deal_pfl_mrp_bracket_div).append(deal_pfl_mrp_price);
+             $(deal_pfl_mrp_bracket_div).append(deal_pfl_mrp_closebracket);
+             $(deal_pfl_price_details_mrp).append(deal_pfl_mrp_bracket_div);
+             var deal_pfl_discount_det = document.createElement('div');
+             $(deal_pfl_discount_det).html("&nbsp"+deal_discount+"%");
+             $(deal_pfl_discount_det).css('float','right');
+             $(deal_pfl_price_details_mrp).append(deal_pfl_discount_det);
+             $(deal_pfl_price_details).append(deal_pfl_price_details_price);
+             $(deal_pfl_price_details).append(deal_pfl_price_details_mrp);
+             var deal_testinfo_head_table = document.createElement('table');
+             $(deal_testinfo_head_table).css('width','531px');
+             $(deal_testinfo_head_table).css('marginBottom','16px');
+             var deal_testinfo_head_tr = document.createElement('tr');
+             $(deal_testinfo_head_tr).css('border','1px solid rgb(65, 167, 179)');
+             var deal_testinfo_head = document.createElement('th');
+             $(deal_testinfo_head).html("&nbsp;"+"&nbsp;"+"Deal Information");
+             $(deal_testinfo_head).css('background','rgb(65, 167, 179)');
+             $(deal_testinfo_head).css('color','white');
+             $(deal_testinfo_head).css('fontWeight','bold');
+             $(deal_testinfo_head_tr).append(deal_testinfo_head);
+             var deal_testname_tr = document.createElement('tr');
+             $(deal_testname_tr).css('border','1px solid rgb(221, 221, 221)');
+             var deal_testname  = document.createElement('td');
+             $(deal_testname).html("&nbsp;"+"&nbsp;"+"&nbsp;"+dealname);
+             $(deal_testname).css('background', 'rgba(236,246,248,0.99)');
+             $(deal_testname_tr).append(deal_testname);
+             $(deal_testinfo_head_table).append(deal_testinfo_head_tr);
+             $(deal_testinfo_head_table).append(deal_testname_tr);
+              var ptnt_info = document.createElement('div');
+                  $(ptnt_info).html("Patient Information");
+                  $(ptnt_info).css('fontWeight' ,'bold');
+                  $(ptnt_info).css('background','rgb(65, 167, 179)');
+                  $(ptnt_info).css('color','white');
+                  $(ptnt_info).css('paddingLeft','6px');
                   var patient_details_table = document.createElement('table');
                   $(patient_details_table).css('marginBottom','5%');
                   $(patient_details_table).css('width','100%');
                   $(patient_details_table).addClass("deals_ptnt_details");
-                  var tr_ptntinfo_head = document.createElement('tr');
-                  $(tr_ptntinfo_head).css('fontWeight' ,'bold');
-                  $(tr_ptntinfo_head).css('background','rgb(65, 167, 179)');
-                  $(tr_ptntinfo_head).css('color','white');
-                  var th_ptntinfo_head = document.createElement('td');
-                  $(th_ptntinfo_head).html("Patient Information");
-                  $(th_ptntinfo_head).css('fontWeight','bold');
-                  $(tr_ptntinfo_head).append(th_ptntinfo_head);
                   var tr_patient = document.createElement('tr');
-                   $(tr_patient).css('lineHeight','2');
                    $(tr_patient).addClass("deals_ptnt_preview_info");
                    $(tr_patient).css('border' ,'1px solid rgb(221, 221, 221)');
                   var td_patientname = document.createElement('td');
                   $(td_patientname).html("&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"Name");
                   $(td_patientname).css('border','1px solid #ddd');
+                  if (localStorage.getItem("patient_gender") == 2) 
+                  {
+             	       var ptnt_gender = "Male";
+                   }//if
+                  else 
+                  {
+             	     var ptnt_gender = "Female";
+                  }//else 
                   var td_patient_name = document.createElement('td');
-                  $(td_patient_name).html("&nbsp"+localStorage.getItem("patient_name"));
+                  $(td_patient_name).html(localStorage.getItem("patient_name")+"&nbsp;"+"("+"&nbsp;"+ptnt_gender+"&nbsp;"+localStorage.getItem("patient_age")+"yrs"+"&nbsp;"+")");
+                  $(td_patient_name).css('paddingLeft','6px');
                   var tr_email = document.createElement('tr');
-                  $(tr_email).css('lineHeight','2');
                   $(tr_email).css('border' ,'1px solid rgb(221, 221, 221)');
                   $(tr_email).addClass("deals_ptnt_preview_info");
                   var td_emailheading = document.createElement('td');
@@ -2632,30 +2680,29 @@ function hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labsl
                   $(td_emailheading).css('width','50%');
                   $(td_emailheading).css('border','1px solid #ddd');
                   var td_email_heading = document.createElement('td');
-                  $(td_email_heading).html("&nbsp"+localStorage.getItem("patient_email"));
+                  $(td_email_heading).html(localStorage.getItem("patient_email"));
+                  $(td_email_heading).css('paddingLeft','6px');
                   var tr_phno = document.createElement('tr');
-                  $(tr_phno).css('lineHeight','2');
                   $(tr_phno).addClass("deals_ptnt_preview_info");
                   $(tr_phno).css('border' ,'1px solid rgb(221, 221, 221)');
                   var td_phnoheading = document.createElement('td');
                   $(td_phnoheading).html("&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"Mobile No");
                   $(td_phnoheading).css('width','50%');
                   $(td_phnoheading).css('border','1px solid #ddd');
-                  
                   var td_phno_heading = document.createElement('td');
-                  $(td_phno_heading).html("&nbsp"+localStorage.getItem("patient_phone"));
+                  $(td_phno_heading).html(localStorage.getItem("patient_phone"));
+                  $(td_phno_heading).css('paddingLeft','6px');
                   var tr_apptime = document.createElement('tr');
-                  $(tr_apptime).css('lineHeight','2');
                   $(tr_apptime).addClass("deals_ptnt_preview_info");
                   $(tr_apptime).css('border' ,'1px solid rgb(221, 221, 221)');
                   var td_apptimeheading = document.createElement('td');
-                  $(td_apptimeheading).html("&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"Appointment Timing");
+                  $(td_apptimeheading).html("&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"&nbsp"+"Preferred Appointment Time");
                   $(td_apptimeheading).css('border','1px solid #ddd');
                   $(td_apptimeheading).css('width','50%');
                   var td_apptime_heading = document.createElement('td');
-                  $(td_apptime_heading).html("&nbsp"+localStorage.getItem("patient_app_time"));
+                  $(td_apptime_heading).html(localStorage.getItem("patient_app_time"));
+                  $(td_apptime_heading).css('paddingLeft','6px');
                   var tr_address = document.createElement('tr');
-                  $(tr_address).css('lineHeight','2');
                   $(tr_address).addClass("ptnt_preview_info");
                   $(tr_address).css('border' ,'1px solid rgb(221, 221, 221)');
                   var td_address_heading = document.createElement('td');
@@ -2663,27 +2710,13 @@ function hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labsl
                   $(td_address_heading).css('width','50%');
                   $(td_address_heading).css('border','1px solid rgb(221, 221, 221)');
                   var td_address = document.createElement('td');
-                  $(td_address).html("&nbsp"+localStorage.getItem("patient_address"));
+                  $(td_address).html(localStorage.getItem("patient_address"));
+                  $(td_address).css('paddingLeft','6px');
                   $(tr_address).append(td_address_heading);
                   $(tr_address).append(td_address);
-                  var back_button = document.createElement('button');
-                  $(back_button).html("Back");
-                  $(back_button).css('float','left');
-                  $(back_button).css('backgroundColor','#ec4949');
-                  $(back_button).css('width','98px');
-                  $(back_button).css('borderRadius','3px');
-                  $(back_button).css('border','0px');
-                  $(back_button).css('marginTop','11px');
-                  var order_button = document.createElement('button');
-                  $(order_button).html("Order");
-                  $(order_button).css('float','right');
-                  $(order_button).css('backgroundColor','#ec4949');
-                  $(order_button).css('width','98px');
-                  $(order_button).css('borderRadius','3px');
-                  $(order_button).css('border','0px');
-                  $(order_button).css('marginTop','11px');
                   var tmm_form_element = document.createElement('div');
                   $(tmm_form_element).attr('id','tmm-form-wizard');
+                  $(tmm_form_element).addClass("row");
                   var prevbtn_element = document.createElement('div');
                   $(prevbtn_element).css('margin','0px');
                   $(prevbtn_element).addClass('prev');
@@ -2712,15 +2745,6 @@ function hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labsl
                    $(nextbtn).append(span_nextbtn);
                    $(orderbtn_element).append(nextbtn);
                    $(orderbtn_element).append(nextbtn_divider);
-                  $(tr_price).append(td_price);
-                  $(tr_price).append(td_fp);
-                  $(tr_price).append(td_mrp_openbracket);
-                  $(tr_price).append(td_mrp_price);
-                  $(tr_price).append(td_mrp_closebracket);
-                  $(tr_discount).append(td_dealdiscount);
-                  $(tr_discount).append(td_deal_discount);
-                  $(price_table).append(tr_price);
-                  $(price_table).append(tr_discount);
                   $(tr_patient).append(td_patientname);
                   $(tr_patient).append(td_patient_name);
                   $(tr_email).append(td_emailheading);
@@ -2729,25 +2753,23 @@ function hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labsl
                   $(tr_phno).append(td_phno_heading);
                   $(tr_apptime).append(td_apptimeheading);
                   $(tr_apptime).append(td_apptime_heading);
-                  //$(patient_details_table).append(tr_ptntinfo_head);
                   $(patient_details_table).append(tr_patient);
                   $(patient_details_table).append(tr_email);
                   $(patient_details_table).append(tr_phno);
                   $(patient_details_table).append(tr_apptime);
-                  $(patient_details_table).append(tr_address);
-                    if (hotdeal_ptnt_address == "")
-                   {
-                      $(tr_address).detach();
-                   }
+                  if (hme_vst == "yes") 
+                  {
+                     $(patient_details_table).append(tr_address);
+                  }//if 
                   $(tmm_form_element).append(prevbtn_element);
                   $(tmm_form_element).append(orderbtn_element);
                   $(preview_div_element).append(preview_heading);
                   $("#modal_thirdpage").append(closing_element);
                   $(preview_box).append(preview_div_element);
-                  //$(preview_box).append(time_error);
                   $(preview_box).append(deal_info);
                   $(preview_box).append(table_dealname); 
-                  $(preview_box).append(price_table);
+                  $(preview_box).append(deal_pfl_price_details);
+                  $(preview_box).append(deal_testinfo_head_table);
                   $(preview_box).append(ptnt_info);
                   $(preview_box).append(patient_details_table);
                   $(preview_box).append(tmm_form_element);
@@ -2760,12 +2782,12 @@ function hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labsl
                      $(prevbtn_element).on('click', function ()
                       {
                       	 
-                          form_handler(dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
+                          form_handler(lab_address,lab_pin,dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea);
                      	});//click fnctn  
                      	$(orderbtn_element).on('click',function ()
                      	 {
                             loadingimage_page();                    		
-                             confirm_pagehandler(labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea)                     		
+                             confirm_pagehandler(hme_vst,hrd_cpy,lab_address,lab_pin,dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea)                     		
                      	      
                      		});//click          
                  
@@ -2790,12 +2812,15 @@ function hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labsl
                $(error_page).modal().open();
     }// loading img fnctn           
  
- function confirm_pagehandler(labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea)
+ function confirm_pagehandler(hme_vst,hrd_cpy,lab_address,lab_pin,dataid,online_reports,visit_type,labname,labslug,dealname,deal_slug,deal_mrp,deal_discount,deal_finalprice,labarea)
  {
  	 var pnt_name =localStorage.getItem("patient_name");
     var pnt_mobileno = localStorage.getItem("patient_phone");
     var mail = localStorage.getItem("patient_email");
     var appt_time = localStorage.getItem("patient_app_time");
+    var deal_book_pnt_address = localStorage.getItem("patient_address");
+    var deal_ptnt_age = localStorage.getItem("patient_age");
+    var deal_patient_pin = localStorage.getItem("patient_pincode");
     var sel_month_name = appt_time.substr(3,3);
     
     
@@ -2931,12 +2956,19 @@ function hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labsl
                    var sel_time = sel_year+"-"+sel_month+"-"+sel_date+" "+sel_hours+":"+sel_minutes+":"+sel_sec;
                    
                   }// if 09
-                       
+           if (localStorage.getItem("patient_gender") == 2) 
+             {
+             	var ptnt_gender = "Male";
+             }
+             else 
+             {
+             	var ptnt_gender = "Female";
+             }             
          $.ajax({
          url:host_api+"/m-checkout/book-order",
          type:'POST',
          dataType:'json',
-         data:{labSlug:labslug,hotDealSlugs:deal_slug,patientName:pnt_name,patientMobile:pnt_mobileno,patientEmail:mail,apptTime:sel_time},
+         data:{isHomeVisit:hme_vst,patientPincode:deal_patient_pin,patientGender:ptnt_gender,patientAge:deal_ptnt_age,reportHardCopy:hrd_cpy,homeVisitAddress:deal_book_pnt_address,labSlug:labslug,hotDealSlugs:deal_slug,patientName:pnt_name,patientMobile:pnt_mobileno,patientEmail:mail,apptTime:sel_time},
           success:function(data)
           {
           	 if(data.error)
@@ -3027,31 +3059,39 @@ function hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labsl
                   $(labname_tr).attr('id','ordered_lab');
                   var labname_td= document.createElement('td');
                   $(labname_td).html("Lab name");
+                  $(labname_td).css('paddingLeft','6px');
                   $(labname_td).css('borderRight','1px solid #ddd');
                   var lab_name_td = document.createElement('td');
-                  $(lab_name_td).html("&nbsp"+data.labName);
+                  $(lab_name_td).html(data.labName);
+                  $(lab_name_td).css('paddingLeft','6px');
                   var orderid_tr = document.createElement('tr');
                   $(orderid_tr).addClass("order_class");
                   var orderid_td = document.createElement('td');
                   $(orderid_td).html("OrderId");
                   $(orderid_td).css('borderRight','1px solid #ddd');
+                  $(orderid_td).css('paddingLeft','6px');
                   var order_id_td = document.createElement('td');
-                  $(order_id_td).html("&nbsp"+data.orderId);
+                  $(order_id_td).html(data.orderId);
+                  $(order_id_td).css('paddingLeft','6px');
                   var ptnt_name_tr = document.createElement('tr');
                   $(ptnt_name_tr).addClass("order_class");
                   $(ptnt_name_tr).attr('id','order_name');
                   var ptnt_name_td = document.createElement('td');
                   $(ptnt_name_td).html("Name");
                   $(ptnt_name_td).css('borderRight','1px solid #ddd');
+                  $(ptnt_name_td).css('paddingLeft','6px');
                   var ptntname_td = document.createElement('td');
-                  $(ptntname_td).html("&nbsp"+data.patientName);
+                  $(ptntname_td).html(data.patientName);
+                  $(ptntname_td).css('paddingLeft','6px');
                   var apptime_tr = document.createElement('tr');
                   $(apptime_tr).addClass("order_class");
                   var apptime_td = document.createElement('td');
-                  $(apptime_td).html("Appointment Timing");
+                  $(apptime_td).html("Preferred Appointment Time");
                   $(apptime_td).css('borderRight','1px solid #ddd');
+                  $(apptime_td).css('paddingLeft','6px');
                   var appt_time_td = document.createElement('td');
-                  $(appt_time_td).html("&nbsp"+data.apptTime);
+                  $(appt_time_td).html(data.apptTime);
+                  $(appt_time_td).css('paddingLeft','6px');
                   var close_button = document.createElement('button');
                   $(close_button).addClass("close_modal");
                   $(close_button).attr('type','button');
@@ -3096,17 +3136,10 @@ function hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labsl
                  
                   });//ajax   
  }//fnctn handler
-    
-    	
-     $("#subscriber_button").on('click', function() 
-   { 
-       var subscriber_fullname = $("#subscriber_name").val();
-       var mobile_number = $("#subscriber_phonenumber").val();
-       var subscriber_mailid = $("#subscriber_email").val();
-       if ( !(subscriber_fullname.length >= 6 && subscriber_fullname.length <= 26) || subscriber_fullname.match(/[^a-zA-Z ]/)  )
-        {
-              var  name_alert = document.createElement('div');
-               $(name_alert).addClass("modal");
+function subscribe_alert_handler()
+{
+    var  name_alert = document.createElement('div');
+    $(name_alert).addClass("modal");
                $(name_alert).attr('id', 'name_modal');
                $(name_alert).css('position','relative');
                $(name_alert).css('backgroundColor','#fff'); 
@@ -3123,7 +3156,7 @@ function hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labsl
                $(close_action).css('fontSize','30px');
                $(close_action).css('marginRight','7px');
                var modal_name_body = document.createElement('div');
-                $(modal_name_body).html('Enter Full Name');
+                $(modal_name_body).attr('id','deal_modal_body');
                 $(modal_name_body).css('padding' ,'10px');
                 $(modal_name_body).css('position','relative');
                var modal_name_footer = document.createElement('div');
@@ -3146,53 +3179,27 @@ function hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labsl
                 $('#name_modal').append(close_action);
                 $('#name_modal').append(modal_name_body);
                 $('#name_modal').append(modal_name_footer);
-               return false;
+   
+  } //alert fnctn endng  
+    	
+     $("#subscriber_button").on('click', function() 
+   { 
+       var subscriber_fullname = $("#subscriber_name").val();
+       var mobile_number = $("#subscriber_phonenumber").val();
+       var subscriber_mailid = $("#subscriber_email").val();
+       if ( !(subscriber_fullname.length >= 6 && subscriber_fullname.length <= 26) || subscriber_fullname.match(/[^a-zA-Z ]/)  )
+        {
+                subscribe_alert_handler();
+                var deal_modal_error = document.getElementById('deal_modal_body');
+                $(deal_modal_error).html('Enter Full Name');
+                return false;
           }//if sub_name
          var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
          if(!filter.test(subscriber_mailid))
          {
-         
-               var  email_alert = document.createElement('div');
-               $(email_alert).addClass("modal");
-               $(email_alert).attr('id', 'email_modal');
-               $(email_alert).css('position','relative');
-               $(email_alert).css('backgroundColor','#fff'); 
-               $(email_alert).css('position','relative');
-               $(email_alert).css('border','0px');
-               $(email_alert).css('borderRadius','5px');
-               $(email_alert).css('paddingRight','0px');
-                $(email_alert).modal().open(); 
-               var close_action  = document.createElement('a');
-               $(close_action).addClass("close");
-               $(close_action).attr('href','#');
-               $(close_action).html("&times;");
-               $(close_action).css('marginTop' ,'-21px');
-               $(close_action).css('fontSize','30px');
-               $(close_action).css('marginRight','7px');
-               var modal_email_body = document.createElement('div');
-                $(modal_email_body).html('Enter valid e-mail id');
-               $(modal_email_body).css('padding' ,'10px');
-               $(modal_email_body).css('position','relative');
-              var modal_email_footer = document.createElement('div');
-              $(modal_email_footer).css('textAlign','right');
-              $(modal_email_footer).css('padding','15px');
-              $(modal_email_footer).css('borderTop','1px solid #e5e5e5');
-              $(modal_email_footer).css('marginRight','20px');
-             var email_btnelement = document.createElement('button');
-             $(email_btnelement).addClass("btn btn-primary");
-             $(email_btnelement).html("Ok");
-             $(close_action).on('click',function () 
-             {
-             	$(email_alert).modal().close(); 
-             	});//close actn
-             	$(email_btnelement).on('click',function () 
-             	{
-             		$(email_alert).modal().close();
-             	});//close btn
-                $(modal_email_footer).append(email_btnelement);
-                $('#email_modal').append(close_action);
-                $('#email_modal').append(modal_email_body);
-                $('#email_modal').append(modal_email_footer);
+                 subscribe_alert_handler();
+                var deal_modal_error = document.getElementById('deal_modal_body');
+                $(deal_modal_error).html('Enter valid e-mail id');
                  return false;
         }//if subscriber_mail 
      });//sub btn
@@ -3201,47 +3208,9 @@ function hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labsl
         		   var mobile_number = $("#subscriber_phonenumber").val();
         		   if (mobile_number.match(/^[a-zA-Z]+$/))
                {
-                   var  letters_alert = document.createElement('div');
-                   $(letters_alert).addClass("modal");
-                   $(letters_alert).attr('id', 'letters_modal');
-                   $(letters_alert).css('position','relative');
-                   $(letters_alert).css('backgroundColor','#fff'); 
-                   $(letters_alert).css('position','relative');
-                   $(letters_alert).css('border','0px');
-                   $(letters_alert).css('borderRadius','5px');
-                   $(letters_alert).css('paddingRight','0px');
-                   $(letters_alert).modal().open(); 
-                   var close_action  = document.createElement('a');
-                  $(close_action).addClass("close");
-                  $(close_action).attr('href','#');
-                  $(close_action).html("&times;");
-                  $(close_action).css('marginTop' ,'-21px');
-                  $(close_action).css('fontSize','30px');
-                  $(close_action).css('marginRight','7px');
-                  var modal_letters_body = document.createElement('div');
-                  $(modal_letters_body).html('Enter  numeric digits only');
-                  $(modal_letters_body).css('padding' ,'10px');
-                  $(modal_letters_body).css('position','relative');
-                  var modal_letters_footer = document.createElement('div');
-                  $(modal_letters_footer).css('textAlign','right');
-                  $(modal_letters_footer).css('padding','15px');
-                  $(modal_letters_footer).css('borderTop','1px solid #e5e5e5');
-                  $(modal_letters_footer).css('marginRight','20px');
-                  var letters_btnelement = document.createElement('button');
-                  $(letters_btnelement).addClass("btn btn-primary");
-                  $(letters_btnelement).html("Ok");
-                  $(close_action).on('click',function () 
-                 {
-             	      $(letters_alert).modal().close(); 
-             	  });//close click
-             	  $(letters_btnelement).on('click',function () 
-             	  {
-             		  $(letters_alert).modal().close();
-            	  });//btn click
-                $(modal_letters_footer).append(letters_btnelement);
-                $('#letters_modal').append(close_action);
-                $('#letters_modal').append(modal_letters_body);
-                $('#letters_modal').append(modal_letters_footer);
+                subscribe_alert_handler();
+                var deal_modal_error = document.getElementById('deal_modal_body');
+                $(deal_modal_error).html('Enter  numeric digits only');
                  return false;
                  }//if letters
             });//letters alert
@@ -3253,230 +3222,40 @@ function hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labsl
               var subscriber_mailid = $("#subscriber_email").val();
               if ( !(subscriber_fullname.length >= 6 && subscriber_fullname.length <= 26) || subscriber_fullname.match(/[^a-zA-Z ]/)  )
               {
-                 var  name_alert = document.createElement('div');
-                  $(name_alert).addClass("modal");
-                  $(name_alert).attr('id', 'name_modal');
-                  $(name_alert).css('position','relative');
-                  $(name_alert).css('backgroundColor','#fff'); 
-                  $(name_alert).css('position','relative');
-                  $(name_alert).css('border','0px');
-                  $(name_alert).css('borderRadius','5px');
-                  $(name_alert).css('paddingRight','0px');
-                  $(name_alert).modal().open(); 
-                  var close_action  = document.createElement('a');
-                  $(close_action).addClass("close");
-                 $(close_action).attr('href','#');
-                 $(close_action).html("&times;");
-                 $(close_action).css('marginTop' ,'-21px');
-                 $(close_action).css('fontSize','30px');
-                 $(close_action).css('marginRight','7px');
-                 var modal_name_body = document.createElement('div');
-                 $(modal_name_body).html('Enter Full Name');
-                 $(modal_name_body).css('padding' ,'10px');
-                 $(modal_name_body).css('position','relative');
-                 var modal_name_footer = document.createElement('div');
-                $(modal_name_footer).css('textAlign','right');
-                $(modal_name_footer).css('padding','15px');
-                $(modal_name_footer).css('borderTop','1px solid #e5e5e5');
-                $(modal_name_footer).css('marginRight','20px');
-                var name_btnelement = document.createElement('button');
-                $(name_btnelement).addClass("btn btn-primary");
-                $(name_btnelement).html("Ok");
-                $(close_action).on('click',function () 
-                {
-             	    $(name_alert).modal().close(); 
-             	 });//close click
-             	$(name_btnelement).on('click',function () 
-             	{
-             		$(name_alert).modal().close();
-            	});//btn click
-                $(modal_name_footer).append(name_btnelement);
-                $('#name_modal').append(close_action);
-                $('#name_modal').append(modal_name_body);
-                $('#name_modal').append(modal_name_footer);
+                subscribe_alert_handler();
+                var deal_modal_error = document.getElementById('deal_modal_body');
+                $(deal_modal_error).html('Enter Full Name');
                return false;
           }//if sub_name
          var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
          if(!filter.test(subscriber_mailid))
          {
-         
-               var  email_alert = document.createElement('div');
-               $(email_alert).addClass("modal");
-               $(email_alert).attr('id', 'email_modal');
-               $(email_alert).css('position','relative');
-               $(email_alert).css('backgroundColor','#fff'); 
-               $(email_alert).css('position','relative');
-               $(email_alert).css('border','0px');
-               $(email_alert).css('borderRadius','5px');
-               $(email_alert).css('paddingRight','0px');
-                $(email_alert).modal().open(); 
-               var close_action  = document.createElement('a');
-               $(close_action).addClass("close");
-               $(close_action).attr('href','#');
-               $(close_action).html("&times;");
-               $(close_action).css('marginTop' ,'-21px');
-               $(close_action).css('fontSize','30px');
-               $(close_action).css('marginRight','7px');
-               var modal_email_body = document.createElement('div');
-                $(modal_email_body).html('Enter valid e-mail id');
-               $(modal_email_body).css('padding' ,'10px');
-               $(modal_email_body).css('position','relative');
-              var modal_email_footer = document.createElement('div');
-              $(modal_email_footer).css('textAlign','right');
-              $(modal_email_footer).css('padding','15px');
-              $(modal_email_footer).css('borderTop','1px solid #e5e5e5');
-              $(modal_email_footer).css('marginRight','20px');
-             var email_btnelement = document.createElement('button');
-             $(email_btnelement).addClass("btn btn-primary");
-             $(email_btnelement).html("Ok");
-             $(close_action).on('click',function () 
-             {
-             	$(email_alert).modal().close(); 
-             	});
-             	$(email_btnelement).on('click',function () 
-             	{
-             		$(email_alert).modal().close();
-             		});
-                $(modal_email_footer).append(email_btnelement);
-                $('#email_modal').append(close_action);
-                $('#email_modal').append(modal_email_body);
-                $('#email_modal').append(modal_email_footer);
+                 subscribe_alert_handler();
+                var deal_modal_error = document.getElementById('deal_modal_body');
+                $(deal_modal_error).html('Enter valid e-mail id');
                  return false;
         }//if subscriber_mail
               if (mobile_number.match(/^[a-zA-Z]+$/))
                {
-                   var  letters_alert = document.createElement('div');
-                   $(letters_alert).addClass("modal");
-                   $(letters_alert).attr('id', 'letters_modal');
-                   $(letters_alert).css('position','relative');
-                   $(letters_alert).css('backgroundColor','#fff'); 
-                   $(letters_alert).css('position','relative');
-                   $(letters_alert).css('border','0px');
-                   $(letters_alert).css('borderRadius','5px');
-                   $(letters_alert).css('paddingRight','0px');
-                   $(letters_alert).modal().open(); 
-                   var close_action  = document.createElement('a');
-                  $(close_action).addClass("close");
-                  $(close_action).attr('href','#');
-                  $(close_action).html("&times;");
-                  $(close_action).css('marginTop' ,'-21px');
-                  $(close_action).css('fontSize','30px');
-                  $(close_action).css('marginRight','7px');
-                  var modal_letters_body = document.createElement('div');
-                  $(modal_letters_body).html('Enter  numeric digits only.');
-                  $(modal_letters_body).css('padding' ,'10px');
-                  $(modal_letters_body).css('position','relative');
-                  var modal_letters_footer = document.createElement('div');
-                  $(modal_letters_footer).css('textAlign','right');
-                  $(modal_letters_footer).css('padding','15px');
-                  $(modal_letters_footer).css('borderTop','1px solid #e5e5e5');
-                  $(modal_letters_footer).css('marginRight','20px');
-                  var letters_btnelement = document.createElement('button');
-                  $(letters_btnelement).addClass("btn btn-primary");
-                  $(letters_btnelement).html("Ok");
-                  $(close_action).on('click',function () 
-                 {
-             	      $(letters_alert).modal().close(); 
-             	  });//close click
-             	  $(letters_btnelement).on('click',function () 
-             	  {
-             		  $(letters_alert).modal().close();
-            	  });//btn click
-                $(modal_letters_footer).append(letters_btnelement);
-                $('#letters_modal').append(close_action);
-                $('#letters_modal').append(modal_letters_body);
-                $('#letters_modal').append(modal_letters_footer);
+                  
+                 subscribe_alert_handler();
+                var deal_modal_error = document.getElementById('deal_modal_body');
+                $(deal_modal_error).html('Enter  numeric digits only.');
                  return false;
                  }//if letters   
  
              if(mobile_number.match(/[^0-9]/) || mobile_number.length != 10) 
             {
-              var  mbno_alert = document.createElement('div');
-               $(mbno_alert).addClass("modal");
-               $(mbno_alert).attr('id', 'mbno_modal');
-               $(mbno_alert).css('position','relative');
-               $(mbno_alert).css('backgroundColor','#fff'); 
-               $(mbno_alert).css('position','relative');
-               $(mbno_alert).css('border','0px');
-               $(mbno_alert).css('borderRadius','5px');
-               $(mbno_alert).css('paddingRight','0px');
-               $(mbno_alert).modal().open(); 
-              var close_action  = document.createElement('a');
-               $(close_action).addClass("close");
-               $(close_action).attr('href','#');
-               $(close_action).html("&times;");
-               $(close_action).css('marginTop' ,'-21px');
-               $(close_action).css('fontSize','30px');
-               $(close_action).css('marginRight','7px');
-              var modal_mbno_body = document.createElement('div');
-              $(modal_mbno_body).html('Enter correct mobile number');
-              $(modal_mbno_body).css('padding' ,'10px');
-              $(modal_mbno_body).css('position','relative');
-              var modal_mbno_footer = document.createElement('div');
-              $(modal_mbno_footer).css('textAlign','right');
-              $(modal_mbno_footer).css('padding','15px');
-              $(modal_mbno_footer).css('borderTop','1px solid #e5e5e5');
-              $(modal_mbno_footer).css('marginRight','20px');
-              var mbno_btnelement = document.createElement('button');
-              $(mbno_btnelement).addClass("btn btn-primary");
-              $(mbno_btnelement).html("Ok");
-              $(close_action).on('click',function () 
-             {
-             	$(mbno_alert).modal().close(); 
-             	});
-             	$(mbno_btnelement).on('click',function () 
-             	{
-             		$(mbno_alert).modal().close();
-             	});
-              $(modal_mbno_footer).append(mbno_btnelement);
-                $('#mbno_modal').append(close_action);
-                $('#mbno_modal').append(modal_mbno_body);
-                $('#mbno_modal').append(modal_mbno_footer);
+                 subscribe_alert_handler();
+                var deal_modal_error = document.getElementById('deal_modal_body');
+                $(deal_modal_error).html('Enter correct mobile number');
                 return false;
         }//if mobile_number
         if (!(mobile_number.charAt(0)=="9" || mobile_number.charAt(0)=="8" || mobile_number.charAt(0)=="7"))
         {
-      
-              var  invalid_mbno_alert = document.createElement('div');
-               $(invalid_mbno_alert).addClass("modal");
-               $(invalid_mbno_alert).attr('id', 'invalid_mbno');
-               $(invalid_mbno_alert).css('position','relative');
-               $(invalid_mbno_alert).css('backgroundColor','#fff'); 
-               $(invalid_mbno_alert).css('position','relative');
-               $(invalid_mbno_alert).css('border','0px');
-               $(invalid_mbno_alert).css('borderRadius','5px');
-               $(invalid_mbno_alert).css('paddingRight','0px');
-                $(invalid_mbno_alert).modal().open(); 
-             var close_action  = document.createElement('a');
-               $(close_action).addClass("close");
-               $(close_action).attr('href','#');
-               $(close_action).html("&times;");
-               $(close_action).css('marginTop' ,'-21px');
-               $(close_action).css('fontSize','30px');
-               $(close_action).css('marginRight','7px');
-            var invalid_mbno_body = document.createElement('div');
-             $(invalid_mbno_body).html('Mobile number is not valid');
-             $(invalid_mbno_body).css('padding' ,'10px');
-             $(invalid_mbno_body).css('position','relative');
-             var invalid_mbno_footer = document.createElement('div');
-             $(invalid_mbno_footer).css('textAlign','right');
-             $(invalid_mbno_footer).css('padding','15px');
-             $(invalid_mbno_footer).css('borderTop','1px solid #e5e5e5');
-             var invalid_mbno_btn = document.createElement('button');
-             $(invalid_mbno_btn).addClass("btn btn-primary");
-             $(invalid_mbno_btn).html("Ok");
-             $(close_action).on('click',function () 
-             {
-             	$(invalid_mbno_alert).modal().close(); 
-             	});
-             	$(invalid_mbno_btn).on('click',function () 
-             	{
-             		$(invalid_mbno_alert).modal().close();
-             		});
-              $(invalid_mbno_footer).append(invalid_mbno_btn);
-                $('#invalid_mbno').append(close_action);
-                $('#invalid_mbno').append(invalid_mbno_body);
-                $('#invalid_mbno').append(invalid_mbno_footer);
+                subscribe_alert_handler();
+                var deal_modal_error = document.getElementById('deal_modal_body');
+                $(deal_modal_error).html('Mobile number is not valid');
                 return false;
         }//if mobile_number 7,8,9
         loadingimage_page();
@@ -3537,7 +3316,7 @@ function hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labsl
                   $(sub_error_closebtn).on('click',function () 
                   {
                   	$(sub_error_modal).modal().close();
-                  	});//click btn
+                  	});//click btn 
 
           	}
           	else
@@ -3600,3 +3379,4 @@ function hotdeal_both_vst_handler(dataid,online_reports,visit_type,labname,labsl
       
      
    
+
